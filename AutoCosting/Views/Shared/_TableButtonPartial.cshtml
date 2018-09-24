@@ -1,0 +1,33 @@
+﻿@model AutoCosting.Models.IndividualButtonPartial
+
+<td style="width:150px">
+    <div class="btn-group" role="group">
+        @Html.Partial("_IndividualButtonPartial",
+              new IndividualButtonPartial
+              {
+                  Action = "Edit",
+                  ButtonType = "btn-primary",
+                  Glyph = "pencil",
+                  Text = "Editar",
+                  Id = Model.Id
+              })
+        @Html.Partial("_IndividualButtonPartial",
+              new IndividualButtonPartial
+              {
+                  Action = "Details",
+                  ButtonType = "btn-success",
+                  Glyph = "list",
+                  Text = "Detalles",
+                  Id = Model.Id
+              })
+        @Html.Partial("_IndividualButtonPartial",
+             new IndividualButtonPartial
+             {
+                 Action = "Delete",
+                 ButtonType = "btn-danger",
+                 Glyph = "trash",
+                 Text = "Eliminar",
+                 Id = Model.Id
+             })
+    </div>
+</td>
