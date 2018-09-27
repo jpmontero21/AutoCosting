@@ -14,6 +14,7 @@ namespace AutoCosting.Models.Maintenance
         [Key, Column(Order = 0)]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
+        [Display(Name = "Empresa")]
         [Key, Column(Order = 1)]
         public int EmpresaID { get; set; }
         [ForeignKey("EmpresaID")]

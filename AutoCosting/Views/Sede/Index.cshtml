@@ -1,65 +1,67 @@
-﻿@model IEnumerable<AutoCosting.Models.Maintenance.Sede>
+﻿@model AutoCosting.Models.ViewModel.EmpresaSedeViewModel
 
 @{
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<br />
+<h2>Sedes&nbsp;-&nbsp;@Html.DisplayFor(modelItem => modelItem.Empresa.Nombre) </h2>
+<hr />
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (Model.Empresa != null && Model.Empresa.MultiSedeYN)
+    {
+        <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
+    }
+    else if (Model.Empresa != null && !Model.Empresa.MultiSedeYN && Model.SedeList.Count() == 0)
+    {
+        <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
+    }
 </p>
 <table class="table">
     <thead>
-        <tr>
+        <tr>            
             <th>
-                @Html.DisplayNameFor(model => model.Empresa)
+                @Html.DisplayNameFor(model => model.Sede.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Nombre)
+                @Html.DisplayNameFor(model => model.Sede.Direccion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Direccion)
+                @Html.DisplayNameFor(model => model.Sede.Telefono)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Telefono)
+                @Html.DisplayNameFor(model => model.Sede.UsarCierreCajaYN)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UsarCierreCajaYN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ImprimirLogoYN)
+                @Html.DisplayNameFor(model => model.Sede.ImprimirLogoYN)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Empresa.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UsarCierreCajaYN)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ImprimirLogoYN)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.ID  }) |
-                @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.ID })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model.SedeList)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UsarCierreCajaYN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ImprimirLogoYN)
+                </td>
+                <td>
+                    @Html.Partial("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

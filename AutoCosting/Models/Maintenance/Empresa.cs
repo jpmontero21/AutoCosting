@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoCosting.HelpersAndValidations;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -14,13 +15,13 @@ namespace AutoCosting.Models.Maintenance
         [Required]
         public string Nombre { get; set; }
         [Display(Name = "Dirección")]
-        public string Direccion { get; set; }        
+        public string Direccion { get; set; }
         [DataType(DataType.PhoneNumber)]
         [RegularExpression(@"^(\+\s?)?((?<!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$", ErrorMessage = "Número de teléfono Invalido.")]
         [Display(Name = "Teléfono")]
         public string Telefono { get; set; }
         [Required]
-        [Display(Name = "Multi Sede")]        
+        [Display(Name = "Multi Sede")]
         public bool MultiSedeYN { get; set; }
         [Display(Name = "Correo Electrónico")]
         [EmailAddress]

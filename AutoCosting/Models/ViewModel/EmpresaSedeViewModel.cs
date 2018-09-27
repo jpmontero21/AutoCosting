@@ -10,5 +10,6 @@ namespace AutoCosting.Models.ViewModel
     {
         public Empresa Empresa  { get; set; }
         public Sede Sede { get; set; }
+        public IEnumerable<Sede> SedeList { get; set; }
     }
 }

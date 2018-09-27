@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Maintenance;
+using AutoCosting.Models.ViewModel;
 
 namespace AutoCosting.Controllers
 {
@@ -22,8 +23,14 @@ namespace AutoCosting.Controllers
         // GET: Sede
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Sede.Include(s => s.Empresa);
-            return View(await applicationDbContext.ToListAsync());
+            //var applicationDbContext = _context.Sede.Include(s => s.Empresa);
+            var empresaSede = new EmpresaSedeViewModel()
+            {
+                SedeList = _context.Sede.ToList(),
+                Empresa = _context.Empresa.FirstOrDefault()
+            };
+            //return View(await applicationDbContext.ToListAsync());
+            return View(empresaSede);
         }
 
         // GET: Sede/Details/5
@@ -37,18 +44,19 @@ namespace AutoCosting.Controllers
             var sede = await _context.Sede
                 .Include(s => s.Empresa)
                 .FirstOrDefaultAsync(m => m.ID == id);
+
             if (sede == null)
             {
                 return NotFound();
             }
-
+            ViewData["EmpresaID"] = new SelectList(_context.Empresa, "ID", "Nombre", sede.EmpresaID);
             return View(sede);
         }
 
         // GET: Sede/Create
         public IActionResult Create()
         {
-            if (_context.Empresa.Count() <= 0)
+            if (_context.Empresa.Count() == 0 || (!_context.Empresa.FirstOrDefault().MultiSedeYN && _context.Sede.Count() >= 1))
             {
                 return RedirectToAction(nameof(Index));
             }
@@ -155,7 +163,7 @@ namespace AutoCosting.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["EmpresaID"] = new SelectList(_context.Empresa, "ID", "Nombre", sede.EmpresaID);
             return View(sede);
         }
 

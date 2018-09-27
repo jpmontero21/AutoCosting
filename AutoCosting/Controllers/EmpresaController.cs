@@ -96,11 +96,19 @@ namespace AutoCosting.Controllers
             {
                 return NotFound();
             }
-
-            if (ModelState.IsValid)
+            int num = _context.Sede.Where(x => x.EmpresaID == id).Count();
+            if (num > 1 && !empresa.MultiSedeYN)
+            {
+                ModelState.AddModelError(nameof(empresa.MultiSedeYN), "Existen Multiples Sedes para la Empresa.");
+            }
+            else
+            {
+                ModelState.Remove(nameof(empresa.MultiSedeYN));
+            }
+            if (ModelState.IsValid )
             {
                 try
-                {
+                {                    
                     _context.Update(empresa);
                     await _context.SaveChangesAsync();
                 }

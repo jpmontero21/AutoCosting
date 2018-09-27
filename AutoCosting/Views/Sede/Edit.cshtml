@@ -4,55 +4,84 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Edit</h2>
-
-<h4>Sede</h4>
+<br />
+<h2>Editar Sede</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="ID" />
-            <input type="hidden" asp-for="EmpresaID" />
-            <div class="form-group">
-                <label asp-for="Nombre" class="control-label"></label>
-                <input asp-for="Nombre" class="form-control" />
+
+<form asp-action="Edit">
+    <div class="form-group">
+        <input asp-for="EmpresaID" type ="hidden" />
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="EmpresaID" class="control-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <select asp-for="EmpresaID" class="form-control" disabled asp-items="ViewBag.EmpresaID"></select>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Nombre" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="Nombre" class="form-control" />
+                </div>
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Direccion" class="control-label"></label>
-                <input asp-for="Direccion" class="form-control" />
+            <br />
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Direccion" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="Direccion" class="form-control" />
+                </div>
                 <span asp-validation-for="Direccion" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Telefono" class="control-label"></label>
-                <input asp-for="Telefono" class="form-control" />
+            <br />
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="Telefono" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="Telefono" class="form-control" />
+                </div>
                 <span asp-validation-for="Telefono" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="UsarCierreCajaYN" /> @Html.DisplayNameFor(model => model.UsarCierreCajaYN)
-                    </label>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="UsarCierreCajaYN" class="custom-label" style="padding-top:9px"></label>
+                </div>
+                <div class="col-sm-4">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="UsarCierreCajaYN" />
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-2">
+                    <label asp-for="ImprimirLogoYN" class="custom-label" style="padding-top:9px"></label>
+                </div>
+                <div class="col-sm-4">
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="ImprimirLogoYN" />
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
-                <div class="checkbox">
-                    <label>
-                        <input asp-for="ImprimirLogoYN" /> @Html.DisplayNameFor(model => model.ImprimirLogoYN)
-                    </label>
-                </div>
+                <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
+                <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
