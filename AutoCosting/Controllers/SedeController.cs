@@ -26,8 +26,8 @@ namespace AutoCosting.Controllers
             //var applicationDbContext = _context.Sede.Include(s => s.Empresa);
             var empresaSede = new EmpresaSedeViewModel()
             {
-                SedeList = _context.Sede.ToList(),
-                Empresa = _context.Empresa.FirstOrDefault()
+                SedeList = await _context.Sede.ToListAsync(),
+                Empresa = await _context.Empresa.FirstOrDefaultAsync()
             };
             //return View(await applicationDbContext.ToListAsync());
             return View(empresaSede);

@@ -2,7 +2,7 @@
 
 <td style="width:150px">
     <div class="btn-group" role="group">
-        @Html.Partial("_IndividualButtonPartial",
+        @await Html.PartialAsync("_IndividualButtonPartial",
               new IndividualButtonPartial
               {
                   Action = "Edit",
@@ -11,7 +11,7 @@
                   Text = "Editar",
                   Id = Model.Id
               })
-        @Html.Partial("_IndividualButtonPartial",
+        @await Html.PartialAsync("_IndividualButtonPartial",
               new IndividualButtonPartial
               {
                   Action = "Details",
@@ -20,7 +20,7 @@
                   Text = "Detalles",
                   Id = Model.Id
               })
-        @Html.Partial("_IndividualButtonPartial",
+        @await Html.PartialAsync("_IndividualButtonPartial",
              new IndividualButtonPartial
              {
                  Action = "Delete",

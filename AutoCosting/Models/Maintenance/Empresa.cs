@@ -23,7 +23,7 @@ namespace AutoCosting.Models.Maintenance
         [Required]
         [Display(Name = "Multi Sede")]
         public bool MultiSedeYN { get; set; }
-        [Display(Name = "Correo Electrónico")]
+        [Display(Name = "Email")]
         [EmailAddress]
         public string ContactEmail { get; set; }
     }

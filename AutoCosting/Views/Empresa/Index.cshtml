@@ -56,7 +56,7 @@
                     @Html.DisplayFor(modelItem => item.ContactEmail)
                 </td>
                 <td>
-                    @Html.Partial("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                    @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
                 </td>
             </tr>
         }

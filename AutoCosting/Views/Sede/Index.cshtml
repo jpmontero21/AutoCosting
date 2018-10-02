@@ -59,7 +59,7 @@
                     @Html.DisplayFor(modelItem => item.ImprimirLogoYN)
                 </td>
                 <td>
-                    @Html.Partial("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                    @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
                 </td>
             </tr>
         }

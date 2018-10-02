@@ -12,6 +12,8 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using AutoCosting.Models;
+using AutoCosting.HelpersAndValidations;
 
 namespace AutoCosting
 {
@@ -37,8 +39,11 @@ namespace AutoCosting
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            services.AddDefaultIdentity<IdentityUser>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddErrorDescriber<SpanishIdentityErrorDescriber>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
