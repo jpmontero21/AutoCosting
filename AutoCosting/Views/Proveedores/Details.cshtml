@@ -4,51 +4,68 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<br />
+<h2>Detalles del Proveedor</h2>
+<hr />
 
-<div>
-    <h4>Proveedor</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NombreContacto)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NombreContacto)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NombreEmpresa)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NombreEmpresa)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Telefono)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Notas)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Notas)
-        </dd>
-    </dl>
+<div class="form-group">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="NombreContacto" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="NombreContacto" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="NombreEmpresa" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="NombreEmpresa" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Direccion" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="Direccion" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Telefono" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="Telefono" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Email" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="Email" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Notas" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <textarea asp-for="Notas" disabled class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-sm btn-primary">Editar</a>
+            <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

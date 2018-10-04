@@ -4,10 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<br />
+<h2>Proveedores </h2>
+<hr />
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary">Crear nuevo.</a>
 </p>
 <table class="table">
     <thead>
@@ -34,33 +36,31 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreContacto)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NombreEmpresa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Direccion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notas)
-            </td>
-            <td>            
-                @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })  
-                <a type="button" class="btn btn-sm " href="~/images/banner1.svg" > ASD
-                    <span class="glyphicon glyphicon-flash"></span>
-                </a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreContacto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NombreEmpresa)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Direccion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notas)
+                </td>
+                <td>
+                    @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

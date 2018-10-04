@@ -4,54 +4,68 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<br />
+<h2>Eliminar Proveedor</h2>
+<hr />
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Proveedor</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NombreContacto)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NombreContacto)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NombreEmpresa)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NombreEmpresa)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Direccion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Direccion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Telefono)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Telefono)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Notas)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Notas)
-        </dd>
-    </dl>
-    
+<h3>Está seguro que desea eliminar el proveedor?</h3>
+<hr />
     <form asp-action="Delete">
-        <input type="hidden" asp-for="ID" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
+        <div class="form-group">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="NombreContacto" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="NombreContacto" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="NombreEmpresa" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="NombreEmpresa" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Direccion" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Direccion" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Telefono" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Telefono" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Email" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Email" disabled class="form-control" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Notas" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <textarea asp-for="Notas" disabled class="form-control"></textarea>
+                    </div>                    
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
+                    <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+                </div>
+            </div>
+        </div>
     </form>
-</div>
