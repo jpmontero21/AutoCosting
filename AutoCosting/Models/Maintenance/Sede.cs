@@ -19,7 +19,7 @@ namespace AutoCosting.Models.Maintenance
         public int EmpresaID { get; set; }
         [ForeignKey("EmpresaID")]
         public Empresa Empresa { get; set; }
-        [Required]
+        [Required(ErrorMessage = "El Nombre es requerido.")]
         public string Nombre { get; set; }        
         [Display(Name = "Dirección")]
         public string Direccion { get; set; }

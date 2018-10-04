@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Linq;
 
 namespace AutoCosting.Areas.Identity.Pages.Account
 {
@@ -96,21 +97,21 @@ namespace AutoCosting.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
-                    if (!await _roleManager.RoleExistsAsync(SD.CustomerEndUser))
+                    if (!await _roleManager.RoleExistsAsync(SD.SalesAgentUser))
                     {
-                        await _roleManager.CreateAsync(new IdentityRole(SD.CustomerEndUser));
+                        await _roleManager.CreateAsync(new IdentityRole(SD.SalesAgentUser));
                     }
                     if (!await _roleManager.RoleExistsAsync(SD.AdminEndUser))
                     {
                         await _roleManager.CreateAsync(new IdentityRole(SD.AdminEndUser));
                     }
-                    if (Input.IsAdmin)
+                    if (Input.IsAdmin || this._db.Users.Count() == 1)
                     {
                         await _userManager.AddToRoleAsync(user, SD.AdminEndUser);
                     }
                     else
                     {
-                        await _userManager.AddToRoleAsync(user, SD.CustomerEndUser);
+                        await _userManager.AddToRoleAsync(user, SD.SalesAgentUser);
                     }
                     _logger.LogInformation("User created a new account with password.");
 

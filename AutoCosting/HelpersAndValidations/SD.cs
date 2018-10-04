@@ -8,6 +8,6 @@ namespace AutoCosting.HelpersAndValidations
     public class SD
     {
         public const string AdminEndUser = "Admin";
-        public const string CustomerEndUser = "Customer";
+        public const string SalesAgentUser = "SalesAgent";
     }
 }

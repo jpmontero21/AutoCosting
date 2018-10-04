@@ -12,6 +12,7 @@ namespace AutoCosting.Data
     {
         public DbSet<Empresa> Empresa { get; set; }
         public DbSet<Sede> Sede { get; set; }
+        public DbSet<Proveedor> Proveedores { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
