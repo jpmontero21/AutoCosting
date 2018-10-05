@@ -1,11 +1,11 @@
-﻿@model IEnumerable<AutoCosting.Models.Maintenance.Proveedor>
+﻿@model IEnumerable<AutoCosting.Models.Maintenance.Cliente>
 
 @{
     ViewData["Title"] = "Index";
 }
 
 <br />
-<h2>Proveedores </h2>
+<h2>Clientes </h2>
 <hr />
 
 <p>
@@ -15,10 +15,13 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NombreContacto)
+                @Html.DisplayNameFor(model => model.Nombre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NombreEmpresa)
+                @Html.DisplayNameFor(model => model.Apellido1)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido2)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Direccion)
@@ -40,10 +43,13 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NombreContacto)
+                    @Html.DisplayFor(modelItem => item.Nombre)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.NombreEmpresa)
+                    @Html.DisplayFor(modelItem => item.Apellido1)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido2)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Direccion)

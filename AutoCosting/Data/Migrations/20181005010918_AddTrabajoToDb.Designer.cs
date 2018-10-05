@@ -4,14 +4,16 @@ using AutoCosting.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AutoCosting.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181005010918_AddTrabajoToDb")]
+    partial class AddTrabajoToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -182,7 +184,7 @@ namespace AutoCosting.Data.Migrations
                     b.Property<string>("Descripcion")
                         .IsRequired();
 
-                    b.Property<double>("PrecioPromedio");
+                    b.Property<decimal>("PrecioPromedio");
 
                     b.HasKey("ID");
 
