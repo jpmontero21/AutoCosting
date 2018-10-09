@@ -1,0 +1,96 @@
+﻿@model IEnumerable<AutoCosting.Models.Maintenance.Vehiculo>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<br />
+<h2>Vehículos</h2>
+<hr />
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Modelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Anno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Transmision)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estilo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Combustible)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Estado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioMinimo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PrecioRecomendado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ApartadoYN)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FechaIngreso)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Modelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Anno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Transmision)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estilo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Combustible)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioMinimo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioRecomendado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ApartadoYN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FechaIngreso)
+                </td>
+                <td>
+                    @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { StrId = item.VIN })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
