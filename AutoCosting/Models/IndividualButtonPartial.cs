@@ -14,6 +14,7 @@ namespace AutoCosting.Models
         public string Text { get; set; }
 
         public int? Id { get; set; }
+        public string StrId { get; set; }
         public string ActionParameters
         {
             get
@@ -22,6 +23,10 @@ namespace AutoCosting.Models
                 if (this.Id != 0 && this.Id != null)
                 {
                     param.Append(string.Format("{0}", Id));
+                }
+                if (StrId != null && StrId.Length > 0)
+                {
+                    param.Append(String.Format("{0}", StrId));
                 }
                 return param.ToString().Substring(0, param.Length);
             }
