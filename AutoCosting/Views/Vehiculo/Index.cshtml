@@ -15,6 +15,9 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.VIN)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.Marca)
             </th>
             <th>
@@ -53,44 +56,47 @@
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Marca)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Modelo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Anno)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Transmision)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estilo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Combustible)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Estado)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioMinimo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioRecomendado)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ApartadoYN)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FechaIngreso)
-                </td>
-                <td>
-                    @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { StrId = item.VIN })
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.VIN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marca)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Modelo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Anno)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Transmision)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estilo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Combustible)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioMinimo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrecioRecomendado)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ApartadoYN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FechaIngreso)
+            </td>
+            <td>
+                @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { StrId = item.VIN })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

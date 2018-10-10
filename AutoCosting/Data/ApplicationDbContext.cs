@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AutoCosting.Models;
 using AutoCosting.Models.Maintenance;
+using AutoCosting.Models.Tracking;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +18,8 @@ namespace AutoCosting.Data
         public DbSet<Trabajo> Trabajos { get; set; }
         public DbSet<Empleado> Empleados { get; set; }
         public DbSet<Vehiculo> Vehiculos { get; set; }
+        public DbSet<TrackingHeader> TrackingHeaders { get; set; }
+        public DbSet<TrackingDetail> TrackinDetails { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

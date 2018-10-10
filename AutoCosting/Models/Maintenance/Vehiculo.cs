@@ -13,7 +13,7 @@ namespace AutoCosting.Models.Maintenance
     public class Vehiculo
     {
         [Key]
-        [Required(ErrorMessage = "El VIN es requerido." )]
+        [Required(ErrorMessage = "El VIN es requerido.")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string VIN { get; set; }
 
@@ -24,6 +24,7 @@ namespace AutoCosting.Models.Maintenance
         public string Modelo { get; set; }
 
         [Required(ErrorMessage = "El año es requerido.")]
+        [Display(Name = "Año")]
         public int Anno { get; set; }
 
         [Required(ErrorMessage = "La transmisión es requerida.")]
@@ -64,7 +65,7 @@ namespace AutoCosting.Models.Maintenance
         public double PrecioRecomendado { get; set; }
 
         [Display(Name = "Apartado")]
-        [DefaultValue(false)]        
+        [DefaultValue(false)]
         public bool ApartadoYN { get; set; }
 
         [Required(ErrorMessage = "La fecha de Ingreso es requerida.")]
@@ -72,5 +73,13 @@ namespace AutoCosting.Models.Maintenance
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime FechaIngreso { get; set; }
 
+        [NotMapped]
+        public string Descripcion
+        {
+            get
+            {
+                return string.Format("{0} {1} {2}", this.VIN, this.Marca, this.Modelo);
+            }
+        }
     }
 }

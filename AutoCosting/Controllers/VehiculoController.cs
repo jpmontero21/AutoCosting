@@ -46,7 +46,9 @@ namespace AutoCosting.Controllers
         // GET: Vehiculo/Create
         public IActionResult Create()
         {
-            return View();
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.FechaIngreso = DateTime.Today;
+            return View(vehiculo);
         }
 
         // POST: Vehiculo/Create
