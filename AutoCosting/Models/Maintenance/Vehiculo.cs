@@ -56,12 +56,12 @@ namespace AutoCosting.Models.Maintenance
 
         [Display(Name = "Precio mínimo")]
         [Required(ErrorMessage = "El precio mínimo es requerido.")]
-        [DisplayFormat(DataFormatString = "{0:#,####.00}")]
+        [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
         public double PrecioMinimo { get; set; }
 
         [Display(Name = "Precio Recomendado")]
         [Required(ErrorMessage = "El precio recomendado es requerido.")]
-        [DisplayFormat(DataFormatString = "{0:#,####.00}")]
+        [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
         public double PrecioRecomendado { get; set; }
 
         [Display(Name = "Apartado")]

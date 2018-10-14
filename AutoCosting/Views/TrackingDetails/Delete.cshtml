@@ -4,10 +4,81 @@
     ViewData["Title"] = "Delete";
 }
 
-<h2>Delete</h2>
+<br />
+<h2>Eliminar Detalle de Seguimiento</h2>
+<h3>Seguimiento # @Html.DisplayFor(modelItem => Model.TrackingId)</h3>
+<hr />
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
+<h3>Está seguro que desea eliminar esta linea de detalle?</h3>
+<h5>Eliminar este detalle de seguimiento alterará el precio del vehículo relacionado.</h5>
+<hr />
+
+<form asp-action="Delete">
+    <div class="form-group">
+        <div asp-validation-summary="ModelOnly"></div>
+        <input type="hidden" asp-for="TrackingId" />
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="TrabajoId" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <select asp-for="TrabajoId" class="form-control" disabled asp-items="ViewBag.TrabajoId" onchange="">
+                        <option disabled selected>--Seleccionar--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="Costo" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="Costo" readonly="readonly" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="ProveedorId" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <select asp-for="ProveedorId" disabled class="form-control" asp-items="ViewBag.ProveedorId">
+                        <option disabled selected>--Seleccionar--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="NumeroFactura" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="NumeroFactura" readonly="readonly" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="Descripcion" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="Descripcion" readonly="readonly" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="AddDescripcion" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <textarea asp-for="AddDescripcion" readonly="readonly" class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
+                <a asp-action="Edit" asp-controller="TrackingHeaders" asp-route-id="@Model.TrackingId" class="btn btn-sm btn-success">Regresar al Seguimiento</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@*<div>
     <h4>TrackingDetail</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -54,10 +125,10 @@
             @Html.DisplayFor(model => model.AddDescripcion)
         </dd>
     </dl>
-    
+
     <form asp-action="Delete">
         <input type="hidden" asp-for="ID" />
         <input type="submit" value="Delete" class="btn btn-default" /> |
         <a asp-action="Index">Back to List</a>
     </form>
-</div>
+</div>*@

@@ -4,57 +4,70 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<br />
+<h2>Detalle de </h2>
+<h2>Seguimiento # @Html.DisplayFor(modelItem => Model.TrackingId)</h2>
+<hr />
 
-<div>
-    <h4>TrackingDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Parent)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Parent.TrackingID)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Costo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Costo)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Trabajo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Trabajo.Descripcion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Proveedor)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Proveedor.NombreContacto)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.NumeroFactura)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.NumeroFactura)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Descripcion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Descripcion)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.AddDescripcion)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.AddDescripcion)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+
+<div class="form-group">
+    <input type="hidden" asp-for="TrackingId" />
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="TrabajoId" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <select asp-for="TrabajoId" class="form-control" disabled asp-items="ViewBag.TrabajoId" onchange="">
+                    <option disabled selected>--Seleccionar--</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Costo" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="Costo" readonly="readonly" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="ProveedorId" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <select asp-for="ProveedorId" disabled class="form-control" asp-items="ViewBag.ProveedorId">
+                    <option disabled selected>--Seleccionar--</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="NumeroFactura" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="NumeroFactura" readonly="readonly" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Descripcion" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="Descripcion" readonly="readonly" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="AddDescripcion" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <textarea asp-for="AddDescripcion" readonly="readonly" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="form-group">            
+            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-sm btn-primary">Editar</a>
+            <a asp-action="Edit" asp-controller="TrackingHeaders" asp-route-id="@Model.TrackingId" class="btn btn-sm btn-success">Regresar al Seguimiento</a>
+        </div>
+    </div>
 </div>

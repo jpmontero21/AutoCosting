@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Tracking;
+using AutoCosting.Models.Maintenance;
 
 namespace AutoCosting.Controllers.Tracking
 {
@@ -43,17 +44,23 @@ namespace AutoCosting.Controllers.Tracking
             {
                 return NotFound();
             }
-
+            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto");
+            ViewData["TrabajoId"] = new SelectList(_context.Trabajos, "ID", "Descripcion");
             return View(trackingDetail);
         }
 
         // GET: TrackingDetails/Create
-        public IActionResult Create()
+        public IActionResult Create(int trackingId)
         {
+            TrackingDetail detail = new TrackingDetail()
+            {
+                Parent = this._context.TrackingHeaders.FirstOrDefault(h => h.TrackingID == trackingId),
+                TrackingId = trackingId
+            };
             ViewData["TrackingId"] = new SelectList(_context.TrackingHeaders, "TrackingID", "TrackingID");
             ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto");
             ViewData["TrabajoId"] = new SelectList(_context.Trabajos, "ID", "Descripcion");
-            return View();
+            return View(detail);
         }
 
         // POST: TrackingDetails/Create
@@ -65,9 +72,18 @@ namespace AutoCosting.Controllers.Tracking
         {
             if (ModelState.IsValid)
             {
+                TrackingHeader parent = await _context.TrackingHeaders.AsNoTracking().FirstOrDefaultAsync(h => h.TrackingID == trackingDetail.TrackingId);
+                Vehiculo vehiculo = await _context.Vehiculos.AsNoTracking().FirstOrDefaultAsync(v => v.VIN == parent.VINVehiculo);
+                if (vehiculo != null)
+                {
+                    vehiculo.PrecioMinimo += trackingDetail.Costo;
+                    vehiculo.PrecioRecomendado += trackingDetail.Costo;
+                    _context.Vehiculos.Update(vehiculo);
+                }
+
                 _context.Add(trackingDetail);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), "TrackingHeaders", new { @id = trackingDetail.TrackingId });
             }
             ViewData["TrackingId"] = new SelectList(_context.TrackingHeaders, "TrackingID", "TrackingID", trackingDetail.TrackingId);
             ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto", trackingDetail.ProveedorId);
@@ -110,6 +126,28 @@ namespace AutoCosting.Controllers.Tracking
             {
                 try
                 {
+                    TrackingDetail originalDetail = await _context.TrackinDetails.AsNoTracking().FirstOrDefaultAsync(d => d.ID == id);
+                    if (originalDetail != null)
+                    {
+                        originalDetail.Parent = await _context.TrackingHeaders.AsNoTracking().FirstOrDefaultAsync(h => h.TrackingID == originalDetail.TrackingId);
+                        Vehiculo vehiculo = await _context.Vehiculos.AsNoTracking().FirstOrDefaultAsync(v => v.VIN == originalDetail.Parent.VINVehiculo);
+                        if (vehiculo != null)
+                        {
+                            if (originalDetail.Costo > trackingDetail.Costo)
+                            {
+                                vehiculo.PrecioMinimo -= originalDetail.Costo - trackingDetail.Costo;
+                                vehiculo.PrecioRecomendado -= originalDetail.Costo - trackingDetail.Costo;
+                            }
+                            else if (trackingDetail.Costo > originalDetail.Costo)
+                            {
+                                vehiculo.PrecioMinimo += trackingDetail.Costo - originalDetail.Costo;
+                                vehiculo.PrecioRecomendado += trackingDetail.Costo - originalDetail.Costo;
+                            }
+                            //how to update this vehiculo ?
+                            _context.Vehiculos.Update(vehiculo);
+                        }
+                    }
+
                     _context.Update(trackingDetail);
                     await _context.SaveChangesAsync();
                 }
@@ -124,7 +162,7 @@ namespace AutoCosting.Controllers.Tracking
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), "TrackingHeaders", new { @id = trackingDetail.TrackingId });
             }
             ViewData["TrackingId"] = new SelectList(_context.TrackingHeaders, "TrackingID", "TrackingID", trackingDetail.TrackingId);
             ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto", trackingDetail.ProveedorId);
@@ -149,7 +187,9 @@ namespace AutoCosting.Controllers.Tracking
             {
                 return NotFound();
             }
-
+            ViewData["TrackingId"] = new SelectList(_context.TrackingHeaders, "TrackingID", "TrackingID", trackingDetail.TrackingId);
+            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto", trackingDetail.ProveedorId);
+            ViewData["TrabajoId"] = new SelectList(_context.Trabajos, "ID", "Descripcion", trackingDetail.TrabajoId);
             return View(trackingDetail);
         }
 
@@ -158,9 +198,25 @@ namespace AutoCosting.Controllers.Tracking
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            int trackingID = 0;
             var trackingDetail = await _context.TrackinDetails.FindAsync(id);
+            trackingID = trackingDetail.TrackingId;
+
+            TrackingHeader parent = await _context.TrackingHeaders.AsNoTracking().FirstOrDefaultAsync(h => h.TrackingID == trackingDetail.TrackingId);
+            Vehiculo vehiculo = await _context.Vehiculos.AsNoTracking().FirstOrDefaultAsync(v => v.VIN == parent.VINVehiculo);
+            if (vehiculo != null)
+            {
+                vehiculo.PrecioMinimo -= trackingDetail.Costo;
+                vehiculo.PrecioRecomendado -= trackingDetail.Costo;
+                _context.Vehiculos.Update(vehiculo);
+            }
+
             _context.TrackinDetails.Remove(trackingDetail);
             await _context.SaveChangesAsync();
+            if (trackingID != 0)
+            {
+                return RedirectToAction(nameof(Edit), "TrackingHeaders", new { @id = trackingID });
+            }
             return RedirectToAction(nameof(Index));
         }
 
@@ -168,5 +224,6 @@ namespace AutoCosting.Controllers.Tracking
         {
             return _context.TrackinDetails.Any(e => e.ID == id);
         }
+
     }
 }

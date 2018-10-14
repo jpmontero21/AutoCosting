@@ -23,7 +23,7 @@ namespace AutoCosting.Controllers.Tracking
         // GET: TrackingHeaders
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.TrackingHeaders.Include(t => t.Vehiculo);
+            var applicationDbContext = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(d=>d.TrackingDetails);            
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -42,8 +42,19 @@ namespace AutoCosting.Controllers.Tracking
             {
                 return NotFound();
             }
-
-            return View(trackingHeader);
+            List<TrackingDetail> list = this._context.TrackinDetails.Where(d => d.TrackingId == id).ToList();
+            list.ForEach(d =>
+            {
+                d.Proveedor = this._context.Proveedores.FirstOrDefault(p => p.ID == d.ProveedorId);
+                d.Trabajo = this._context.Trabajos.FirstOrDefault(t => t.ID == d.TrabajoId);
+            });
+            TrackingViewModel tracking = new TrackingViewModel()
+            {
+                Tracking = trackingHeader,
+                TrackingDetalles = list
+            };
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", trackingHeader.VINVehiculo);
+            return View(tracking);
         }
 
         // GET: TrackingHeaders/Create
@@ -51,7 +62,8 @@ namespace AutoCosting.Controllers.Tracking
         {
             TrackingHeader header = new TrackingHeader();
             header.Fecha = DateTime.Today;
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion");
+            ;
+            ViewData["VINVehiculo"] = new SelectList(this._context.Vehiculos.Where(v => !this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN)), "VIN", "Descripcion");
             return View(header);
         }
 
@@ -85,13 +97,18 @@ namespace AutoCosting.Controllers.Tracking
                 return NotFound();
             }
             List<TrackingDetail> list = this._context.TrackinDetails.Where(d => d.TrackingId == id).ToList();
+            list.ForEach(d => 
+            {
+                d.Proveedor = this._context.Proveedores.FirstOrDefault(p => p.ID == d.ProveedorId);
+                d.Trabajo = this._context.Trabajos.FirstOrDefault(t => t.ID == d.TrabajoId);
+            });
             TrackingViewModel tracking = new TrackingViewModel()
             {
                 Tracking = trackingHeader,
                 TrackingDetalles = list
             };
             
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN", trackingHeader.VINVehiculo);
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", trackingHeader.VINVehiculo);
             return View(tracking);
         }
 
@@ -100,9 +117,9 @@ namespace AutoCosting.Controllers.Tracking
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TrackingID,VINVehiculo,Fecha,Notas")] TrackingHeader trackingHeader)
+        public async Task<IActionResult> Edit(int id, /*[Bind("TrackingID,VINVehiculo,Fecha,Notas")] TrackingHeader*/ TrackingViewModel trackingHeader)
         {
-            if (id != trackingHeader.TrackingID)
+            if (id != trackingHeader.Tracking.TrackingID)
             {
                 return NotFound();
             }
@@ -111,12 +128,12 @@ namespace AutoCosting.Controllers.Tracking
             {
                 try
                 {
-                    _context.Update(trackingHeader);
+                    _context.Update(trackingHeader.Tracking);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TrackingHeaderExists(trackingHeader.TrackingID))
+                    if (!TrackingHeaderExists(trackingHeader.Tracking.TrackingID))
                     {
                         return NotFound();
                     }
@@ -127,7 +144,7 @@ namespace AutoCosting.Controllers.Tracking
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN", trackingHeader.VINVehiculo);
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", trackingHeader.Tracking.VINVehiculo);
             return View(trackingHeader);
         }
 
@@ -146,8 +163,19 @@ namespace AutoCosting.Controllers.Tracking
             {
                 return NotFound();
             }
-
-            return View(trackingHeader);
+            List<TrackingDetail> list = this._context.TrackinDetails.Where(d => d.TrackingId == id).ToList();
+            list.ForEach(d =>
+            {
+                d.Proveedor = this._context.Proveedores.FirstOrDefault(p => p.ID == d.ProveedorId);
+                d.Trabajo = this._context.Trabajos.FirstOrDefault(t => t.ID == d.TrabajoId);
+            });
+            TrackingViewModel tracking = new TrackingViewModel()
+            {
+                Tracking = trackingHeader,
+                TrackingDetalles = list
+            };
+            ViewData["VINVehiculo"] = new SelectList(this._context.Vehiculos.Where(v => !this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN)), "VIN", "Descripcion");
+            return View(tracking);
         }
 
         // POST: TrackingHeaders/Delete/5

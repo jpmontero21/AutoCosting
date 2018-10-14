@@ -4,10 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h2>Index</h2>
+<br />
+<h2>Seguimientos</h2>
+<hr />
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create"class="btn btn-primary">Crear nuevo</a>
 </p>
 <table class="table">
     <thead>
@@ -31,29 +33,28 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TrackingID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Descripcion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Notas)
-            </td>
-            <th>
-                @Html.DisplayFor(modelItem => item.CostoTotal)
-            </th>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.TrackingID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.TrackingID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.TrackingID">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrackingID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Descripcion)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Fecha)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Notas)
+                </td>
+                <th>
+                    @Html.DisplayFor(modelItem => item.CostoTotal)
+                </th>
+                <td>
+                    @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.TrackingID })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

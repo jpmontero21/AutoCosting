@@ -15,6 +15,8 @@ namespace AutoCosting.Models.Tracking
         [Display(Name = "Tracking ID")]
         [DisplayFormat(DataFormatString = "{0:00000000}")]
         public int TrackingID { get; set; }
+        [Display(Name = "VIN - Vehículo")]
+        [Required(ErrorMessage = "El vehículo es Requerido.")]
         public string VINVehiculo { get; set; }
         [Display(Name = "Vehículo")]
         [ForeignKey("VINVehiculo")]
@@ -23,6 +25,7 @@ namespace AutoCosting.Models.Tracking
         public DateTime Fecha { get; set; }
         public string Notas { get; set; }
         [NotMapped]
+        [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
         [Display(Name = "Costo Total")]
         public double CostoTotal
         {

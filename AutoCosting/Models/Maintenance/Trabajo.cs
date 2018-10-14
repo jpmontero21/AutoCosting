@@ -16,7 +16,7 @@ namespace AutoCosting.Models.Maintenance
         [Required(ErrorMessage = "La Descripción es Requerida.")]
         public string Descripcion { get; set; }        
         [Display(Name = "Precio Promedio")]
-        [DisplayFormat(DataFormatString = "{0:#,####.00}")]
+        [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
         [Required(ErrorMessage = "El Precio Promedio es Requerido.")]
         public double PrecioPromedio { get; set; }
     }
