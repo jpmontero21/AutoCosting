@@ -4,6 +4,26 @@
     ViewData["Title"] = "Edit";
 }
 
+<script type="text/javascript">
+    
+
+    function GetDefaultJobPrice(selEle) {        
+        var trabId = selEle.value.toString() ;
+        $.ajax({            
+            url: "/TrackingDetails/GetTrabajoInfo",
+            type: "POST",
+            data: { trabajoID: trabId },
+            success: function (data) {
+                document.getElementById("Costo").value = data;
+            },
+            error: function () {
+                alert("Ups Hubo un Error.");
+            }  
+        });
+        
+    };
+</script>
+
 <br />
 <h2>Editar detalle </h2>
 <h2>Seguimiento # @Html.DisplayFor(modelItem => Model.TrackingId)</h2>
@@ -14,21 +34,12 @@
         <input type="hidden" asp-for="TrackingId" />
         <div asp-validation-summary="ModelOnly"></div>
         <div class="form-group">
-            @*<div class="row">
-                    <div class="col-sm-3">
-                        <label asp-for="TrackingId" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4" style="padding-top:6px">
-                        @Html.DisplayFor(modelItem => Model.TrackingId)
-                    </div>
-                    <span asp-validation-for="TrackingId" class="text-danger"></span>
-                </div>*@
             <div class="row">
                 <div class="col-sm-3">
                     <label asp-for="TrabajoId" class="custom-label"></label>
                 </div>
                 <div class="col-sm-4">
-                    <select asp-for="TrabajoId" class="form-control" asp-items="ViewBag.TrabajoId" onchange="">
+                    <select asp-for="TrabajoId" class="form-control" asp-items="ViewBag.TrabajoId" onchange="GetDefaultJobPrice(this)">
                         <option disabled selected>--Seleccionar--</option>
                     </select>
                 </div>

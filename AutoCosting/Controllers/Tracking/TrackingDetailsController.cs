@@ -225,5 +225,15 @@ namespace AutoCosting.Controllers.Tracking
             return _context.TrackinDetails.Any(e => e.ID == id);
         }
 
+        [HttpPost]
+        public string GetTrabajoInfo(string trabajoID )
+        {
+            var trabajo = this._context.Trabajos.FirstOrDefault(t => t.ID == Convert.ToInt32(trabajoID));
+            if (trabajo != null)
+            {
+                return trabajo.PrecioPromedio.ToString();
+            }
+            return string.Empty;
+        }
     }
 }
