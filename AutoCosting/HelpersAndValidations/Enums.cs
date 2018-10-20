@@ -52,4 +52,10 @@ namespace AutoCosting.HelpersAndValidations
         Credito = 0,
         Contado = 1
     }
+
+    public enum TipoComision : short
+    {
+        Interna = 0,
+        Externa = 1        
+    }
 }
