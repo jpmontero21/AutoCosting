@@ -42,10 +42,11 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
+            [Display(Name = "Correo Electrónico")]
             public string Email { get; set; }
 
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Número de teléfono")]
             public string PhoneNumber { get; set; }
         }
 
@@ -54,7 +55,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No se puede cargar el usuario con el ID '{_userManager.GetUserId(User)}'.");
             }
 
             var userName = await _userManager.GetUserNameAsync(user);
@@ -84,7 +85,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"No se puede cargar el usuario con el ID '{_userManager.GetUserId(User)}'.");
             }
 
             var email = await _userManager.GetEmailAsync(user);
@@ -94,7 +95,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
                 if (!setEmailResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting email for user with ID '{userId}'.");
+                    throw new InvalidOperationException($"Se ha producido un error inesperado al configurar el correo electrónico para el usuario con el ID '{userId}'.");
                 }
             }
 
@@ -105,12 +106,12 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
                 if (!setPhoneResult.Succeeded)
                 {
                     var userId = await _userManager.GetUserIdAsync(user);
-                    throw new InvalidOperationException($"Unexpected error occurred setting phone number for user with ID '{userId}'.");
+                    throw new InvalidOperationException($"Se ha producido un error inesperado al configurar el correo electrónico para el usuario con el ID '{userId}'.");
                 }
             }
 
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Su perfil ha sido actualizado.";
             return RedirectToPage();
         }
 
@@ -124,7 +125,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Se ha producido un error inesperado al configurar el correo electrónico para el usuario con el ID '{_userManager.GetUserId(User)}'.");
             }
 
 
@@ -138,10 +139,10 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Confirmar Correo Electrónico",
+                $"Por favor confirme su cuenta haciendo <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Click aquí</a>.");
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Correo de verificación enviado. Por favor revise su correo.";
             return RedirectToPage();
         }
     }

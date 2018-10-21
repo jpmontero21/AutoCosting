@@ -37,15 +37,17 @@ namespace AutoCosting.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "El Correo Electrónico es requerido.")]
             [EmailAddress]
+            [Display(Name = "Correo Electrónico")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "La Contraseña es requerida.")]
             [DataType(DataType.Password)]
+            [Display(Name = "Contraseña")]
             public string Password { get; set; }
 
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Recordar usuario?")]
             public bool RememberMe { get; set; }
         }
 

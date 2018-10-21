@@ -116,7 +116,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, SD.SalesAgentUser);
                     }
-                    _logger.LogInformation("User created a new account with password.");
+                    _logger.LogInformation("El usuario creó una nueva cuenta con contrseña.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
@@ -125,8 +125,8 @@ namespace AutoCosting.Areas.Identity.Pages.Account
                         values: new { userId = user.Id, code = code },
                         protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    await _emailSender.SendEmailAsync(Input.Email, "Confirmación de correo electrónico",
+                        $"Por favor confirme su cuenta haciendo <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>click aqui</a>.");
                     if (!User.IsInRole(SD.AdminEndUser))
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);

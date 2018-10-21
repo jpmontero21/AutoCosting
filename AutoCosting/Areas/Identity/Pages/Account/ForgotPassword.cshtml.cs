@@ -56,8 +56,8 @@ namespace AutoCosting.Areas.Identity.Pages.Account
 
                 await _emailSender.SendEmailAsync(
                     Input.Email,
-                    "Reset Password",
-                    $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    "Restablecer Contraseña",
+                    $"Por favor restablece tu contraseña <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>haciendo click aqui</a>.");
 
                 return RedirectToPage("./ForgotPasswordConfirmation");
             }
