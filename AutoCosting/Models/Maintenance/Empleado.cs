@@ -16,6 +16,7 @@ namespace AutoCosting.Models.Maintenance
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         [Required(ErrorMessage = "La Cédula es requerida.")]
         public string Cedula { get; set; }
+        [Required(ErrorMessage = "El Nombre es requerido.")]
         public string Nombre { get; set; }
         [Required(ErrorMessage = "El Primer Apellido es requerido.")]
         [Display(Name = "Primer Apellido")]
@@ -35,5 +36,13 @@ namespace AutoCosting.Models.Maintenance
         public DateTime FechaNacimiento { get; set; }
         [Display(Name = "Descripción del Puesto")]
         public string DescripcionPuesto { get; set; }
+        [NotMapped]
+        public string NombreCompleto
+        {
+            get
+            {
+                return string.Format("{0} - {1} {2}", this.Cedula, this.Nombre, this.Apellido1);
+            }
+        }
     }
 }

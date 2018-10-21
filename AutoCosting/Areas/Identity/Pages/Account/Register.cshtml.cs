@@ -13,10 +13,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AutoCosting.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    [AllowAnonymous]//[Authorize]//
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -54,7 +55,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account
             [Display(Name = "Email")]
             public string Email { get; set; }
 
-            [Required (ErrorMessage = "La contraseña es requerida.")]
+            [Required(ErrorMessage = "La contraseña es requerida.")]
             [StringLength(100, ErrorMessage = "La {0} debe tener entre {2} y {1} caracteres.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Contraseña")]
@@ -64,27 +65,30 @@ namespace AutoCosting.Areas.Identity.Pages.Account
             [Display(Name = "Confirmar Contraseña")]
             [Compare("Password", ErrorMessage = "La Contraseña y la confirmación no coinciden.")]
             public string ConfirmPassword { get; set; }
+                        
+            [Display(Name = "Empleado")]
+            public string EmpleadoID { get; set; }
 
-            [Required(ErrorMessage = "El nombre es requerido.")]
-            [Display(Name = "Nombre")]
-            public string FirstName { get; set; }
+            [Display(Name = "Rol")]
+            [Required(ErrorMessage = "El Rol es requerido.")]
+            public string RolId { get; set; }
 
-            [Required(ErrorMessage = "El apellido es requerido.")]
-            [Display(Name = "Apellidos")]
-            public string LastName { get; set; }
-
-            [Display(Name = "Teléfono")]
-            [DataType(DataType.PhoneNumber)]
-            [RegularExpression(@"^(\+\s?)?((?<!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$", ErrorMessage = "Número de teléfono Invalido.")]
-            public string PhoneNumber { get; set; }
-
-            [Display(Name = "Administrador")]
-            public bool IsAdmin { get; set; }
         }
 
         public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
+            IEnumerable<string> rolesList;
+            if (this._db.Users.Count() == 0)
+            {
+                rolesList = new List<string>() { SD.AdminEndUser };
+            }
+            else
+            {
+                rolesList = new List<string>() {  SD.SalesAgentUser, SD.AdminEndUser };
+            }        
+            ViewData["Empleado"] = new SelectList(_db.Empleados.Where(e => !this._db.Users.Any(u => u.EmpleadoID == e.Cedula)), "Cedula", "NombreCompleto");
+            ViewData["Roles"] = new SelectList(rolesList);
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -92,8 +96,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email
-                , FirstName = Input.FirstName, LastName = Input.LastName, PhoneNumber = Input.PhoneNumber };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, EmpleadoID = Input.EmpleadoID };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -105,7 +108,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account
                     {
                         await _roleManager.CreateAsync(new IdentityRole(SD.AdminEndUser));
                     }
-                    if (Input.IsAdmin || this._db.Users.Count() == 1)
+                    if (Input.RolId.Equals(SD.AdminEndUser) || this._db.Users.Count() == 1)
                     {
                         await _userManager.AddToRoleAsync(user, SD.AdminEndUser);
                     }
@@ -124,8 +127,12 @@ namespace AutoCosting.Areas.Identity.Pages.Account
 
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
-
-                    await _signInManager.SignInAsync(user, isPersistent: false);
+                    if (!User.IsInRole(SD.AdminEndUser))
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        return LocalRedirect(returnUrl);
+                    }
+                    
                     return LocalRedirect(returnUrl);
                 }
                 foreach (var error in result.Errors)

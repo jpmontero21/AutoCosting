@@ -1,7 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    
+    @using AutoCosting.HelpersAndValidations
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - AutoCosting</title>
@@ -34,17 +34,32 @@
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    <li><a asp-area="" asp-controller="Empresa" asp-action="Index">Empresa</a></li>
-                    <li><a asp-area="" asp-controller="Sede" asp-action="Index">Sede</a></li>
-                    <li><a asp-area="" asp-controller="Proveedores" asp-action="Index">Proveedor</a></li>
-                    <li><a asp-area="" asp-controller="Cliente" asp-action="Index">Cliente</a></li>
-                    <li><a asp-area="" asp-controller="Trabajo" asp-action="Index">Trabajo</a></li>
-                    <li><a asp-area="" asp-controller="Empleado" asp-action="Index">Empleados</a></li>
-                    <li><a asp-area="" asp-controller="Vehiculo" asp-action="Index">Vehiculos</a></li>
+                    <li>
+                        <div class="dropdown">
+                            <button class="btn btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Mantenimientos
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                                <a asp-area="" asp-controller="Empresa" asp-action="Index" class="dropdown-item">Empresa</a><br />
+                                <a asp-area="" asp-controller="Sede" asp-action="Index" class="dropdown-item">Sede</a><br />
+                                <a asp-area="" asp-controller="Proveedores" asp-action="Index" class="dropdown-item">Proveedor</a><br />
+                                <a asp-area="" asp-controller="Cliente" asp-action="Index" class="dropdown-item">Cliente</a><br />
+                                <a asp-area="" asp-controller="Trabajo" asp-action="Index" class="dropdown-item">Trabajo</a><br />
+                                <a asp-area="" asp-controller="Empleado" asp-action="Index" class="dropdown-item">Empleados</a><br />
+                                <a asp-area="" asp-controller="Vehiculo" asp-action="Index" class="dropdown-item">Vehiculos</a><br />
+                            </div>
+                        </div>
+                    </li>
+
                     <li><a asp-area="" asp-controller="TrackingHeaders" asp-action="Index">Tracking</a></li>
+                    @if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        <li><a asp-area="Identity" asp-page="/Account/Register">Registrar Usuario</a></li>
+                    }
                 </ul>
                 <partial name="_LoginPartial" />
             </div>
+
         </div>
     </nav>
 
