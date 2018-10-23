@@ -1,3 +1,4 @@
 ﻿@{
-    Layout = "_Main";
+
+    Layout = Context.Request.Headers["x-requested-with"] == "XMLHttpRequest" ? null : "_Main";
 }
