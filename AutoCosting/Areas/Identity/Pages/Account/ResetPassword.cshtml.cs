@@ -31,7 +31,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account
             [Display(Name = "Correo Electrónico")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "La contraseña es requerida.")]
             [Display(Name = "Contraseña")]
             [StringLength(100, ErrorMessage = "La {0} debe ser al menos {2} y un maxímo de {1} caracteres de longitud.", MinimumLength = 6)]
             [DataType(DataType.Password)]

@@ -93,7 +93,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Usuario y contraseña no coinciden");
                     return Page();
                 }
             }
