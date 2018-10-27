@@ -18,7 +18,7 @@
                     <label asp-for="VIN" class="custom-label"></label>
                 </div>
                 <div class="col-sm-4">
-                    <input asp-for="VIN"  disabled  class="form-control">
+                    <input asp-for="VIN" disabled class="form-control">
                 </div>
                 <span asp-validation-for="VIN" class="text-danger"></span>
             </div>
@@ -27,7 +27,9 @@
                     <label asp-for="Marca" class="custom-label"></label>
                 </div>
                 <div class="col-sm-4">
-                    <input asp-for="Marca" class="form-control" />
+                    <select asp-for="Marca" class="form-control" asp-items="ViewBag.Brands">
+                        <option disabled selected>--Seleccionar--</option>
+                    </select>
                 </div>
                 <span asp-validation-for="Marca" class="text-danger"></span>
             </div>

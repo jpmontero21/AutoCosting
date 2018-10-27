@@ -47,7 +47,8 @@ namespace AutoCosting.Controllers
         public IActionResult Create()
         {
             Vehiculo vehiculo = new Vehiculo();
-            vehiculo.FechaIngreso = DateTime.Today;
+            vehiculo.FechaIngreso = DateTime.Today;            
+            ViewData["Brands"] = new SelectList(Brands);
             return View(vehiculo);
         }
 
@@ -80,6 +81,7 @@ namespace AutoCosting.Controllers
             {
                 return NotFound();
             }
+            ViewData["Brands"] = new SelectList(Brands);
             return View(vehiculo);
         }
 
@@ -150,6 +152,55 @@ namespace AutoCosting.Controllers
         private bool VehiculoExists(string id)
         {
             return _context.Vehiculos.Any(e => e.VIN == id);
+        }
+
+        public List<string> Brands
+        {
+            get
+            {
+                List<string> brands = new List<string>();
+                brands.Add("Alfa Romeo");
+                brands.Add("Audi");
+                brands.Add("BMW");
+                brands.Add("BYD");
+                brands.Add("Changan");
+                brands.Add("Chevrolet");
+                brands.Add("Chrysler");
+                brands.Add("Citroen");
+                brands.Add("Dodge");
+                brands.Add("DS");
+                brands.Add("Fiat");
+                brands.Add("Ford");
+                brands.Add("Fuso");
+                brands.Add("Geely");
+                brands.Add("Great Wall");
+                brands.Add("Hino");
+                brands.Add("Honda");
+                brands.Add("Hyundai");
+                brands.Add("Isuzu");
+                brands.Add("JAC");
+                brands.Add("Jaguar");
+                brands.Add("Jeep");
+                brands.Add("Kia");
+                brands.Add("Land Rover");
+                brands.Add("Lexus");
+                brands.Add("Mazda");
+                brands.Add("Mercedes Benz");
+                brands.Add("MG");
+                brands.Add("Mitsubishi");
+                brands.Add("Nissan");
+                brands.Add("Porsche");
+                brands.Add("RAM");
+                brands.Add("Renault");
+                brands.Add("Ssang Yong");
+                brands.Add("Subaru");
+                brands.Add("Suzuki");
+                brands.Add("Toyota");
+                brands.Add("Volkswagen");
+                brands.Add("Volvo");
+                brands.Add("ZNA (DongFeng)");
+                return brands;
+            }
         }
     }
 }

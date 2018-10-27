@@ -24,8 +24,10 @@
                 <div class="col-sm-3">
                     <label asp-for="Marca" class="custom-label"></label>
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="Marca" class="form-control" />
+                <div class="col-sm-4">                    
+                    <select asp-for="Marca" class="form-control" asp-items="ViewBag.Brands">
+                        <option disabled selected>--Seleccionar--</option>
+                    </select>
                 </div>
                 <span asp-validation-for="Marca" class="text-danger"></span>
             </div>
