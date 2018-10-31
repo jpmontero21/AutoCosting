@@ -6,9 +6,11 @@ using AutoCosting.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using AutoCosting.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoCosting.Controllers.CalcFinanciamiento
 {
+    [Authorize]
     public class CalcFinanciamientoController : Controller
     {
         private readonly ApplicationDbContext _context;

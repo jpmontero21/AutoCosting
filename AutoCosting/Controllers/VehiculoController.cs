@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Maintenance;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoCosting.Controllers
 {
+    [Authorize]
     public class VehiculoController : Controller
     {
         private readonly ApplicationDbContext _context;

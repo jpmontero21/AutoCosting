@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Tracking;
 using AutoCosting.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
+using AutoCosting.HelpersAndValidations;
 
 namespace AutoCosting.Controllers.Tracking
 {
+    [Authorize(Roles = SD.AdminEndUser)]
     public class TrackingHeadersController : Controller
     {
         private readonly ApplicationDbContext _context;

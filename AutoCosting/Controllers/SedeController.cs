@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Maintenance;
 using AutoCosting.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
+using AutoCosting.HelpersAndValidations;
 
 namespace AutoCosting.Controllers
 {
+    [Authorize(Roles = SD.AdminEndUser)]
     public class SedeController : Controller
     {
         private readonly ApplicationDbContext _context;
