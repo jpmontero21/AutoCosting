@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Maintenance;
+using AutoCosting.HelpersAndValidations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoCosting.Controllers
 {
+    [Authorize(Roles = SD.AdminEndUser)]
     public class EmpleadoController : Controller
     {
         private readonly ApplicationDbContext _context;
