@@ -116,7 +116,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account
                     {
                         await _userManager.AddToRoleAsync(user, SD.SalesAgentUser);
                     }
-                    _logger.LogInformation("El usuario creó una nueva cuenta con contrseña.");
+                    _logger.LogInformation("El usuario creó una nueva cuenta con contraseña.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     var callbackUrl = Url.Page(
@@ -142,6 +142,7 @@ namespace AutoCosting.Areas.Identity.Pages.Account
             }
 
             // If we got this far, something failed, redisplay form
+            OnGet();
             return Page();
         }
     }
