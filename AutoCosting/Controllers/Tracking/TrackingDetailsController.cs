@@ -47,7 +47,7 @@ namespace AutoCosting.Controllers.Tracking
             {
                 return NotFound();
             }
-            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto");
+            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreEmpresa");
             ViewData["TrabajoId"] = new SelectList(_context.Trabajos, "ID", "Descripcion");
             return View(trackingDetail);
         }
@@ -61,7 +61,7 @@ namespace AutoCosting.Controllers.Tracking
                 TrackingId = trackingId
             };
             ViewData["TrackingId"] = new SelectList(_context.TrackingHeaders, "TrackingID", "TrackingID");
-            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto");
+            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreEmpresa");
             ViewData["TrabajoId"] = new SelectList(_context.Trabajos, "ID", "Descripcion");
             return View(detail);
         }
@@ -89,7 +89,7 @@ namespace AutoCosting.Controllers.Tracking
                 return RedirectToAction(nameof(Edit), "TrackingHeaders", new { @id = trackingDetail.TrackingId });
             }
             ViewData["TrackingId"] = new SelectList(_context.TrackingHeaders, "TrackingID", "TrackingID", trackingDetail.TrackingId);
-            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto", trackingDetail.ProveedorId);
+            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreEmpresa", trackingDetail.ProveedorId);
             ViewData["TrabajoId"] = new SelectList(_context.Trabajos, "ID", "Descripcion", trackingDetail.TrabajoId);
             return View(trackingDetail);
         }
@@ -108,7 +108,7 @@ namespace AutoCosting.Controllers.Tracking
                 return NotFound();
             }
             ViewData["TrackingId"] = new SelectList(_context.TrackingHeaders, "TrackingID", "TrackingID", trackingDetail.TrackingId);
-            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto", trackingDetail.ProveedorId);
+            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreEmpresa", trackingDetail.ProveedorId);
             ViewData["TrabajoId"] = new SelectList(_context.Trabajos, "ID", "Descripcion", trackingDetail.TrabajoId);
             return View(trackingDetail);
         }
@@ -168,7 +168,7 @@ namespace AutoCosting.Controllers.Tracking
                 return RedirectToAction(nameof(Edit), "TrackingHeaders", new { @id = trackingDetail.TrackingId });
             }
             ViewData["TrackingId"] = new SelectList(_context.TrackingHeaders, "TrackingID", "TrackingID", trackingDetail.TrackingId);
-            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto", trackingDetail.ProveedorId);
+            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreEmpresa", trackingDetail.ProveedorId);
             ViewData["TrabajoId"] = new SelectList(_context.Trabajos, "ID", "Descripcion", trackingDetail.TrabajoId);
             return View(trackingDetail);
         }
@@ -191,7 +191,7 @@ namespace AutoCosting.Controllers.Tracking
                 return NotFound();
             }
             ViewData["TrackingId"] = new SelectList(_context.TrackingHeaders, "TrackingID", "TrackingID", trackingDetail.TrackingId);
-            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreContacto", trackingDetail.ProveedorId);
+            ViewData["ProveedorId"] = new SelectList(_context.Proveedores, "ID", "NombreEmpresa", trackingDetail.ProveedorId);
             ViewData["TrabajoId"] = new SelectList(_context.Trabajos, "ID", "Descripcion", trackingDetail.TrabajoId);
             return View(trackingDetail);
         }
