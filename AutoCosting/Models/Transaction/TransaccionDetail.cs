@@ -18,9 +18,10 @@ namespace AutoCosting.Models.Transaction
 
         [Display(Name = "Transacción")]
         [ForeignKey("TransID")]
-        TransaccionHeader Parent { get; set; }
+        public TransaccionHeader Parent { get; set; }
 
         [Required(ErrorMessage = "El Vehículo es requerido.")]
+        [Display(Name = "VIN - Vehículo")]
         public string VINVehiculo { get; set; }
 
         [Display(Name = "Vehículo")]
@@ -28,7 +29,8 @@ namespace AutoCosting.Models.Transaction
         public Vehiculo Vehiculo { get; set; }
         [NotMapped]//read only solo para referencia
         public double PrecioMinimo { get; set; }
-
+        [NotMapped]//read only solo para referencia
+        public double PrecioRecomendado { get; set; }
         [Required(ErrorMessage = "El precio acordado es requerido.")]
         [Display(Name = "Precio Acordado")]
         public double? PrecioAcordado { get; set; }

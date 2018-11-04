@@ -24,7 +24,7 @@ namespace AutoCosting.Controllers.Transaccion
         // GET: TransaccionHeader
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede);
+            var applicationDbContext = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede).Where(t=>t.Eliminada == false);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -208,8 +208,11 @@ namespace AutoCosting.Controllers.Transaccion
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var transaccionHeader = await _context.TransaccionHeaders.FindAsync(id);
-            _context.TransaccionHeaders.Remove(transaccionHeader);
+            //_context.TransaccionHeaders.Remove(transaccionHeader);
+            transaccionHeader.Eliminada = true;
+            _context.Update(transaccionHeader);
             await _context.SaveChangesAsync();
+            //await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 

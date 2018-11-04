@@ -16,7 +16,7 @@
                 </div>
                 <div class="col-sm-4">
                     <select asp-for="Transaccion.VendedorID" class="form-control" disabled asp-items="ViewBag.VendedorID"></select>
-                </div>                
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-3">
@@ -26,7 +26,7 @@
                     <select asp-for="Transaccion.ClienteID" class="form-control" disabled asp-items="ViewBag.ClienteID">
                         <option disabled selected>--Seleccionar--</option>
                     </select>
-                </div>                
+                </div>
             </div>
             <div class="row hidden">
                 <div class="col-sm-3">
@@ -34,7 +34,7 @@
                 </div>
                 <div class="col-sm-4">
                     <select asp-for="Transaccion.EmpresaID" class="form-control" disabled asp-items="ViewBag.EmpresaID"></select>
-                </div>                
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-3">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="col-sm-4">
                     <select asp-for="Transaccion.SedeID" class="form-control" disabled asp-items="ViewBag.SedeID"></select>
-                </div>                
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-3">
@@ -50,7 +50,7 @@
                 </div>
                 <div class="col-sm-4">
                     <select asp-for="Transaccion.TipoPago" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoPago>()"></select>
-                </div>                
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-3">
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-sm-4">
                     <select asp-for="Transaccion.TipoTransaccion" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoTransaccion>()"></select>
-                </div>                
+                </div>
             </div>
             <div class="row">
                 <div class="col-sm-3">
@@ -66,9 +66,18 @@
                 </div>
                 <div class="col-sm-4">
                     <input asp-for="Transaccion.Fecha" readonly="readonly" class="form-control" type="date" />
-                </div>                
+                </div>
             </div>
-            <div class="form-group">                
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="Transaccion.Total" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4" style="padding-top:6px">
+                    @Html.DisplayFor(modelItem => Model.Transaccion.Total)
+                </div>
+                <span asp-validation-for="Transaccion.Total" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <a asp-action="Edit" asp-route-id="@Model.Transaccion.TransID" class="btn btn-sm btn-primary">Editar</a>
                 <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
             </div>

@@ -4,27 +4,77 @@
     ViewData["Title"] = "Details";
 }
 
-<h2>Details</h2>
+<h2>Detalles</h2>
+<h2>Número de Transacción @Html.DisplayFor(modelItem => Model.TransID)</h2>
+<hr />
 
-<div>
-    <h4>TransaccionDetail</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Vehiculo)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Vehiculo.VIN)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.PrecioAcordado)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.PrecioAcordado)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+    <div class="form-group">
+        <input type="hidden" asp-for="TransID" />
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="VINVehiculo" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <select asp-for="VINVehiculo" class="form-control" asp-items="ViewBag.VINVehiculo" disabled >
+                        <option disabled selected>--Seleccionar--</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="PrecioAcordado" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="PrecioAcordado"  readonly="readonly" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="PrecioMinimo" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="PrecioMinimo" readonly="readonly" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="PrecioRecomendado" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <input asp-for="PrecioRecomendado" readonly="readonly" class="form-control" />
+                </div>                
+            </div>
+            <div class="form-group">
+                <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-sm btn-primary">Editar</a>
+                <a asp-action="Edit" asp-controller="TransaccionHeader" asp-route-id="@Model.TransID" class="btn btn-sm btn-success">Regresar a la Transacción</a>
+            </div>
+        </div>
+    </div>
+
+@*<h2>Details</h2>
+
+    <div>
+        <h4>TransaccionDetail</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Vehiculo)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Vehiculo.VIN)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.PrecioAcordado)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.PrecioAcordado)
+            </dd>
+        </dl>
+    </div>
+    <div>
+        <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+        <a asp-action="Index">Back to List</a>
+    </div>*@

@@ -35,5 +35,6 @@ namespace AutoCosting.Models.Tracking
         public string Descripcion { get; set; }
         [Display(Name = "Descripción Adicional")]
         public string AddDescripcion { get; set; }
+        
     }
 }

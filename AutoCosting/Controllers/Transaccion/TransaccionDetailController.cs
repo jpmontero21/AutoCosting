@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Transaction;
+using System.ComponentModel.DataAnnotations;
 
 namespace AutoCosting.Controllers.Transaccion
 {
@@ -29,6 +30,7 @@ namespace AutoCosting.Controllers.Transaccion
         // GET: TransaccionDetail/Details/5
         public async Task<IActionResult> Details(int? id)
         {
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion");
             if (id == null)
             {
                 return NotFound();
@@ -41,15 +43,26 @@ namespace AutoCosting.Controllers.Transaccion
             {
                 return NotFound();
             }
+            var vehiculo = await _context.Vehiculos.FindAsync(transaccionDetail.VINVehiculo);
+            if (vehiculo != null)
+            {
+                transaccionDetail.PrecioMinimo = vehiculo.PrecioMinimo;
+                transaccionDetail.PrecioRecomendado = vehiculo.PrecioRecomendado;
+            }
 
             return View(transaccionDetail);
         }
 
         // GET: TransaccionDetail/Create
-        public IActionResult Create()
+        public IActionResult Create(int transID)
         {
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN");
-            return View();
+            TransaccionDetail detail = new TransaccionDetail()
+            {
+                Parent = this._context.TransaccionHeaders.FirstOrDefault(h => h.TransID == transID),
+                TransID = transID
+            };
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion");
+            return View(detail);
         }
 
         // POST: TransaccionDetail/Create
@@ -57,15 +70,20 @@ namespace AutoCosting.Controllers.Transaccion
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TransID,VINVehiculo,PrecioAcordado")] TransaccionDetail transaccionDetail)
+        public async Task<IActionResult> Create(/*[Bind("ID,TransID,VINVehiculo,PrecioAcordado")]*/ TransaccionDetail transaccionDetail)
         {
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", transaccionDetail.VINVehiculo);
             if (ModelState.IsValid)
             {
+                if (transaccionDetail.PrecioAcordado < transaccionDetail.PrecioMinimo)
+                {
+                    ModelState.AddModelError("PrecioAcordado", "El precio acordado no puede ser menor que el precio mínimo.");
+                    return View(transaccionDetail);
+                }
                 _context.Add(transaccionDetail);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN", transaccionDetail.VINVehiculo);
+                return RedirectToAction(nameof(Edit), "TransaccionHeader", new { @id = transaccionDetail.TransID});
+            }            
             return View(transaccionDetail);
         }
 
@@ -82,7 +100,13 @@ namespace AutoCosting.Controllers.Transaccion
             {
                 return NotFound();
             }
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN", transaccionDetail.VINVehiculo);
+            var vehiculo = await _context.Vehiculos.FindAsync(transaccionDetail.VINVehiculo);
+            if (vehiculo != null)
+            {
+                transaccionDetail.PrecioMinimo = vehiculo.PrecioMinimo;
+                transaccionDetail.PrecioRecomendado = vehiculo.PrecioRecomendado;
+            }
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", transaccionDetail.VINVehiculo);
             return View(transaccionDetail);
         }
 
@@ -91,8 +115,9 @@ namespace AutoCosting.Controllers.Transaccion
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TransID,VINVehiculo,PrecioAcordado")] TransaccionDetail transaccionDetail)
+        public async Task<IActionResult> Edit(int id, /*[Bind("ID,TransID,VINVehiculo,PrecioAcordado")]*/ TransaccionDetail transaccionDetail)
         {
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", transaccionDetail.VINVehiculo);
             if (id != transaccionDetail.ID)
             {
                 return NotFound();
@@ -102,6 +127,11 @@ namespace AutoCosting.Controllers.Transaccion
             {
                 try
                 {
+                    if (transaccionDetail.PrecioAcordado < transaccionDetail.PrecioMinimo)
+                    {
+                        ModelState.AddModelError("PrecioAcordado", "El precio acordado no puede ser menor que el precio mínimo.");
+                        return View(transaccionDetail);
+                    }
                     _context.Update(transaccionDetail);
                     await _context.SaveChangesAsync();
                 }
@@ -116,15 +146,16 @@ namespace AutoCosting.Controllers.Transaccion
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), "TransaccionHeader", new { @id = transaccionDetail.TransID });
+                //return RedirectToAction(nameof(Index));
             }
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN", transaccionDetail.VINVehiculo);
+            
             return View(transaccionDetail);
         }
 
         // GET: TransaccionDetail/Delete/5
         public async Task<IActionResult> Delete(int? id)
-        {
+        {            
             if (id == null)
             {
                 return NotFound();
@@ -136,6 +167,13 @@ namespace AutoCosting.Controllers.Transaccion
             if (transaccionDetail == null)
             {
                 return NotFound();
+            }
+            var vehiculo = await _context.Vehiculos.FindAsync(transaccionDetail.VINVehiculo);
+            if (vehiculo != null)
+            {
+                transaccionDetail.PrecioMinimo = vehiculo.PrecioMinimo;
+                transaccionDetail.PrecioRecomendado = vehiculo.PrecioRecomendado;
+                transaccionDetail.Vehiculo = vehiculo;
             }
 
             return View(transaccionDetail);
@@ -149,12 +187,33 @@ namespace AutoCosting.Controllers.Transaccion
             var transaccionDetail = await _context.TransaccionDetails.FindAsync(id);
             _context.TransaccionDetails.Remove(transaccionDetail);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(Edit), "TransaccionHeader", new { @id = transaccionDetail.TransID });
         }
 
         private bool TransaccionDetailExists(int id)
         {
             return _context.TransaccionDetails.Any(e => e.ID == id);
+        }
+
+        [HttpPost]
+        public string GetMinPrice(string VIN)
+        {
+            var vehiculo = this._context.Vehiculos.FirstOrDefault(v => v.VIN == VIN);
+            if (vehiculo != null)
+            {
+                return vehiculo.PrecioMinimo.ToString();
+            }
+            return string.Empty;
+        }
+        [HttpPost]
+        public string GetRecommendedPrice(string VIN)
+        {
+            var vehiculo = this._context.Vehiculos.FirstOrDefault(v => v.VIN == VIN);
+            if (vehiculo != null)
+            {
+                return vehiculo.PrecioRecomendado.ToString();
+            }
+            return string.Empty;
         }
     }
 }

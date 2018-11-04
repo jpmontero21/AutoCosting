@@ -77,6 +77,15 @@
                 </div>
                 <span asp-validation-for="Transaccion.Fecha" class="text-danger"></span>
             </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="Transaccion.Total" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4" style="padding-top:6px">
+                    @Html.DisplayFor(modelItem => Model.Transaccion.Total)
+                </div>                
+                <span asp-validation-for="Transaccion.Total" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
                 <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
@@ -87,12 +96,12 @@
 <hr />
 <h3>Lineas de Detalle</h3>
 <hr />
-<a asp-action="Create" class="btn btn-primary" asp-controller="TransaccionDetail" asp-route-trackingId="@Model.Transaccion.TransID">Agregar nuevo vehículo</a>
+<a asp-action="Create" class="btn btn-primary" asp-controller="TransaccionDetail" asp-route-transID="@Model.Transaccion.TransID">Agregar nuevo vehículo</a>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo)
+                @Html.DisplayNameFor(model => model.TransaccionDetail.VINVehiculo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Marca)
