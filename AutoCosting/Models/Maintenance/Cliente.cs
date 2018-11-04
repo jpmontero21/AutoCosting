@@ -28,5 +28,18 @@ namespace AutoCosting.Models.Maintenance
         [EmailAddress(ErrorMessage = "La dirección de email no es válida.")]
         public string Email { get; set; }
         public string Notas { get; set; }
+
+        [Display (Name = "Cédula")]        
+        [Required(ErrorMessage = "La Cédula es Requerida.")]
+        public string Cedula { get; set; }
+
+        [NotMapped]
+        public string Informacion
+        {
+            get
+            {
+                return $"{Cedula} - {Nombre} {Apellido1}";
+            }
+        }
     }
 }

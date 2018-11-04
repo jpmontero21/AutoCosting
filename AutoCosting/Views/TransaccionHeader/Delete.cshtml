@@ -1,0 +1,135 @@
+﻿@model AutoCosting.Models.ViewModel.TransaccionViewModel
+@using AutoCosting.HelpersAndValidations
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<h2>Eliminar Transacción</h2>
+<hr />
+
+<h3>Está seguro que desea eliminar esta Transacción?</h3>
+<h5>Eliminar esta transacción habilitará la venta de los vehículos relacionados.</h5>
+<hr />
+
+<div class="form-group">
+    <div class="form-group">
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Transaccion.VendedorID" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <select asp-for="Transaccion.VendedorID" class="form-control" disabled asp-items="ViewBag.VendedorID"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Transaccion.ClienteID" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <select asp-for="Transaccion.ClienteID" class="form-control" disabled asp-items="ViewBag.ClienteID">
+                    <option disabled selected>--Seleccionar--</option>
+                </select>
+            </div>
+        </div>
+        <div class="row hidden">
+            <div class="col-sm-3">
+                <label asp-for="Transaccion.EmpresaID" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <select asp-for="Transaccion.EmpresaID" class="form-control" disabled asp-items="ViewBag.EmpresaID"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Transaccion.SedeID" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <select asp-for="Transaccion.SedeID" class="form-control" disabled asp-items="ViewBag.SedeID"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Transaccion.TipoPago" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <select asp-for="Transaccion.TipoPago" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoPago>()"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Transaccion.TipoTransaccion" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <select asp-for="Transaccion.TipoTransaccion" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoTransaccion>()"></select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label asp-for="Transaccion.Fecha" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="Transaccion.Fecha" readonly="readonly" class="form-control" type="date" />
+            </div>
+        </div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Transaccion.TransID" />
+            <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
+            <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+        </form>
+    </div>
+</div>
+
+<hr />
+<h3>Lineas de Detalle</h3>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Modelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Anno)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TransaccionDetail.PrecioAcordado)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TransaccionDetalles)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VINVehiculo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Modelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Anno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioAcordado)
+                </td>
+                <td>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<AutoCosting.Models.Transaction.TransaccionHeader>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Transacciones</h2>
+<hr />
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear nueva</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TransID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Cliente)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Empleado)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fecha)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoPago)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TipoTransaccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Sede)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Saldo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TransID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cliente.Informacion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Empleado.NombreCompleto)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoPago)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoTransaccion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Sede.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Saldo)
+            </td>
+            <td>
+                @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.TransID })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

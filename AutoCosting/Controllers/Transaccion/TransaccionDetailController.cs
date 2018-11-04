@@ -6,28 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
-using AutoCosting.Models.Maintenance;
-using Microsoft.AspNetCore.Authorization;
+using AutoCosting.Models.Transaction;
 
-namespace AutoCosting.Controllers
+namespace AutoCosting.Controllers.Transaccion
 {
-    [Authorize]
-    public class ClienteController : Controller
+    public class TransaccionDetailController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ClienteController(ApplicationDbContext context)
+        public TransaccionDetailController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Cliente
+        // GET: TransaccionDetail
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clientes.ToListAsync());
+            var applicationDbContext = _context.TransaccionDetails.Include(t => t.Vehiculo);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Cliente/Details/5
+        // GET: TransaccionDetail/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,44 +34,42 @@ namespace AutoCosting.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Clientes
+            var transaccionDetail = await _context.TransaccionDetails
+                .Include(t => t.Vehiculo)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (cliente == null)
+            if (transaccionDetail == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(transaccionDetail);
         }
 
-        // GET: Cliente/Create
+        // GET: TransaccionDetail/Create
         public IActionResult Create()
         {
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN");
             return View();
         }
 
-        // POST: Cliente/Create
+        // POST: TransaccionDetail/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(/*[Bind("ID,Nombre,Apellido1,Apellido2,Direccion,Telefono,Email,Notas")] */Cliente cliente)
+        public async Task<IActionResult> Create([Bind("ID,TransID,VINVehiculo,PrecioAcordado")] TransaccionDetail transaccionDetail)
         {
             if (ModelState.IsValid)
             {
-                if (_context.Clientes.AsNoTracking().FirstOrDefault(c=> c.Cedula == cliente.Cedula) != null)
-                {
-                    ModelState.AddModelError("Cedula", "Ya existe un cliente con la cedula ingresada.");
-                    return View(cliente);
-                }
-                _context.Add(cliente);
+                _context.Add(transaccionDetail);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN", transaccionDetail.VINVehiculo);
+            return View(transaccionDetail);
         }
 
-        // GET: Cliente/Edit/5
+        // GET: TransaccionDetail/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,22 +77,23 @@ namespace AutoCosting.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Clientes.FindAsync(id);
-            if (cliente == null)
+            var transaccionDetail = await _context.TransaccionDetails.FindAsync(id);
+            if (transaccionDetail == null)
             {
                 return NotFound();
             }
-            return View(cliente);
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN", transaccionDetail.VINVehiculo);
+            return View(transaccionDetail);
         }
 
-        // POST: Cliente/Edit/5
+        // POST: TransaccionDetail/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, /*[Bind("ID,Nombre,Apellido1,Apellido2,Direccion,Telefono,Email,Notas")]*/ Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,TransID,VINVehiculo,PrecioAcordado")] TransaccionDetail transaccionDetail)
         {
-            if (id != cliente.ID)
+            if (id != transaccionDetail.ID)
             {
                 return NotFound();
             }
@@ -104,12 +102,12 @@ namespace AutoCosting.Controllers
             {
                 try
                 {
-                    _context.Update(cliente);
+                    _context.Update(transaccionDetail);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteExists(cliente.ID))
+                    if (!TransaccionDetailExists(transaccionDetail.ID))
                     {
                         return NotFound();
                     }
@@ -120,10 +118,11 @@ namespace AutoCosting.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "VIN", transaccionDetail.VINVehiculo);
+            return View(transaccionDetail);
         }
 
-        // GET: Cliente/Delete/5
+        // GET: TransaccionDetail/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -131,30 +130,31 @@ namespace AutoCosting.Controllers
                 return NotFound();
             }
 
-            var cliente = await _context.Clientes
+            var transaccionDetail = await _context.TransaccionDetails
+                .Include(t => t.Vehiculo)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (cliente == null)
+            if (transaccionDetail == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(transaccionDetail);
         }
 
-        // POST: Cliente/Delete/5
+        // POST: TransaccionDetail/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var cliente = await _context.Clientes.FindAsync(id);
-            _context.Clientes.Remove(cliente);
+            var transaccionDetail = await _context.TransaccionDetails.FindAsync(id);
+            _context.TransaccionDetails.Remove(transaccionDetail);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClienteExists(int id)
+        private bool TransaccionDetailExists(int id)
         {
-            return _context.Clientes.Any(e => e.ID == id);
+            return _context.TransaccionDetails.Any(e => e.ID == id);
         }
     }
 }

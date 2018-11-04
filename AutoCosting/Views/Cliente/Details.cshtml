@@ -11,10 +11,18 @@
     <div class="form-group">
         <div class="row">
             <div class="col-sm-3">
+                <label asp-for="Cedula" class="custom-label"></label>
+            </div>
+            <div class="col-sm-4">
+                <input asp-for="Cedula" readonly="readonly" class="form-control" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
                 <label asp-for="Nombre" class="custom-label"></label>
             </div>
             <div class="col-sm-4">
-                <input asp-for="Nombre" disabled class="form-control" />
+                <input asp-for="Nombre" readonly="readonly" class="form-control" />
             </div>
         </div>
         <div class="row">
@@ -22,7 +30,7 @@
                 <label asp-for="Apellido1" class="custom-label"></label>
             </div>
             <div class="col-sm-4">
-                <input asp-for="Apellido1" disabled class="form-control" />
+                <input asp-for="Apellido1" readonly="readonly" class="form-control" />
             </div>
         </div>
         <div class="row">
@@ -30,7 +38,7 @@
                 <label asp-for="Apellido2" class="custom-label"></label>
             </div>
             <div class="col-sm-4">
-                <input asp-for="Apellido2" disabled class="form-control" />
+                <input asp-for="Apellido2" readonly="readonly" class="form-control" />
             </div>
         </div>
         <div class="row">
@@ -38,7 +46,7 @@
                 <label asp-for="Direccion" class="custom-label"></label>
             </div>
             <div class="col-sm-4">
-                <input asp-for="Direccion" disabled class="form-control" />
+                <input asp-for="Direccion" readonly="readonly" class="form-control" />
             </div>
         </div>
         <div class="row">
@@ -46,7 +54,7 @@
                 <label asp-for="Telefono" class="custom-label"></label>
             </div>
             <div class="col-sm-4">
-                <input asp-for="Telefono" disabled class="form-control" data-mask="9999-9999" />
+                <input asp-for="Telefono" readonly="readonly" class="form-control" data-mask="9999-9999" />
             </div>
         </div>
         <div class="row">
@@ -54,7 +62,7 @@
                 <label asp-for="Email" class="custom-label"></label>
             </div>
             <div class="col-sm-4">
-                <input asp-for="Email" disabled class="form-control" />
+                <input asp-for="Email" readonly="readonly" class="form-control" />
             </div>
         </div>
         <div class="row">
@@ -62,7 +70,7 @@
                 <label asp-for="Notas" class="custom-label"></label>
             </div>
             <div class="col-sm-4">
-                <textarea asp-for="Notas" disabled class="form-control"></textarea>
+                <textarea asp-for="Notas" readonly="readonly" class="form-control"></textarea>
             </div>
         </div>
         <div class="form-group">
