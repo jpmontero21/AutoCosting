@@ -9,7 +9,6 @@ namespace AutoCosting.Models.Calc
 {
     public class CalcFinanciamiento
     {
-        [Required(ErrorMessage = "El vehículo es requerido.")]
         public string Vehiculo { get; set; }
         [Required(ErrorMessage = "El precio es requerido.")]
         public double? Precio { get; set; }
@@ -17,8 +16,9 @@ namespace AutoCosting.Models.Calc
         [Required(ErrorMessage = "El porcentaje de interés es requerido.")]
         public double? Interes { get; set; }
         [Required(ErrorMessage = "La cantidad de cuotas es requerida.")]
+        [Display(Name = "Cantidad de Cuotas")]
         public int? NumeroCuotas { get; set; }
-        [Display(Name = "Tarifa Adicional.")]
+        [Display(Name = "Tarifa Adicional")]
         public double? TarifaAddicional { get; set; }        
         public double? Prima { get; set; }
         public double? Descuento { get; set; }
