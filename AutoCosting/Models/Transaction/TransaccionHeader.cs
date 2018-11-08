@@ -35,7 +35,7 @@ namespace AutoCosting.Models.Transaction
         public int SedeID { get; set; }
         public int EmpresaID { get; set; }
 
-        [Display (Name = "Tipo de Pago")]
+        [Display(Name = "Tipo de Pago")]
         [Required(ErrorMessage = "El Tipo de pago es requerido.")]
         public TipoPago TipoPago { get; set; }
         [Display(Name = "Tipo de Transacción")]
@@ -44,6 +44,14 @@ namespace AutoCosting.Models.Transaction
         [Required(ErrorMessage = "La Fecha es requerida.")]
         [DisplayFormat(DataFormatString = "{0:d}")]
         public DateTime? Fecha { get; set; }
+        [NotMapped]
+        public string FechaStr
+        {
+            get
+            {
+                return this.Fecha.GetValueOrDefault(DateTime.Today).ToString("MM/dd/yyyy");
+            }
+                }
         [NotMapped]
         [Display( Name = "Apartado Vencido.")]
         public bool ApartadoVencidoYN

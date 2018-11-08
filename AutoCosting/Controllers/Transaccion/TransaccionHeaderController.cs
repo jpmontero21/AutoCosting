@@ -220,5 +220,42 @@ namespace AutoCosting.Controllers.Transaccion
         {
             return _context.TransaccionHeaders.Any(e => e.TransID == id);
         }
+
+        
+        //public async Task<IActionResult> Imprimir(int  transID)
+        //{
+        //    var dbContext = this._context.TransaccionHeaders.Include(v => v.Empleado).Include(c => c.Cliente).Include(d => d.TransDetails).Include(d => d.Sede).Where(t => t.TransID == transID); 
+        //    if (dbContext == null)//Include(t => t.Vehiculo).Include(d=>d.TrackingDetails)
+        //    {                
+        //        return NotFound();
+        //    }
+        //    var transaccion = dbContext.ToList().FirstOrDefault();
+        //    if (transaccion == null)
+        //    {
+        //        return NotFound();
+        //    }            
+        //     return this.RedirectToAction(nameof(ImprimirRep), transaccion);
+        //}
+
+
+        public IActionResult ImprimirRep(int transID)
+        {
+            var dbContext = this._context.TransaccionHeaders.Include(v => v.Empleado).Include(c => c.Cliente).Include(d => d.TransDetails).Include(d => d.Sede).Where(t => t.TransID == transID);
+            if (dbContext == null)//Include(t => t.Vehiculo).Include(d=>d.TrackingDetails)
+            {
+                return NotFound();
+            }
+            var transaccion = dbContext.ToList().FirstOrDefault();
+            if (transaccion == null)
+            {
+                return NotFound();
+            }
+            transaccion.TransDetails.ToList().ForEach(detail => 
+            {
+                detail.Vehiculo = this._context.Vehiculos.First(v => v.VIN == detail.VINVehiculo);
+            });
+            transaccion.Sede.Empresa = this._context.Empresa.FirstOrDefault(e => e.ID == transaccion.EmpresaID);
+            return View(transaccion);
+        }
     }
 }

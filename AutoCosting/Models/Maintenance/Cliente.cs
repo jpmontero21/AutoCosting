@@ -38,7 +38,7 @@ namespace AutoCosting.Models.Maintenance
         {
             get
             {
-                return $"{Cedula} - {Nombre} {Apellido1}";
+                return $"{Cedula} - {Nombre} {Apellido1} {Apellido2}";
             }
         }
     }

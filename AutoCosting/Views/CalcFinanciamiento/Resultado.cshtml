@@ -13,7 +13,7 @@
                 <label asp-for="Vehiculo" class="custom-label"></label>
             </div>
             <div class="col-sm-4">
-                <select asp-for="Vehiculo" class="form-control" asp-items="ViewBag.VINVehiculo" disabled >
+                <select asp-for="Vehiculo" class="form-control" asp-items="ViewBag.VINVehiculo" disabled>
                     <option disabled selected>--Seleccionar--</option>
                 </select>
             </div>
@@ -81,6 +81,18 @@
                 <textarea asp-for="Resultado" class="form-control" readonly="readonly"></textarea>
             </div>
             <span asp-validation-for="Resultado" class="text-danger"></span>
+        </div>
+        <div class="row">
+            <div class="col-sm-3">
+                <label class="custom-label">Nota:</label>
+            </div>
+            <div class="col-sm-4">
+                <p  class="custom-label" >
+                    Este Documento no tiene ninguna validez.<br />
+                    Los precios pueden variar sin previo aviso.<br />
+                    El resultado aquí mostrado es solo un aproximado y no un valor definitivo.
+                </p>
+            </div>            
         </div>
         <div class="form-group">
             <input type="submit" value="Imprimir" class="btn btn-sm btn-primary no-print" onclick="window.print();" />

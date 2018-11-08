@@ -4,7 +4,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using AutoCosting.Data;
 using AutoCosting.Models;
+using AutoCosting.Models.Maintenance;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,17 +19,21 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
+        public readonly ApplicationDbContext _context;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
+            this._context = context;
         }
 
+        [Display(Name = "Usuario")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -48,6 +54,8 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Número de teléfono")]
             public string PhoneNumber { get; set; }
+
+            public Empleado Empleado { get; set; }
         }
 
         public async Task<IActionResult> OnGetAsync()
@@ -61,13 +69,15 @@ namespace AutoCosting.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var email = await _userManager.GetEmailAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            
 
             Username = userName;
 
             Input = new InputModel
             {
                 Email = email,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Empleado = _context.Empleados.Find(user.EmpleadoID)
             };
 
             IsEmailConfirmed = await _userManager.IsEmailConfirmedAsync(user);

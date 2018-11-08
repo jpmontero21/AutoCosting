@@ -1,0 +1,142 @@
+﻿@model AutoCosting.Models.Transaction.TransaccionHeader
+@using AutoCosting.HelpersAndValidations;
+@{
+    ViewData["Title"] = "ImprimirRep";
+}
+
+@if (Model.TipoTransaccion == TipoTransaccion.Venta)
+{
+    <h2>Factura</h2>
+}
+else if (Model.TipoTransaccion == TipoTransaccion.Cotizacion)
+{
+    <h2>Cotización</h2>
+}
+else
+{
+    <h2>Apartado</h2>
+}
+
+
+<div>
+    <h4><b>Número de Transacción:</b> @Html.DisplayFor(Model => Model.TransID)</h4>
+    <hr />
+</div>
+@*<div class="row">
+        <div class="col-sm-1">
+            @Html.DisplayNameFor(model => model.Sede.Empresa)
+        </div>
+        <div class="col-sm-2">
+            @Html.DisplayTextFor(model => model.Sede.Empresa.Nombre)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            @Html.DisplayNameFor(model => model.Sede.Empresa.Telefono)
+        </div>
+        <div class="col-sm-2">
+            @Html.DisplayTextFor(model => model.Sede.Empresa.Telefono)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            @Html.DisplayNameFor(model => model.Sede)
+        </div>
+        <div class="col-sm-2">
+            @Html.DisplayTextFor(model => model.Sede.Nombre)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            @Html.DisplayNameFor(model => model.Cliente)
+        </div>
+        <div class="col-sm-2">
+            @Html.DisplayTextFor(model => model.Cliente.Informacion)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TipoTransaccion)
+        </div>
+        <div class="col-sm-2">
+            @Html.DisplayTextFor(model => model.TipoTransaccion)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1">
+            @Html.DisplayNameFor(model => model.TipoPago)
+        </div>
+        <div class="col-sm-2">
+            @Html.DisplayTextFor(model => model.TipoPago)
+        </div>
+    </div>*@
+<p>
+    <b>@Html.DisplayNameFor(model => model.Sede.Empresa): </b>
+    @Html.DisplayTextFor(model => model.Sede.Empresa.Nombre)<br />
+    <b>@Html.DisplayNameFor(model => model.Sede.Empresa.Telefono): </b>
+    @Html.DisplayTextFor(model => model.Sede.Empresa.Telefono)<br />
+    <b>@Html.DisplayNameFor(model => model.Sede): </b>
+    @Html.DisplayTextFor(model => model.Sede.Nombre)<br />
+    <b>@Html.DisplayNameFor(model => model.Cliente): </b>
+    @Html.DisplayTextFor(model => model.Cliente.Informacion)<br />
+    <b>@Html.DisplayNameFor(model => model.TipoTransaccion): </b>
+    @Html.DisplayTextFor(model => model.TipoTransaccion)<br />
+    <b>@Html.DisplayNameFor(model => model.TipoPago): </b>
+    @Html.DisplayTextFor(model => model.TipoPago)<br />
+    <b>@Html.DisplayNameFor(model => model.Fecha): </b>
+    @Html.DisplayTextFor(model => model.FechaStr)<br />
+</p>
+<b><p>Detalles: </p></b>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <b>VIN - Vehículo</b>
+            </th>
+            <th>
+                <b>Marca</b>
+            </th>
+            <th>
+                <b>Modelo</b>
+            </th>
+            <th>
+                <b>Año</b>
+            </th>
+            <th>
+                <b>Precio</b>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.TransDetails)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VINVehiculo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Modelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Anno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioAcordado)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<p>
+    <b>@Html.DisplayNameFor(model => model.Total): </b>
+    @Html.DisplayFor(model => model.Total)<br />
+</p>
+
+<div>
+    <input type="submit" value="Imprimir" class="btn btn-sm btn-primary no-print" onclick="window.print();" />
+    <a asp-action="Edit" asp-route-id="@Model.TransID" class="btn btn-sm btn-success no-print">Regresar a la transacción.</a>
+</div>
+

@@ -4,7 +4,18 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Editar Transacción</h2>
+    <input type="hidden" asp-for="Transaccion.TransID" />
+    <div class="row">
+        <div class="col-sm-4">
+            <h2>Editar Transacción</h2>
+        </div>
+        <div style="text-align:right;padding:0px 20px 0px 0px">
+            <br />
+            
+            <a asp-action="ImprimirRep" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-success">Imprimir</a>
+        </div>
+    </div>
+
 <hr />
 <form asp-action="Edit">
     <input type="hidden" asp-for="Transaccion.TransID" />
@@ -83,7 +94,7 @@
                 </div>
                 <div class="col-sm-4" style="padding-top:6px">
                     @Html.DisplayFor(modelItem => Model.Transaccion.Total)
-                </div>                
+                </div>
                 <span asp-validation-for="Transaccion.Total" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -121,30 +132,30 @@
     <tbody>
         @foreach (var item in Model.TransaccionDetalles)
         {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.VINVehiculo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Marca)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Modelo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Vehiculo.Anno)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PrecioAcordado)
-            </td>
-            <td>
-                <div class="btn-group" role="group">
-                    <a asp-action="Edit" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-primary glyphicon glyphicon-pencil"></a>
-                    <a asp-action="Details" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-success glyphicon glyphicon-list"></a>
-                    <a asp-action="Delete" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-danger glyphicon glyphicon-trash"></a>
-                </div>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.VINVehiculo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Modelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Vehiculo.Anno)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PrecioAcordado)
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a asp-action="Edit" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-primary glyphicon glyphicon-pencil"></a>
+                        <a asp-action="Details" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-success glyphicon glyphicon-list"></a>
+                        <a asp-action="Delete" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-danger glyphicon glyphicon-trash"></a>
+                    </div>
+                </td>
+            </tr>
         }
     </tbody>
 </table>

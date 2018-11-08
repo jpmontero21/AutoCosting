@@ -33,6 +33,7 @@ namespace AutoCosting.Models.Transaction
         public double PrecioRecomendado { get; set; }
         [Required(ErrorMessage = "El precio acordado es requerido.")]
         [Display(Name = "Precio Acordado")]
+        [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
         public double? PrecioAcordado { get; set; }
 
 
