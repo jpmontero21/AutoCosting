@@ -6,8 +6,7 @@
 
 <h2>Crear Vehiculo</h2>
 <hr />
-
-<form asp-action="Create">
+<form asp-action="Create" enctype="multipart/form-data">
     <div class="form-group">
         <div asp-validation-summary="ModelOnly"></div>
         <div class="form-group">
@@ -24,7 +23,7 @@
                 <div class="col-sm-3">
                     <label asp-for="Marca" class="custom-label"></label>
                 </div>
-                <div class="col-sm-4">                    
+                <div class="col-sm-4">
                     <select asp-for="Marca" class="form-control" asp-items="ViewBag.Brands">
                         <option disabled selected>--Seleccionar--</option>
                     </select>
@@ -185,6 +184,40 @@
                     <input asp-for="FechaIngreso" class="form-control" type="date" for />
                 </div>
                 <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="Imagen1" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                        <div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileinput-new">Seleccionar</span>
+                                <span class="fileinput-exists">Cambiar</span><input type="file" name="files1">
+                            </span>
+                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <label asp-for="Imagen2" class="custom-label"></label>
+                </div>
+                <div class="col-sm-4">
+                    <div class="fileinput fileinput-new" data-provides="fileinput">
+                        <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                        <div>
+                            <span class="btn btn-default btn-file">
+                                <span class="fileinput-new">Seleccionar</span>
+                                <span class="fileinput-exists">Cambiar</span><input type="file" name="files2">
+                            </span>
+                            <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-sm btn-primary" />

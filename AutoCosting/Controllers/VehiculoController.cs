@@ -8,6 +8,9 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Maintenance;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using System.Net.Http.Headers;
+using System.IO;
 
 namespace AutoCosting.Controllers
 {
@@ -15,10 +18,11 @@ namespace AutoCosting.Controllers
     public class VehiculoController : Controller
     {
         private readonly ApplicationDbContext _context;
-
-        public VehiculoController(ApplicationDbContext context)
+        private readonly IHostingEnvironment _environment;
+        public VehiculoController(ApplicationDbContext context, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
+            _environment = hostingEnvironment;
         }
 
         // GET: Vehiculo
@@ -59,13 +63,56 @@ namespace AutoCosting.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VIN,Marca,Modelo,Anno,Transmision,Estilo,Combustible,NumeroPuertas,Color,Placa,Kilometraje,Estado,Cilindrada,PrecioMinimo,PrecioRecomendado,ApartadoYN,FechaIngreso")] Vehiculo vehiculo)
+        public async Task<IActionResult> Create(Vehiculo vehiculo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(vehiculo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var newFileName = string.Empty;
+                if (HttpContext.Request.Form.Files != null)
+                {
+                    var fileName = string.Empty;
+                    string PathDB = string.Empty;
+                    var files = HttpContext.Request.Form.Files;
+                    foreach (var file in files)
+                    {
+                        if (file.Length > 0)
+                        {
+                            //Getting FileName
+                            fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+
+                            //Assigning Unique Filename (Guid)
+                            var myUniqueFileName = Convert.ToString(Guid.NewGuid());
+
+                            //Getting file Extension
+                            var FileExtension = Path.GetExtension(fileName);
+
+                            // concating  FileName + FileExtension
+                            newFileName = myUniqueFileName + FileExtension;
+
+                            // Combines two strings into a path.
+                            fileName = Path.Combine(_environment.WebRootPath, "CarImages", vehiculo.VIN);
+                            System.IO.Directory.CreateDirectory(fileName);
+                            fileName += $@"\{newFileName}";
+                            
+                            // if you want to store path of folder in database
+                            PathDB = "CarImages/"+ vehiculo.VIN + "/" + newFileName;
+
+                            using (FileStream fs = System.IO.File.Create(fileName))
+                            {
+                                file.CopyTo(fs);
+                                fs.Flush();
+                            }
+                            if (!string.IsNullOrEmpty(vehiculo.Imagen1))
+                            {
+                                System.IO.File.Delete(vehiculo.Imagen1);
+                            }
+                            vehiculo.Imagen1 = PathDB;
+                        }
+                    }
+                    _context.Add(vehiculo);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
             }
             return View(vehiculo);
         }

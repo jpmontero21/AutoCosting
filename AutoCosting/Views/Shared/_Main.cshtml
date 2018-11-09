@@ -11,6 +11,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title>Automotores Texas | ATX</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="~/css/jasny-bootstrap.min.css">
     <link rel="stylesheet" href="~/AdminLTE/bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="~/AdminLTE/bower_components/font-awesome/css/font-awesome.min.css">
@@ -256,6 +257,7 @@ desired effect
     <script src="~/AdminLTE/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
     <script src="~/AdminLTE/bower_components/fastclick/lib/fastclick.js"></script>
+    <script src="~/js/jasny-bootstrap.min.js"></script>
     <script>
         $("ul .treeview-menu a").click(function (e) {
             var ulr = $(this).attr("href");
@@ -263,7 +265,6 @@ desired effect
             return false;
         });
     </script>
-    <script src="~/js/jasny-bootstrap.min.js"></script>
 
     @RenderSection("Scripts", required: false)
 </body>

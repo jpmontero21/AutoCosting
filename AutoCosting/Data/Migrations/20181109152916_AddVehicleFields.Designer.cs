@@ -4,14 +4,16 @@ using AutoCosting.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AutoCosting.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181109152916_AddVehicleFields")]
+    partial class AddVehicleFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -339,8 +341,6 @@ namespace AutoCosting.Data.Migrations
                     b.Property<short>("Transmision");
 
                     b.Property<bool>("TurboYN");
-
-                    b.Property<bool>("VendidoYN");
 
                     b.Property<bool>("VidriosElectricosYN");
 
