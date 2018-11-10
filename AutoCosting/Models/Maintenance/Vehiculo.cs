@@ -13,6 +13,7 @@ namespace AutoCosting.Models.Maintenance
     public class Vehiculo
     {
         [Key]
+        [MinLength(17, ErrorMessage = "El VIN debe tener al menos 17 dígitos")]
         [Required(ErrorMessage = "El VIN es requerido.")]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string VIN { get; set; }
@@ -118,7 +119,7 @@ namespace AutoCosting.Models.Maintenance
         [Display(Name = "Aire Acondicionado")]
         public bool AireAcondicionadoYN { get; set; }
         [Display(Name = "Desempañador Trasero")]
-        public bool DesempañadorTraseroYN { get; set; }
+        public bool DesempanadorTraseroYN { get; set; }
         [Display(Name = "Sunroof/Techo Panorámico")]
         public bool SunroofTechoPanoramicoYN { get; set; }
         [Display(Name = "Aros de Lujo")]
