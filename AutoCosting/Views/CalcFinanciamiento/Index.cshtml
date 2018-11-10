@@ -2,7 +2,6 @@
 @{
     ViewData["Title"] = "Calculadora de Financiamiento.";
 }
-
 <script type="text/javascript">
     function GetVehiclePrice(selEle) {
         var vin = selEle.value.toString();
@@ -20,82 +19,94 @@
 
     };
 </script>
-
 <h2>Calcular Financiamiento</h2>
 <hr />
 
-
 <form asp-action="Calculate" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
     <div class="form-group">
-        <div asp-validation-summary="ModelOnly"></div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Vehiculo" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Vehiculo" class="form-control" asp-items="ViewBag.VINVehiculo" onchange="GetVehiclePrice(this)">
-                        <option disabled selected>--Seleccionar--</option>
-                    </select>
-                </div>
-                <span asp-validation-for="Vehiculo" class="text-danger"></span>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Calculadora</h3>
             </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Precio" class="custom-label"></label>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Vehiculo" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="Vehiculo" class="form-control" asp-items="ViewBag.VINVehiculo" onchange="GetVehiclePrice(this)">
+                                <option selected>--Seleccionar--</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="Vehiculo" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Precio" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Precio" class="form-control">
+                        </div>
+                        <span asp-validation-for="Precio" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="TarifaAddicional" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="TarifaAddicional" class="form-control">
+                        </div>
+                        <span asp-validation-for="TarifaAddicional" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Descuento" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Descuento" class="form-control">
+                        </div>
+                        <span asp-validation-for="Descuento" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Prima" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Prima" class="form-control">
+                        </div>
+                        <span asp-validation-for="Prima" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Interes" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Interes" class="form-control">
+                        </div>
+                        <span asp-validation-for="Interes" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="NumeroCuotas" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="NumeroCuotas" class="form-control">
+                        </div>
+                        <span asp-validation-for="NumeroCuotas" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Calcular" class="btn btn-sm btn-primary" />
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="Precio" class="form-control" >
-                </div>
-                <span asp-validation-for="Precio" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="TarifaAddicional" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="TarifaAddicional" class="form-control" >
-                </div>
-                <span asp-validation-for="TarifaAddicional" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Descuento" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Descuento" class="form-control">
-                </div>
-                <span asp-validation-for="Descuento" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Prima" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Prima" class="form-control" >
-                </div>
-                <span asp-validation-for="Prima" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Interes" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Interes" class="form-control">
-                </div>
-                <span asp-validation-for="Interes" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="NumeroCuotas" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="NumeroCuotas" class="form-control">
-                </div>
-                <span asp-validation-for="NumeroCuotas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Calcular" class="btn btn-sm btn-primary" />
             </div>
         </div>
     </div>

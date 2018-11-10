@@ -9,66 +9,79 @@
 <hr />
 
 <form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly"></div>
     <div class="form-group">
-        <div asp-validation-summary="ModelOnly"></div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="NombreContacto" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="NombreContacto" class="form-control" />
-                </div>
-                <span asp-validation-for="NombreContacto" class="text-danger"></span>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Información del Proveedor</h3>
             </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="NombreEmpresa" class="custom-label"></label>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="NombreContacto" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="NombreContacto" class="form-control" placeholder="Nombre del Contacto" />
+                        </div>
+                        <span asp-validation-for="NombreContacto" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="NombreEmpresa" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="NombreEmpresa" class="form-control" placeholder="Nombre de la Empresa" />
+                        </div>
+                        <span asp-validation-for="NombreEmpresa" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Direccion" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Direccion" class="form-control" placeholder="Dirección" />
+                        </div>
+                        <span asp-validation-for="Direccion" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Telefono" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Telefono" class="form-control" data-mask="9999-9999" placeholder="Teléfono" />
+                        </div>
+                        <span asp-validation-for="Telefono" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Email" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Email" class="form-control" placeholder="Correo Electrónico" />
+                        </div>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Notas" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <textarea asp-for="Notas" class="form-control" placeholder="Notas ..."></textarea>
+                        </div>
+                        <span asp-validation-for="Notas" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
+                        <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="NombreEmpresa" class="form-control" />
-                </div>
-                <span asp-validation-for="NombreEmpresa" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Direccion" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Direccion" class="form-control" />
-                </div>
-                <span asp-validation-for="Direccion" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Telefono" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Telefono" class="form-control" data-mask="9999-9999"/>
-                </div>
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Email" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Email" class="form-control" />
-                </div>
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Notas" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <textarea asp-for="Notas" class="form-control"></textarea>
-                </div>
-                <span asp-validation-for="Notas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
-                <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
             </div>
         </div>
     </div>
@@ -77,4 +90,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-

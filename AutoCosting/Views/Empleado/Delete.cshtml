@@ -11,90 +11,81 @@
 <hr />
 
 <form asp-action="Delete">
-    <div class="form-group">
-        <div asp-validation-summary="ModelOnly"></div>
-        <div class="form-group">
+    <div asp-validation-summary="ModelOnly"></div>
+    <input type="hidden" asp-for="Cedula" />
+    <div class="box box-danger">
+        <div class="box-header with-border">
+            <h3 class="box-title">Información del Empleado</h3>
+        </div>
+        <div class="box-body">
             <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Cedula" class="custom-label"></label>
+                <div class="box-body col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Cedula" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Cedula" class="form-control" placeholder="Cédula" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Nombre" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Nombre" class="form-control" placeholder="Nombre" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Apellido1" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Apellido1" class="form-control" placeholder="Primer Apellido" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Apellido2" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Apellido2" class="form-control" placeholder="Segundo Apellido" readonly="readonly"/>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="Cedula" disabled class="form-control" />
+                <div class="box-body col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Direccion" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Direccion" class="form-control" placeholder="Dirección" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Telefono" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="Telefono" class="form-control" data-mask="9999-9999" placeholder="Teléfono" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="FechaNacimiento" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="FechaNacimiento" class="form-control" type="date" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="DescripcionPuesto" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <input asp-for="DescripcionPuesto" class="form-control" placeholder="Puesto" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Notas" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-9">
+                            <textarea asp-for="Notas" class="form-control" placeholder="Notas ..." readonly="readonly"></textarea>
+                        </div>
+                    </div>
                 </div>
-                <span asp-validation-for="Cedula" class="text-danger"></span>
             </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Nombre" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Nombre" disabled class="form-control" />
-                </div>
-                <span asp-validation-for="Nombre" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Apellido1" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Apellido1" disabled class="form-control" />
-                </div>
-                <span asp-validation-for="Apellido1" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Apellido2" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Apellido2" disabled class="form-control" />
-                </div>
-                <span asp-validation-for="Apellido2" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Direccion" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Direccion" disabled class="form-control" />
-                </div>
-                <span asp-validation-for="Direccion" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Telefono" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Telefono" disabled class="form-control" data-mask="9999-9999"/>
-                </div>
-                <span asp-validation-for="Telefono" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="FechaNacimiento" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="FechaNacimiento" disabled class="form-control" type="date" for />
-                </div>
-                <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="DescripcionPuesto" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="DescripcionPuesto" disabled class="form-control" />
-                </div>
-                <span asp-validation-for="DescripcionPuesto" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Notas" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <textarea asp-for="Notas" disabled class="form-control"></textarea>
-                </div>
-                <span asp-validation-for="Notas" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
                 <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>

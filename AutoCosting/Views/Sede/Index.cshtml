@@ -17,50 +17,52 @@
         <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
     }
 </p>
-<table class="table">
-    <thead>
-        <tr>            
-            <th>
-                @Html.DisplayNameFor(model => model.Sede.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sede.Direccion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sede.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sede.UsarCierreCajaYN)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sede.ImprimirLogoYN)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.SedeList)
-        {
+<div class="box box-info">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Direccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UsarCierreCajaYN)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ImprimirLogoYN)
-                </td>
-                <td>
-                    @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sede.Nombre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sede.Direccion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sede.Telefono)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sede.UsarCierreCajaYN)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Sede.ImprimirLogoYN)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.SedeList)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Direccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Telefono)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UsarCierreCajaYN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ImprimirLogoYN)
+                    </td>
+                    <td>
+                        @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

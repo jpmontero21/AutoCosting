@@ -7,27 +7,37 @@
 <h2>Detalles del Trabajo</h2>
 <hr />
 
+
 <div class="form-group">
-    <div class="form-group">
-        <div class="row">
-            <div class="col-sm-3">
-                <label asp-for="Descripcion" class="custom-label"></label>
-            </div>
-            <div class="col-sm-4">
-                <input asp-for="Descripcion" disabled class="form-control" />
-            </div>
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Información del Trabajo</h3>
         </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <label asp-for="PrecioPromedio" class="custom-label"></label>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Descripcion" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Descripcion" class="form-control" placeholder="Descripción" readonly="readonly">
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="PrecioPromedio" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="PrecioPromedio" class="form-control" placeholder="Precio" readonly="readonly" />
+                    </div>
+                    <span asp-validation-for="PrecioPromedio" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-sm btn-primary">Editar</a>
+                    <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <input asp-for="PrecioPromedio" disabled class="form-control" />
-            </div>
-        </div>
-        <div class="form-group">
-            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-sm btn-primary">Editar</a>
-            <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
         </div>
     </div>
 </div>

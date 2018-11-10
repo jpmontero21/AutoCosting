@@ -12,78 +12,82 @@
 <div>
 
     <hr />
-
     <form asp-action="Delete">
         <div class="form-group">
-            <div asp-validation-summary="ModelOnly"></div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label asp-for="EmpresaID" class="control-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select asp-for="EmpresaID" class="form-control" disabled asp-items="ViewBag.EmpresaID"></select>
-                    </div>
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información de la Sede</h3>
                 </div>
-                <br />
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label asp-for="Nombre" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <input asp-for="Nombre" class="form-control" disabled/>
-                    </div>
-                    <span asp-validation-for="Nombre" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label asp-for="Direccion" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <input asp-for="Direccion" class="form-control" disabled/>
-                    </div>
-                    <span asp-validation-for="Direccion" class="text-danger"></span>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label asp-for="Telefono" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <input asp-for="Telefono" class="form-control" disabled data-mask="9999-9999" />
-                    </div>
-                    <span asp-validation-for="Telefono" class="text-danger"></span>
-                </div>
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label asp-for="UsarCierreCajaYN" class="custom-label" style="padding-top:9px"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="checkbox">
-                            <label>
-                                <input asp-for="UsarCierreCajaYN" disabled/>
-                            </label>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label asp-for="EmpresaID" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="EmpresaID" class="form-control" disabled asp-items="ViewBag.EmpresaID"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label asp-for="Nombre" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Nombre" class="form-control" placeholder="Nombre" readonly="readonly" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label asp-for="Direccion" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Direccion" class="form-control" placeholder="Dirección" readonly="readonly" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label asp-for="Telefono" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Telefono" class="form-control" data-mask="9999-9999" placeholder="Teléfono" readonly="readonly" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label asp-for="UsarCierreCajaYN" class="custom-label" style="padding-top:9px"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="UsarCierreCajaYN" disabled />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label asp-for="ImprimirLogoYN" class="custom-label" style="padding-top:9px"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="checkbox">
+                                    <label>
+                                        <input asp-for="ImprimirLogoYN" disabled />
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
+                            <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label asp-for="ImprimirLogoYN" class="custom-label" style="padding-top:9px"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="checkbox">
-                            <label>
-                                <input asp-for="ImprimirLogoYN" disabled />
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
-                    <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+

@@ -23,9 +23,9 @@ namespace AutoCosting.Controllers.CalcFinanciamiento
         [HttpPost]
         public IActionResult Calculate(AutoCosting.Models.Calc.CalcFinanciamiento calc)
         {
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion");
             if (ModelState.IsValid)
-            {
-                ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion");
+            {                
                 calc.Calcular();
                 return this.RedirectToAction(nameof(Resultado), calc);
             }
