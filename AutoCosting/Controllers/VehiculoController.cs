@@ -11,6 +11,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
 using System.IO;
+using Microsoft.AspNetCore.Http;
+using ImageMagick;
 
 namespace AutoCosting.Controllers
 {
@@ -65,54 +67,23 @@ namespace AutoCosting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Vehiculo vehiculo)
         {
+            Vehiculo existingVehiculo = await _context.Vehiculos.SingleOrDefaultAsync(m => m.VIN == vehiculo.VIN);
+            if (existingVehiculo != null)
+            {
+                ModelState.AddModelError("VIN", "Ya existe un vehículo con este VIN");
+                ViewData["Brands"] = new SelectList(Brands);
+                return View(vehiculo);
+            }
             if (ModelState.IsValid)
             {
-                var newFileName = string.Empty;
                 if (HttpContext.Request.Form.Files != null)
                 {
-                    var fileName = string.Empty;
-                    string PathDB = string.Empty;
-                    var files = HttpContext.Request.Form.Files;
-                    foreach (var file in files)
-                    {
-                        if (file.Length > 0)
-                        {
-                            //Getting FileName
-                            fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-
-                            //Assigning Unique Filename (Guid)
-                            var myUniqueFileName = Convert.ToString(Guid.NewGuid());
-
-                            //Getting file Extension
-                            var FileExtension = Path.GetExtension(fileName);
-
-                            // concating  FileName + FileExtension
-                            newFileName = myUniqueFileName + FileExtension;
-
-                            // Combines two strings into a path.
-                            fileName = Path.Combine(_environment.WebRootPath, "CarImages", vehiculo.VIN);
-                            System.IO.Directory.CreateDirectory(fileName);
-                            fileName += $@"\{newFileName}";
-                            
-                            // if you want to store path of folder in database
-                            PathDB = "CarImages/"+ vehiculo.VIN + "/" + newFileName;
-
-                            using (FileStream fs = System.IO.File.Create(fileName))
-                            {
-                                file.CopyTo(fs);
-                                fs.Flush();
-                            }
-                            if (!string.IsNullOrEmpty(vehiculo.Imagen1))
-                            {
-                                System.IO.File.Delete(vehiculo.Imagen1);
-                            }
-                            vehiculo.Imagen1 = PathDB;
-                        }
-                    }
-                    _context.Add(vehiculo);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    IFormFileCollection files = HttpContext.Request.Form.Files;
+                    ProcessImages(files, vehiculo);
                 }
+                _context.Add(vehiculo);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
             }
             return View(vehiculo);
         }
@@ -139,7 +110,7 @@ namespace AutoCosting.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("VIN,Marca,Modelo,Anno,Transmision,Estilo,Combustible,NumeroPuertas,Color,Placa,Kilometraje,Estado,Cilindrada,PrecioMinimo,PrecioRecomendado,ApartadoYN,FechaIngreso")] Vehiculo vehiculo)
+        public async Task<IActionResult> Edit(string id, Vehiculo vehiculo)
         {
             if (id != vehiculo.VIN)
             {
@@ -251,5 +222,72 @@ namespace AutoCosting.Controllers
                 return brands;
             }
         }
+
+        private void ProcessImages(IFormFileCollection files_, Vehiculo vehiculo)
+        {
+            var newFileName = string.Empty;
+            var fileName = string.Empty;
+            string PathDB = string.Empty;
+            IFormFileCollection files = files_;
+            fileName = Path.Combine(_environment.WebRootPath, "CarImages", vehiculo.VIN);
+            if (System.IO.Directory.Exists(fileName))
+                System.IO.Directory.Delete(fileName, true);
+            foreach (var file in files)
+            {
+                if (file.Length > 0)
+                {
+                    //Getting FileName
+                    fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+
+                    //Assigning Unique Filename (Guid)
+                    var myUniqueFileName = Convert.ToString(Guid.NewGuid());
+
+                    //Getting file Extension
+                    var FileExtension = Path.GetExtension(fileName);
+
+                    // concating  FileName + FileExtension
+                    newFileName = myUniqueFileName + FileExtension;
+
+                    // Combines two strings into a path.
+                    fileName = Path.Combine(_environment.WebRootPath, "CarImages", vehiculo.VIN);
+                    System.IO.Directory.CreateDirectory(fileName);
+                    fileName += $@"\{newFileName}";
+
+                    // if you want to store path of folder in database
+                    PathDB = "CarImages/" + vehiculo.VIN + "/" + newFileName;
+
+                    using (FileStream fs = System.IO.File.Create(fileName))
+                    {
+                        file.CopyTo(fs);
+                        fs.Flush();
+                    }
+                    using (MagickImage image = new MagickImage(fileName))
+                    {
+                        image.Resize(640, 480);
+                        image.Write(fileName);
+                    }
+                        switch (file.Name)
+                        {
+                            case "files1":
+                                vehiculo.Imagen1 = PathDB;
+                                break;
+                            case "files2":
+                                vehiculo.Imagen2 = PathDB;
+                                break;
+                            case "files3":
+                                vehiculo.Imagen3 = PathDB;
+                                break;
+                            case "files4":
+                                vehiculo.Imagen4 = PathDB;
+                                break;
+                            case "files5":
+                                vehiculo.Imagen5 = PathDB;
+                                break;
+                        }
+                }
+            }
+
+        }
+
     }
 }
