@@ -8,41 +8,51 @@
 <hr />
 
 <form asp-action="Create">
+    <div asp-validation-summary="ModelOnly"></div>
     <div class="form-group">
-        <div asp-validation-summary="ModelOnly"></div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="VINVehiculo" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="VINVehiculo" class="form-control" asp-items="ViewBag.VINVehiculo">
-                        <option disabled selected>--Seleccionar--</option>
-                    </select>
-                </div>
-                <span asp-validation-for="VINVehiculo" class="text-danger"></span>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Información del Seguimiento</h3>
             </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Fecha" class="custom-label"></label>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="VINVehiculo" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="VINVehiculo" class="form-control" asp-items="ViewBag.VINVehiculo">
+                                <option disabled selected>--Seleccionar--</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="VINVehiculo" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Fecha" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Fecha" class="form-control" type="date" />
+                        </div>
+                        <span asp-validation-for="Fecha" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Notas" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <textarea asp-for="Notas" class="form-control"></textarea>
+                        </div>
+                        <span asp-validation-for="Notas" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-sm btn-primary" />
+                        <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="Fecha" class="form-control" type="date" />
-                </div>
-                <span asp-validation-for="Fecha" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Notas" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <textarea asp-for="Notas" class="form-control"></textarea>
-                </div>
-                <span asp-validation-for="Notas" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-sm btn-primary" />
-                <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
             </div>
         </div>
     </div>

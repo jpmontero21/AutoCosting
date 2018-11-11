@@ -22,54 +22,6 @@ else
     <h4><b>Número de Transacción:</b> @Html.DisplayFor(Model => Model.TransID)</h4>
     <hr />
 </div>
-@*<div class="row">
-        <div class="col-sm-1">
-            @Html.DisplayNameFor(model => model.Sede.Empresa)
-        </div>
-        <div class="col-sm-2">
-            @Html.DisplayTextFor(model => model.Sede.Empresa.Nombre)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-1">
-            @Html.DisplayNameFor(model => model.Sede.Empresa.Telefono)
-        </div>
-        <div class="col-sm-2">
-            @Html.DisplayTextFor(model => model.Sede.Empresa.Telefono)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-1">
-            @Html.DisplayNameFor(model => model.Sede)
-        </div>
-        <div class="col-sm-2">
-            @Html.DisplayTextFor(model => model.Sede.Nombre)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-1">
-            @Html.DisplayNameFor(model => model.Cliente)
-        </div>
-        <div class="col-sm-2">
-            @Html.DisplayTextFor(model => model.Cliente.Informacion)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TipoTransaccion)
-        </div>
-        <div class="col-sm-2">
-            @Html.DisplayTextFor(model => model.TipoTransaccion)
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-1">
-            @Html.DisplayNameFor(model => model.TipoPago)
-        </div>
-        <div class="col-sm-2">
-            @Html.DisplayTextFor(model => model.TipoPago)
-        </div>
-    </div>*@
 <p>
     <b>@Html.DisplayNameFor(model => model.Sede.Empresa): </b>
     @Html.DisplayTextFor(model => model.Sede.Empresa.Nombre)<br />
@@ -131,8 +83,14 @@ else
     </tbody>
 </table>
 <p>
-    <b>@Html.DisplayNameFor(model => model.Total): </b>
-    @Html.DisplayFor(model => model.Total)<br />
+    <b>
+        @Html.DisplayNameFor(model => model.Total):
+        @Html.DisplayFor(model => model.Total)
+    </b>
+    <br />
+    <br />
+    <br />
+    GRACIAS POR SU VISITA
 </p>
 
 <div>

@@ -4,221 +4,181 @@
     ViewData["Title"] = "Edit";
 }
 
-    <input type="hidden" asp-for="Transaccion.TransID" />
-    <div class="row">
-        <div class="col-sm-4">
-            <h2>Editar Transacción</h2>
-        </div>
-        <div style="text-align:right;padding:0px 20px 0px 0px">
-            <br />
-            
-            <a asp-action="ImprimirRep" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-success">Imprimir</a>
-        </div>
+<input type="hidden" asp-for="Transaccion.TransID" />
+<div class="row">
+    <div class="col-sm-4">
+        <h2>Editar Transacción</h2>
     </div>
+    <div style="text-align:right;padding:0px 20px 0px 0px">
+        <br />
+        <a asp-action="ImprimirRep" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-success">Imprimir</a>
+    </div>
+</div>
 
 <hr />
 <form asp-action="Edit">
     <input type="hidden" asp-for="Transaccion.TransID" />
     <input type="hidden" asp-for="Transaccion.ClienteID" />
+    <div asp-validation-summary="ModelOnly"></div>
     <div class="form-group">
-        <div asp-validation-summary="ModelOnly"></div>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Información de la Transaccón</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Transaccion.VendedorID" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="Transaccion.VendedorID" class="form-control" asp-items="ViewBag.VendedorID"></select>
+                        </div>
+                        <span asp-validation-for="Transaccion.VendedorID" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Transaccion.ClienteID" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="Transaccion.ClienteID" class="form-control" disabled asp-items="ViewBag.ClienteID">
+                                <option disabled selected>--Seleccionar--</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="Transaccion.ClienteID" class="text-danger"></span>
+                    </div>
+                    <div class="row hidden">
+                        <div class="col-sm-3">
+                            <label asp-for="Transaccion.EmpresaID" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="Transaccion.EmpresaID" class="form-control" asp-items="ViewBag.EmpresaID"></select>
+                        </div>
+                        <span asp-validation-for="Transaccion.EmpresaID" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Transaccion.SedeID" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="Transaccion.SedeID" class="form-control" asp-items="ViewBag.SedeID"></select>
+                        </div>
+                        <span asp-validation-for="Transaccion.SedeID" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Transaccion.TipoPago" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="Transaccion.TipoPago" class="form-control" asp-items="Html.GetEnumSelectList<TipoPago>()"></select>
+                        </div>
+                        <span asp-validation-for="Transaccion.TipoPago" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Transaccion.TipoTransaccion" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="Transaccion.TipoTransaccion" class="form-control" asp-items="Html.GetEnumSelectList<TipoTransaccion>()"></select>
+                        </div>
+                        <span asp-validation-for="Transaccion.TipoTransaccion" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Transaccion.Fecha" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Transaccion.Fecha" class="form-control" type="date" />
+                        </div>
+                        <span asp-validation-for="Transaccion.Fecha" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Transaccion.Total" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4" style="padding-top:6px">
+                            @Html.DisplayFor(modelItem => Model.Transaccion.Total)
+                        </div>
+                        <span asp-validation-for="Transaccion.Total" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Transaccion.VendedorID" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Transaccion.VendedorID" class="form-control" asp-items="ViewBag.VendedorID"></select>
-                </div>
-                <span asp-validation-for="Transaccion.VendedorID" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Transaccion.ClienteID" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Transaccion.ClienteID" class="form-control" disabled asp-items="ViewBag.ClienteID">
-                        <option disabled selected>--Seleccionar--</option>
-                    </select>
-                </div>
-                <span asp-validation-for="Transaccion.ClienteID" class="text-danger"></span>
-            </div>
-            <div class="row hidden">
-                <div class="col-sm-3">
-                    <label asp-for="Transaccion.EmpresaID" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Transaccion.EmpresaID" class="form-control" asp-items="ViewBag.EmpresaID"></select>
-                </div>
-                <span asp-validation-for="Transaccion.EmpresaID" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Transaccion.SedeID" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Transaccion.SedeID" class="form-control" asp-items="ViewBag.SedeID"></select>
-                </div>
-                <span asp-validation-for="Transaccion.SedeID" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Transaccion.TipoPago" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Transaccion.TipoPago" class="form-control" asp-items="Html.GetEnumSelectList<TipoPago>()"></select>
-                </div>
-                <span asp-validation-for="Transaccion.TipoPago" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Transaccion.TipoTransaccion" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Transaccion.TipoTransaccion" class="form-control" asp-items="Html.GetEnumSelectList<TipoTransaccion>()"></select>
-                </div>
-                <span asp-validation-for="Transaccion.TipoTransaccion" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Transaccion.Fecha" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Transaccion.Fecha" class="form-control" type="date" />
-                </div>
-                <span asp-validation-for="Transaccion.Fecha" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Transaccion.Total" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4" style="padding-top:6px">
-                    @Html.DisplayFor(modelItem => Model.Transaccion.Total)
-                </div>
-                <span asp-validation-for="Transaccion.Total" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
-                <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
-            </div>
+            <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
+            <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
         </div>
     </div>
 </form>
 <hr />
-<h3>Lineas de Detalle</h3>
-<hr />
-<a asp-action="Create" class="btn btn-primary" asp-controller="TransaccionDetail" asp-route-transID="@Model.Transaccion.TransID">Agregar nuevo vehículo</a>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TransaccionDetail.VINVehiculo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Marca)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Modelo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Anno)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TransaccionDetail.PrecioAcordado)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.TransaccionDetalles)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VINVehiculo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vehiculo.Marca)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vehiculo.Modelo)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vehiculo.Anno)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PrecioAcordado)
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a asp-action="Edit" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-primary glyphicon glyphicon-pencil"></a>
-                        <a asp-action="Details" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-success glyphicon glyphicon-list"></a>
-                        <a asp-action="Delete" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-danger glyphicon glyphicon-trash"></a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-@*<div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="TransID" />
-                <div class="form-group">
-                    <label asp-for="VendedorID" class="control-label"></label>
-                    <select asp-for="VendedorID" class="form-control" asp-items="ViewBag.VendedorID"></select>
-                    <span asp-validation-for="VendedorID" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="ClienteID" class="control-label"></label>
-                    <select asp-for="ClienteID" class="form-control" asp-items="ViewBag.ClienteID"></select>
-                    <span asp-validation-for="ClienteID" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="SedeID" class="control-label"></label>
-                    <select asp-for="SedeID" class="form-control" asp-items="ViewBag.SedeID"></select>
-                    <span asp-validation-for="SedeID" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="EmpresaID" class="control-label"></label>
-                    <select asp-for="EmpresaID" class="form-control" asp-items="ViewBag.EmpresaID"></select>
-                    <span asp-validation-for="EmpresaID" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TipoPago" class="control-label"></label>
-                    <select asp-for="TipoPago" class="form-control"></select>
-                    <span asp-validation-for="TipoPago" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TipoTransaccion" class="control-label"></label>
-                    <select asp-for="TipoTransaccion" class="form-control"></select>
-                    <span asp-validation-for="TipoTransaccion" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Fecha" class="control-label"></label>
-                    <input asp-for="Fecha" class="form-control" />
-                    <span asp-validation-for="Fecha" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Saldo" class="control-label"></label>
-                    <input asp-for="Saldo" class="form-control" />
-                    <span asp-validation-for="Saldo" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label>
-                            <input asp-for="Eliminada" /> @Html.DisplayNameFor(model => model.Eliminada)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-default" />
-                </div>
-            </form>
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Lineas de Detalle</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
         </div>
     </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
-    </div>*@
-
+    <div class="box-body">
+        <a asp-action="Create" class="btn btn-primary" asp-controller="TransaccionDetail" asp-route-transID="@Model.Transaccion.TransID">Agregar nuevo vehículo</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TransaccionDetail.VINVehiculo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Marca)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Modelo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TransaccionDetail.Vehiculo.Anno)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TransaccionDetail.PrecioAcordado)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TransaccionDetalles)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.VINVehiculo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vehiculo.Marca)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vehiculo.Modelo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vehiculo.Anno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PrecioAcordado)
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-primary glyphicon glyphicon-pencil"></a>
+                                <a asp-action="Details" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-success glyphicon glyphicon-list"></a>
+                                <a asp-action="Delete" asp-controller="TransaccionDetail" asp-route-id="@item.ID" class="btn btn-sm btn-danger glyphicon glyphicon-trash"></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

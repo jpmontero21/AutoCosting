@@ -4,128 +4,150 @@
     ViewData["Title"] = "Edit";
 }
 
-<h2>Editar Seguimiento</h2> 
+<h2>Editar Seguimiento</h2>
 <hr />
 
 <form asp-action="Edit">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="Tracking.TrackingID" />
     <div class="form-group">
-        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <input type="hidden" asp-for="Tracking.TrackingID" />
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Información del Seguimiento</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.TrackingID" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4" style="padding-top:6px">
+                            @Html.DisplayFor(modelItem => Model.Tracking.TrackingID)
+                        </div>
+                        <span asp-validation-for="Tracking.TrackingID" style="text-align:center" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.VINVehiculo" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="Tracking.VINVehiculo" class="form-control" asp-items="ViewBag.VINVehiculo"></select>
+                        </div>
+                        <span asp-validation-for="Tracking.VINVehiculo" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.Fecha" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Tracking.Fecha" class="form-control" type="date">
+                        </div>
+                        <span asp-validation-for="Tracking.Fecha" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.CostoTotal" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4" style="padding-top:6px">
+                            @Html.DisplayFor(modelItem => Model.Tracking.CostoTotal)
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.Notas" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <textarea asp-for="Tracking.Notas" class="form-control"></textarea>
+                        </div>
+                        <span asp-validation-for="Tracking.Notas" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="form-group">
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.TrackingID" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4" style="padding-top:6px">
-                    @Html.DisplayFor(modelItem => Model.Tracking.TrackingID)
-                </div>
-                <span asp-validation-for="Tracking.TrackingID" style="text-align:center" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.VINVehiculo" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Tracking.VINVehiculo" class="form-control" asp-items="ViewBag.VINVehiculo"></select>
-                </div>
-                <span asp-validation-for="Tracking.VINVehiculo" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.Fecha" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Tracking.Fecha" class="form-control" type="date">
-                </div>
-                <span asp-validation-for="Tracking.Fecha" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.CostoTotal" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4" style="padding-top:6px">
-                    @Html.DisplayFor(modelItem => Model.Tracking.CostoTotal)
-                </div>                
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.Notas" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <textarea asp-for="Tracking.Notas" class="form-control"></textarea>
-                </div>
-                <span asp-validation-for="Tracking.Notas" class="text-danger"></span>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
-                <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
-            </div>
+            <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
+            <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
         </div>
     </div>
 </form>
-<hr />
-<h3>Lineas de Detalle</h3>
-<hr />
-<a asp-action="Create" class="btn btn-primary" asp-controller="TrackingDetails" asp-route-trackingId="@Model.Tracking.TrackingID">Crear nuevo detalle</a>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.Trabajo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.Costo)
-            </th>            
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.Proveedor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.NumeroFactura)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.AddDescripcion)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.TrackingDetalles)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Trabajo.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Costo)
-                </td>                
-                <td>
-                    @Html.DisplayFor(modelItem => item.Proveedor.NombreEmpresa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumeroFactura)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AddDescripcion)
-                </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a asp-action="Edit" asp-controller="TrackingDetails" asp-route-id="@item.ID" class="btn btn-sm btn-primary glyphicon glyphicon-pencil"></a>
-                        <a asp-action="Details" asp-controller="TrackingDetails" asp-route-id="@item.ID" class="btn btn-sm btn-success glyphicon glyphicon-list"></a>
-                        <a asp-action="Delete" asp-controller="TrackingDetails" asp-route-id="@item.ID" class="btn btn-sm btn-danger glyphicon glyphicon-trash"></a>
-                    </div>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
+
+<hr />
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Lineas de Detalle</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        <a asp-action="Create" class="btn btn-primary" asp-controller="TrackingDetails" asp-route-trackingId="@Model.Tracking.TrackingID">Crear nuevo detalle</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.Trabajo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.Costo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.Proveedor)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.NumeroFactura)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.Descripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.AddDescripcion)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TrackingDetalles)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trabajo.Descripcion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Costo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Proveedor.NombreEmpresa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumeroFactura)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripcion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddDescripcion)
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Edit" asp-controller="TrackingDetails" asp-route-id="@item.ID" class="btn btn-sm btn-primary glyphicon glyphicon-pencil"></a>
+                                <a asp-action="Details" asp-controller="TrackingDetails" asp-route-id="@item.ID" class="btn btn-sm btn-success glyphicon glyphicon-list"></a>
+                                <a asp-action="Delete" asp-controller="TrackingDetails" asp-route-id="@item.ID" class="btn btn-sm btn-danger glyphicon glyphicon-trash"></a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
