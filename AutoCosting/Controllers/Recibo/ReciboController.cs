@@ -6,29 +6,27 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
-using AutoCosting.Models.Maintenance;
-using AutoCosting.HelpersAndValidations;
-using Microsoft.AspNetCore.Authorization;
+using R = AutoCosting.Models.Receipts;
 
-namespace AutoCosting.Controllers
+namespace AutoCosting.Controllers.Recibo
 {
-    [Authorize(Roles = SD.AdminEndUser)]
-    public class EmpresaController : Controller
+    public class ReciboController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public EmpresaController(ApplicationDbContext context)
+        public ReciboController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Empresa
+        // GET: Recibo
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Empresa.ToListAsync());
+            var applicationDbContext = _context.Recibos.Include(r => r.Parent);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Empresa/Details/5
+        // GET: Recibo/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,43 +34,42 @@ namespace AutoCosting.Controllers
                 return NotFound();
             }
 
-            var empresa = await _context.Empresa
+            var recibo = await _context.Recibos
+                .Include(r => r.Parent)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (empresa == null)
+            if (recibo == null)
             {
                 return NotFound();
             }
 
-            return View(empresa);
+            return View(recibo);
         }
 
-        // GET: Empresa/Create
+        // GET: Recibo/Create
         public IActionResult Create()
         {
-            if (_context.Empresa.Count() > 0)
-            {
-                return RedirectToAction(nameof(Index));
-            }
+            ViewData["TransID"] = new SelectList(_context.TransaccionHeaders, "TransID", "TransID");
             return View();
         }
 
-        // POST: Empresa/Create
+        // POST: Recibo/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Empresa empresa)
+        public async Task<IActionResult> Create([Bind("ID,TransID,Descripcion,Abono,Fecha")] R.Recibo recibo)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(empresa);
+                _context.Add(recibo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(empresa);
+            ViewData["TransID"] = new SelectList(_context.TransaccionHeaders, "TransID", "TransID", recibo.TransID);
+            return View(recibo);
         }
 
-        // GET: Empresa/Edit/5
+        // GET: Recibo/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -80,44 +77,37 @@ namespace AutoCosting.Controllers
                 return NotFound();
             }
 
-            var empresa = await _context.Empresa.FindAsync(id);
-            if (empresa == null)
+            var recibo = await _context.Recibos.FindAsync(id);
+            if (recibo == null)
             {
                 return NotFound();
             }
-            return View(empresa);
+            ViewData["TransID"] = new SelectList(_context.TransaccionHeaders, "TransID", "TransID", recibo.TransID);
+            return View(recibo);
         }
 
-        // POST: Empresa/Edit/5
+        // POST: Recibo/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,  Empresa empresa)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,TransID,Descripcion,Abono,Fecha")] R.Recibo recibo)
         {
-            if (id != empresa.ID)
+            if (id != recibo.ID)
             {
                 return NotFound();
             }
-            int num = _context.Sede.Where(x => x.EmpresaID == id).Count();
-            if (num > 1 && !empresa.MultiSedeYN)
-            {
-                ModelState.AddModelError(nameof(empresa.MultiSedeYN), "Existen Multiples Sedes para la Empresa.");
-            }
-            else
-            {
-                ModelState.Remove(nameof(empresa.MultiSedeYN));
-            }
-            if (ModelState.IsValid )
+
+            if (ModelState.IsValid)
             {
                 try
-                {                    
-                    _context.Update(empresa);
+                {
+                    _context.Update(recibo);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EmpresaExists(empresa.ID))
+                    if (!ReciboExists(recibo.ID))
                     {
                         return NotFound();
                     }
@@ -128,10 +118,11 @@ namespace AutoCosting.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(empresa);
+            ViewData["TransID"] = new SelectList(_context.TransaccionHeaders, "TransID", "TransID", recibo.TransID);
+            return View(recibo);
         }
 
-        // GET: Empresa/Delete/5
+        // GET: Recibo/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -139,30 +130,31 @@ namespace AutoCosting.Controllers
                 return NotFound();
             }
 
-            var empresa = await _context.Empresa
+            var recibo = await _context.Recibos
+                .Include(r => r.Parent)
                 .FirstOrDefaultAsync(m => m.ID == id);
-            if (empresa == null)
+            if (recibo == null)
             {
                 return NotFound();
             }
 
-            return View(empresa);
+            return View(recibo);
         }
 
-        // POST: Empresa/Delete/5
+        // POST: Recibo/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var empresa = await _context.Empresa.FindAsync(id);
-            _context.Empresa.Remove(empresa);
+            var recibo = await _context.Recibos.FindAsync(id);
+            _context.Recibos.Remove(recibo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EmpresaExists(int id)
+        private bool ReciboExists(int id)
         {
-            return _context.Empresa.Any(e => e.ID == id);
+            return _context.Recibos.Any(e => e.ID == id);
         }
     }
 }

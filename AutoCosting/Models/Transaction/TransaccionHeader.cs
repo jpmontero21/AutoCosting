@@ -1,5 +1,6 @@
 ﻿using AutoCosting.HelpersAndValidations;
 using AutoCosting.Models.Maintenance;
+using AutoCosting.Models.Receipts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -86,5 +87,7 @@ namespace AutoCosting.Models.Transaction
 
         public bool Eliminada { get; set; }
         public IEnumerable<TransaccionDetail> TransDetails { get; set; }
+        
+        public IEnumerable<Recibo> Recibos { get; set; }
     }
 }

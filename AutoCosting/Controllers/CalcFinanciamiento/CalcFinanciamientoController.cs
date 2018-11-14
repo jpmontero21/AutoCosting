@@ -29,7 +29,7 @@ namespace AutoCosting.Controllers.CalcFinanciamiento
                 calc.Calcular();
                 return this.RedirectToAction(nameof(Resultado), calc);
             }
-            return View("Index");
+            return View(nameof(Index));
         }       
 
         public IActionResult Index()

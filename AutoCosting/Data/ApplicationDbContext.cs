@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using AutoCosting.Models;
 using AutoCosting.Models.Maintenance;
+using AutoCosting.Models.Receipts;
 using AutoCosting.Models.Tracking;
 using AutoCosting.Models.Transaction;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using AutoCosting.Models.Backups;
 
 namespace AutoCosting.Data
 {
@@ -23,6 +25,7 @@ namespace AutoCosting.Data
         public DbSet<TrackingDetail> TrackinDetails { get; set; }
         public DbSet<TransaccionHeader> TransaccionHeaders { get; set; }
         public DbSet<TransaccionDetail> TransaccionDetails { get; set; }
+        public DbSet<Recibo> Recibos { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

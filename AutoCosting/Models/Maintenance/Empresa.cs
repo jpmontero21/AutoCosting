@@ -26,5 +26,9 @@ namespace AutoCosting.Models.Maintenance
         [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "La dirección de email no es válida.")]
         public string ContactEmail { get; set; }
+        
+        [Required(ErrorMessage = "La ruta para almacenar respaldos es requerida.")]
+        [Display(Name = "Ruta para almacenar respaldos.")]
+        public string DBBackupPath { get; set; }
     }
 }
