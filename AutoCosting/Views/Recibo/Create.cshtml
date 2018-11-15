@@ -1,44 +1,61 @@
 ﻿@model AutoCosting.Models.Receipts.Recibo
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Crear Recibo";
 }
 
-<h2>Create</h2>
-
-<h4>Recibo</h4>
+<h2>Crear Recibo</h2>
+<h2>Para la Transacción # @Html.DisplayFor(modelItem => Model.TransID)</h2>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TransID" class="control-label"></label>
-                <select asp-for="TransID" class ="form-control" asp-items="ViewBag.TransID"></select>
+<form asp-action="Create">
+    <input type="hidden" asp-for="TransID" />
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Información del Recibo de Dinero</h3>
             </div>
-            <div class="form-group">
-                <label asp-for="Descripcion" class="control-label"></label>
-                <input asp-for="Descripcion" class="form-control" />
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Descripcion" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Descripcion" class="form-control" placeholder="Descripción" />
+                        </div>
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Abono" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Abono" class="form-control" placeholder="Abono" />
+                        </div>
+                        <span asp-validation-for="Abono" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Fecha" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Fecha" class="form-control" type="date" placeholder="Fecha" />
+                        </div>
+                        <span asp-validation-for="Fecha" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-sm btn-primary" />
+                        <a asp-action="Edit" asp-controller="TransaccionHeader" asp-route-id="@Model.TransID" class="btn btn-sm btn-success">Regresar a la Transacción</a>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Abono" class="control-label"></label>
-                <input asp-for="Abono" class="form-control" />
-                <span asp-validation-for="Abono" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Fecha" class="control-label"></label>
-                <input asp-for="Fecha" class="form-control" />
-                <span asp-validation-for="Fecha" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        </div>
     </div>
-</div>
+</form>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 

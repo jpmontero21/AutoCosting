@@ -9,6 +9,7 @@ using AutoCosting.Data;
 using AutoCosting.Models.Transaction;
 using AutoCosting.HelpersAndValidations;
 using AutoCosting.Models.ViewModel;
+using R = AutoCosting.Models.Receipts;
 
 namespace AutoCosting.Controllers.Transaccion
 {
@@ -51,10 +52,12 @@ namespace AutoCosting.Controllers.Transaccion
                 d.Vehiculo = this._context.Vehiculos.FirstOrDefault(v => v.VIN == d.VINVehiculo);
 
             });
+            List<R.Recibo> recibos = this._context.Recibos.Where(r => r.TransID == id).ToList();
             TransaccionViewModel transView = new TransaccionViewModel()
             {
                 Transaccion = transaccionHeader,
-                TransaccionDetalles = list
+                TransaccionDetalles = list,
+                Recibos = recibos
             };
             ViewData["ClienteID"] = new SelectList(_context.Clientes, "ID", "Informacion", transaccionHeader.ClienteID);
             ViewData["VendedorID"] = new SelectList(_context.Empleados, "Cedula", "NombreCompleto", transaccionHeader.VendedorID);
@@ -115,10 +118,12 @@ namespace AutoCosting.Controllers.Transaccion
                 d.Vehiculo = this._context.Vehiculos.FirstOrDefault(v => v.VIN == d.VINVehiculo);
                 
             });
+            List<R.Recibo> recibos = this._context.Recibos.Where(r => r.TransID == id).ToList();
             TransaccionViewModel transView = new TransaccionViewModel()
             {
                 Transaccion = transaccionHeader,
-                TransaccionDetalles = list
+                TransaccionDetalles = list,
+                Recibos = recibos
             };
 
             ViewData["ClienteID"] = new SelectList(_context.Clientes, "ID", "Informacion", transaccionHeader.ClienteID);
@@ -190,10 +195,12 @@ namespace AutoCosting.Controllers.Transaccion
                 d.Vehiculo = this._context.Vehiculos.FirstOrDefault(v => v.VIN == d.VINVehiculo);
 
             });
+            List<R.Recibo> recibos = this._context.Recibos.Where(r => r.TransID == id).ToList();
             TransaccionViewModel transView = new TransaccionViewModel()
             {
                 Transaccion = transaccionHeader,
-                TransaccionDetalles = list
+                TransaccionDetalles = list,
+                Recibos = recibos
             };
             ViewData["ClienteID"] = new SelectList(_context.Clientes, "ID", "Informacion", transaccionHeader.ClienteID);
             ViewData["VendedorID"] = new SelectList(_context.Empleados, "Cedula", "NombreCompleto", transaccionHeader.VendedorID);

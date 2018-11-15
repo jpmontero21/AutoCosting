@@ -46,10 +46,18 @@ namespace AutoCosting.Controllers.Recibo
         }
 
         // GET: Recibo/Create
-        public IActionResult Create()
+        public IActionResult Create(int transId)
         {
-            ViewData["TransID"] = new SelectList(_context.TransaccionHeaders, "TransID", "TransID");
-            return View();
+            R.Recibo recibo = new R.Recibo();
+            recibo.TransID = transId;
+            var transaccion = this._context.TransaccionHeaders.FirstOrDefault(t=>t.TransID == transId);
+            if (transaccion == null)
+            {
+                return NotFound();
+            }
+            recibo.Parent = transaccion;
+            recibo.Fecha = DateTime.Today;            
+            return View(recibo);
         }
 
         // POST: Recibo/Create
@@ -63,9 +71,9 @@ namespace AutoCosting.Controllers.Recibo
             {
                 _context.Add(recibo);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["TransID"] = new SelectList(_context.TransaccionHeaders, "TransID", "TransID", recibo.TransID);
+                //                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Edit), "TransaccionHeader", new { @id = recibo.TransID });
+            }            
             return View(recibo);
         }
 

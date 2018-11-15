@@ -13,80 +13,132 @@
 <hr />
 
 <div class="form-group">
-    <div class="box box-danger">
-        <div class="box-header with-border">
-            <h3 class="box-title">Información de la Transaccón</h3>
-            <div class="box-tools pull-right">
-                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-7">
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información de la Transaccón</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Transaccion.VendedorID" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="Transaccion.VendedorID" class="form-control" disabled asp-items="ViewBag.VendedorID"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Transaccion.ClienteID" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="Transaccion.ClienteID" class="form-control" disabled asp-items="ViewBag.ClienteID">
+                                    <option disabled selected>--Seleccionar--</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row hidden">
+                            <div class="col-sm-3">
+                                <label asp-for="Transaccion.EmpresaID" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="Transaccion.EmpresaID" class="form-control" disabled asp-items="ViewBag.EmpresaID"></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Transaccion.SedeID" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="Transaccion.SedeID" class="form-control" disabled asp-items="ViewBag.SedeID"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Transaccion.TipoPago" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="Transaccion.TipoPago" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoPago>()"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Transaccion.TipoTransaccion" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <select asp-for="Transaccion.TipoTransaccion" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoTransaccion>()"></select>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Transaccion.Fecha" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Transaccion.Fecha" readonly="readonly" class="form-control" type="date" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="box-body">
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label asp-for="Transaccion.VendedorID" class="custom-label"></label>
+        @if (Model.Recibos.Count > 0)
+        {
+            <div class="col-md-5">
+                <div class="box box-danger">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Recibos</h3>
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                        </div>
                     </div>
-                    <div class="col-sm-4">
-                        <select asp-for="Transaccion.VendedorID" class="form-control" disabled asp-items="ViewBag.VendedorID"></select>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label asp-for="Transaccion.ClienteID" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select asp-for="Transaccion.ClienteID" class="form-control" disabled asp-items="ViewBag.ClienteID">
-                            <option disabled selected>--Seleccionar--</option>
-                        </select>
-                    </div>
-                </div>
-                <br />
-                <div class="row hidden">
-                    <div class="col-sm-3">
-                        <label asp-for="Transaccion.EmpresaID" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select asp-for="Transaccion.EmpresaID" class="form-control" disabled asp-items="ViewBag.EmpresaID"></select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label asp-for="Transaccion.SedeID" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select asp-for="Transaccion.SedeID" class="form-control" disabled asp-items="ViewBag.SedeID"></select>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label asp-for="Transaccion.TipoPago" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select asp-for="Transaccion.TipoPago" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoPago>()"></select>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label asp-for="Transaccion.TipoTransaccion" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <select asp-for="Transaccion.TipoTransaccion" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoTransaccion>()"></select>
-                    </div>
-                </div>
-                <br />
-                <div class="row">
-                    <div class="col-sm-3">
-                        <label asp-for="Transaccion.Fecha" class="custom-label"></label>
-                    </div>
-                    <div class="col-sm-4">
-                        <input asp-for="Transaccion.Fecha" readonly="readonly" class="form-control" type="date" />
+                    <div class="box-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Recibo.Descripcion)
+                                    </th>
+                                    <th style="text-align:right">
+                                        @Html.DisplayNameFor(model => model.Recibo.Abono)
+                                    </th>
+                                    <th style="text-align:right">
+                                        @Html.DisplayNameFor(model => model.Recibo.Fecha)
+                                    </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model.Recibos)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Descripcion)
+                                        </td>
+                                        <td style="text-align:right">
+                                            @Html.DisplayFor(modelItem => item.Abono)
+                                        </td>
+                                        <td style="text-align:right">
+                                            @Html.DisplayFor(modelItem => item.Fecha)
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-        </div>
+        }
     </div>
     <form asp-action="Delete">
         <input type="hidden" asp-for="Transaccion.TransID" />
