@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20181103215320_AddCedulaToCliente.cs" />
     <Compile Remove="Data\Migrations\20181103215320_AddCedulaToCliente.Designer.cs" />
+    <Compile Remove="Data\Migrations\20181117195028_AddCajaToDb.cs" />
+    <Compile Remove="Data\Migrations\20181117195028_AddCajaToDb.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,0 +1,109 @@
+﻿@model AutoCosting.Models.CierreAperturaCaja.Caja
+@using AutoCosting.HelpersAndValidations
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Cerrar Caja</h2>
+<hr />
+
+@if (ViewData["CerrarMessage"] != null && !string.IsNullOrEmpty(ViewData["CerrarMessage"].ToString()))
+{
+    <div class="form-group">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Cierre de caja Realizado.</h3>
+            </div>
+            <div class="box-body">
+                <div class="box-body alert alert-success alert-dismissible">@ViewData["CerrarMessage"]</div>
+                <div class="form-group">
+                    <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="form-group">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Valores de Cierre de caja.</h3>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Fecha" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Fecha" class="form-control" placeholder="Fecha" readonly="readonly" type="date">
+                            </div>
+                            <span asp-validation-for="Fecha" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Monto" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="hidden" asp-for="Monto" />
+                                @Html.DisplayFor(model => model.Monto)
+
+                            </div>
+                            <span asp-validation-for="Monto" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Tipo" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Tipo" class="form-control" placeholder="Tipo" readonly="readonly" />
+
+                            </div>
+                            <span asp-validation-for="Tipo" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Usuario" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Usuario" class="form-control" placeholder="Usuario" readonly="readonly" />
+                            </div>
+                            <span asp-validation-for="Usuario" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="NumeroCaja" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="NumeroCaja" class="form-control" placeholder="Numero de Caja" />
+                            </div>
+                            <span asp-validation-for="NumeroCaja" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Observaciones" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <textarea asp-for="Observaciones" class="form-control" placeholder="Notas ..."></textarea>
+                            </div>
+                            <span asp-validation-for="Observaciones" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="submit" value="Cerrar Caja" class="btn btn-sm btn-primary" />
+                            <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}

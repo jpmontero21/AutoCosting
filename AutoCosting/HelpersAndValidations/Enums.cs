@@ -58,4 +58,10 @@ namespace AutoCosting.HelpersAndValidations
         Interna = 0,
         Externa = 1        
     }
+
+    public enum TipoCaja : short
+    {
+        Cierre = 0,
+        Apertura = 1
+    }
 }

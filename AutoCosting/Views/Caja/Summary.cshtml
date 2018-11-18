@@ -1,0 +1,54 @@
+﻿@model AutoCosting.Models.ViewModel.CierreDeCajaViewModel
+@{
+    ViewData["Title"] = "Resumen";
+}
+
+<h2>Resumen Financiero</h2>
+<div>
+    <h4><b>Cierre de caja</b></h4>
+    <hr />
+</div>
+
+<p>
+    <b>@Html.DisplayNameFor(model => model.Empresa): </b>
+    @Html.DisplayTextFor(model => model.Empresa.Nombre)<br />
+    <b>@Html.DisplayNameFor(model => model.Empresa.Telefono): </b>
+    @Html.DisplayTextFor(model => model.Empresa.Telefono)<br />
+    <b>@Html.DisplayNameFor(model => model.CierreCaja.Fecha): </b>
+    @Html.DisplayFor(model => model.CierreCaja.Fecha)<br />
+    <b>@Html.DisplayNameFor(model => model.CierreCaja.Usuario) encargado del Cierre: </b>
+    @Html.DisplayTextFor(model => model.CierreCaja.Usuario)<br />
+    <b>@Html.DisplayNameFor(model => model.CierreCaja.NumeroCaja): </b>
+    @Html.DisplayTextFor(model => model.CierreCaja.NumeroCaja)<br />
+    <b>@Html.DisplayNameFor(model => model.CierreCaja.Observaciones): </b>
+    @Html.DisplayTextFor(model => model.CierreCaja.Observaciones)<br />    
+</p>
+<b>Saldos En caja:</b>
+<div class="row">
+    <div class="col-md-3">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Saldo Inicial:</td>
+                    <td style="text-align:right">@Html.DisplayFor(Model => Model.AperturaCaja.Monto)</td>
+                </tr>
+                <tr>
+                    <td>Cantidad de Recibos:</td>
+                    <td style="text-align:right">@Html.DisplayFor(Model => Model.Recibos.Count)</td>
+                </tr>
+                <tr>
+                    <td>Total de Recibos:</td>
+                    <td style="text-align:right">@Model.Recibos.Sum(r => r.Abono).GetValueOrDefault(0).ToString("#,###0.00")</td>
+                </tr>
+                <tr>
+                    <td>Saldo al Cierre:</td>
+                    <td style="text-align:right">@Html.DisplayFor(Model => Model.CierreCaja.Monto)</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div>    
+    <a class="btn btn-sm btn-primary no-print" onclick="window.print();"><i class="fa fa-print"></i> Imprimir</a>
+    <a asp-action="Index" class="btn btn-sm btn-success no-print">Regresar</a>
+</div>

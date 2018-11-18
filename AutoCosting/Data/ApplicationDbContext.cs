@@ -9,6 +9,7 @@ using AutoCosting.Models.Transaction;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Models.Backups;
+using AutoCosting.Models.CierreAperturaCaja;
 
 namespace AutoCosting.Data
 {
@@ -26,6 +27,7 @@ namespace AutoCosting.Data
         public DbSet<TransaccionHeader> TransaccionHeaders { get; set; }
         public DbSet<TransaccionDetail> TransaccionDetails { get; set; }
         public DbSet<Recibo> Recibos { get; set; }
+        public DbSet<Caja> AperturaCierreCaja { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
