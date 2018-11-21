@@ -1,0 +1,85 @@
+﻿@model AutoCosting.Models.Transaction.Comision
+@using AutoCosting.HelpersAndValidations
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Detalles de la Comisión</h2>
+<hr />
+
+<div class="form-group">
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Comisión @Model.TipoComision</h3>
+        </div>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="TransID" class="control-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <select asp-for="TransID" class="form-control" asp-items="ViewBag.TransID" disabled>
+                            <option disabled selected>--Seleccionar--</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Nombre" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        @if (Model.TipoComision == TipoComision.Interna)
+                        {
+                            <select asp-for="Nombre" class="form-control" asp-items="ViewBag.VendedorID" disabled>
+                                <option disabled selected>--Seleccionar--</option>
+                            </select>
+                        }
+                        else
+                        {
+                            <input asp-for="Nombre" class="form-control" placeholder="Nombre" readonly="readonly">
+                        }
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Descripcion" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Descripcion" class="form-control" placeholder="Descripción" readonly="readonly">
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Monto" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Monto" class="form-control" placeholder="Monto" readonly="readonly">
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="TipoComision" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="TipoComision" class="form-control" placeholder="Tipo" readonly="readonly" >
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-sm btn-primary">Editar</a>
+                    <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+

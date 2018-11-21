@@ -1,0 +1,61 @@
+﻿@model IEnumerable<AutoCosting.Models.Transaction.Comision>
+@using AutoCosting.HelpersAndValidations
+@{
+    ViewData["Title"] = "Comisiones";
+}
+
+<h2>Comisiones</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary" asp-route-commType="@TipoComision.Externa">Crear Comisión Externa</a>
+    <a asp-action="Create" class="btn btn-primary" asp-route-commType="@TipoComision.Interna">Crear Comisión Interna</a>
+</p>
+<div class="box box-info">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Parent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Nombre)
+                </th>
+                <th style="text-align:right">
+                    @Html.DisplayNameFor(model => model.Monto)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Descripcion)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TipoComision)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Parent.TransID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td style="text-align:right">
+                        @Html.DisplayFor(modelItem => item.Monto)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TipoComision)
+                    </td>
+                    <td>
+                        @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

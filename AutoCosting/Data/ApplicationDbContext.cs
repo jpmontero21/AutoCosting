@@ -29,6 +29,7 @@ namespace AutoCosting.Data
         public DbSet<TransaccionDetail> TransaccionDetails { get; set; }
         public DbSet<Recibo> Recibos { get; set; }
         public DbSet<Caja> AperturaCierreCaja { get; set; }
+        public DbSet<Comision> Comisiones { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

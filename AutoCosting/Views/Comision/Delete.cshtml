@@ -1,0 +1,92 @@
+﻿@model AutoCosting.Models.Transaction.Comision
+@using AutoCosting.HelpersAndValidations
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Eliminar Comisión</h2>
+<hr />
+
+<h3>Está seguro que desea eliminar esta comisión?</h3>
+<hr />
+
+
+<form asp-action="Delete">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Comisión @Model.TipoComision</h3>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="TransID" class="control-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="TransID" class="form-control" asp-items="ViewBag.TransID" disabled>
+                                <option disabled selected>--Seleccionar--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Nombre" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            @if (Model.TipoComision == TipoComision.Interna)
+                            {
+                                <select asp-for="Nombre" class="form-control" asp-items="ViewBag.VendedorID" disabled>
+                                    <option disabled selected>--Seleccionar--</option>
+                                </select>
+                            }
+                            else
+                            {
+                                <input asp-for="Nombre" class="form-control" placeholder="Nombre" readonly="readonly">
+                            }
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Descripcion" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Descripcion" class="form-control" placeholder="Descripción" readonly="readonly">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Monto" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Monto" class="form-control" placeholder="Monto" readonly="readonly">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="TipoComision" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="TipoComision" class="form-control" placeholder="Tipo" readonly="readonly">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
+                        <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

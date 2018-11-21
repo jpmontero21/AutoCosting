@@ -89,5 +89,11 @@ namespace AutoCosting.Models.Transaction
         public IEnumerable<TransaccionDetail> TransDetails { get; set; }
         
         public IEnumerable<Recibo> Recibos { get; set; }
+
+        [NotMapped]
+        public string TransIdStr
+        {
+            get => this.TransID.ToString("00000000");
+        }
     }
 }
