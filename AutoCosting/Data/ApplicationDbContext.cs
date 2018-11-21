@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Models.Backups;
 using AutoCosting.Models.CierreAperturaCaja;
+using System.Linq;
 
 namespace AutoCosting.Data
 {
@@ -37,8 +38,8 @@ namespace AutoCosting.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Sede>().HasKey(c => new { c.ID, c.EmpresaID});
-            builder.Entity<Cliente>(entity => { entity.HasIndex(c => c.Cedula).IsUnique(); });
+            builder.Entity<Sede>().HasKey(c => new { c.ID, c.EmpresaID });
+            builder.Entity<Cliente>(entity => { entity.HasIndex(c => c.Cedula).IsUnique(); });            
         }
     }
 }

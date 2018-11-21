@@ -52,7 +52,7 @@
                         @Html.DisplayFor(modelItem => item.CostoTotal)
                     </th>
                     <td>
-                        @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.TrackingID })
+                        @await Html.PartialAsync("_TableButtonPartialEditDetails", new IndividualButtonPartial { Id = item.TrackingID })
                     </td>
                 </tr>
             }

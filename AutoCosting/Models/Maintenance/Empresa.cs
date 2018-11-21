@@ -20,15 +20,21 @@ namespace AutoCosting.Models.Maintenance
         [RegularExpression(@"^(\+\s?)?((?<!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$", ErrorMessage = "Número de teléfono Invalido.")]
         [Display(Name = "Teléfono")]
         public string Telefono { get; set; }
-        [Required]
-        [Display(Name = "Multi Sede")]
-        public bool MultiSedeYN { get; set; }
+        
         [Display(Name = "Email")]
         [EmailAddress(ErrorMessage = "La dirección de email no es válida.")]
         public string ContactEmail { get; set; }
         
+        //Configuration 
         [Required(ErrorMessage = "La ruta para almacenar respaldos es requerida.")]
         [Display(Name = "Ruta para almacenar respaldos.")]
         public string DBBackupPath { get; set; }
+        [Required]
+        [Display(Name = "Multi Sede")]
+        public bool MultiSedeYN { get; set; }
+                
+        [Display(Name = "Imprimir Logo")]
+        public bool ImprimirLogoYN { get; set; }
+        
     }
 }

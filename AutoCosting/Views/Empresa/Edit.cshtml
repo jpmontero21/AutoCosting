@@ -50,19 +50,6 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-2">
-                            <label asp-for="MultiSedeYN" class="custom-label"></label>
-                        </div>
-                        <div class="col-sm-4">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="MultiSedeYN" />
-                                </label>
-                            </div>
-                        </div>
-                        <span asp-validation-for="MultiSedeYN" class="text-danger"></span>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-2">
                             <label asp-for="ContactEmail" class="custom-label"></label>
                         </div>
                         <div class="col-sm-4">
@@ -91,6 +78,16 @@
                         </div>
                         <span asp-validation-for="DBBackupPath" class="text-danger"></span>
                     </div>
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="MultiSedeYN" /> @Html.DisplayNameFor(model => model.MultiSedeYN)
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input asp-for="ImprimirLogoYN" /> @Html.DisplayNameFor(model => model.ImprimirLogoYN)
+                        </label>
+                    </div>                    
                 </div>
             </div>
         </div>

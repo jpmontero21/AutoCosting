@@ -55,30 +55,27 @@
                         </div>
                         <span asp-validation-for="Telefono" class="text-danger"></span>
                     </div>
+                    <br />
                     <div class="row">
                         <div class="col-sm-2">
-                            <label asp-for="UsarCierreCajaYN" class="custom-label" style="padding-top:9px"></label>
+                            <label asp-for="NombreContacto" class="custom-label"></label>
                         </div>
                         <div class="col-sm-4">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="UsarCierreCajaYN" />
-                                </label>
-                            </div>
+                            <input asp-for="NombreContacto" class="form-control" placeholder="Contacto" />
                         </div>
+                        <span asp-validation-for="NombreContacto" class="text-danger"></span>
                     </div>
+                    <br />
                     <div class="row">
                         <div class="col-sm-2">
-                            <label asp-for="ImprimirLogoYN" class="custom-label" style="padding-top:9px"></label>
+                            <label asp-for="ContactEmail" class="custom-label"></label>
                         </div>
                         <div class="col-sm-4">
-                            <div class="checkbox">
-                                <label>
-                                    <input asp-for="ImprimirLogoYN" />
-                                </label>
-                            </div>
+                            <input asp-for="ContactEmail" class="form-control" placeholder="Email" />
                         </div>
+                        <span asp-validation-for="ContactEmail" class="text-danger"></span>
                     </div>
+                    <br />
                     <div class="form-group">
                         <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
                         <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>

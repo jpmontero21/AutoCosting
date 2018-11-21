@@ -27,12 +27,15 @@ namespace AutoCosting.Models.Maintenance
         [RegularExpression(@"^(\+\s?)?((?<!\+.*)\(\+?\d+([\s\-\.]?\d+)?\)|\d+)([\s\-\.]?(\(\d+([\s\-\.]?\d+)?\)|\d+))*(\s?(x|ext\.?)\s?\d+)?$", ErrorMessage = "Número de teléfono Invalido.")]
         [Display(Name = "Teléfono")]
         public string Telefono { get; set; }
-        [DefaultValue(false)]
-        [Display(Name = "Usar Cierre de Caja")]
-        public bool UsarCierreCajaYN { get; set; }
-        [DefaultValue(true)]
-        [Display(Name = "Imprimir Logo")]
-        public bool ImprimirLogoYN { get; set; }
+
+        [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = "La dirección de email no es válida.")]
+        public string ContactEmail { get; set; }
+
+        [Display(Name = "Nombre del Contacto")]
+        [Required(ErrorMessage = "El Nombre del Contacto es requerido.")]
+        public string NombreContacto { get; set; }
+
 
     }
 }

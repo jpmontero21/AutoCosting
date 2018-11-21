@@ -93,7 +93,7 @@
                 @Html.DisplayFor(modelItem => item.FechaIngreso)
             </td>
             <td>
-                @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { StrId = item.VIN })
+                @await Html.PartialAsync("_TableButtonPartialEditDetails", new IndividualButtonPartial { StrId = item.VIN })
             </td>
         </tr>
         }

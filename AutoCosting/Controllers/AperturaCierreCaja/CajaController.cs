@@ -48,13 +48,13 @@ namespace AutoCosting.Controllers.AperturaCierreCaja
             }
 
             Claim claim = _httpContextAccessor.HttpContext.User.FindFirst(ClaimTypes.NameIdentifier);
-            
+            Caja apertura = this._context.AperturaCierreCaja.OrderByDescending(c => c.Fecha).FirstOrDefault(c => c.Tipo == TipoCaja.Apertura);
             Caja caja = new Caja()
             {
                 Fecha = DateTime.Today,
                 Usuario = (claim != null && claim.Subject != null) ? claim.Subject.Name : string.Empty,
                 Tipo = TipoCaja.Cierre,
-                Monto = this.GetEntradasDeDinero(DateTime.Today),
+                Monto = this.GetEntradasDeDinero(DateTime.Today) + apertura.Monto,
                 Observaciones = $"Cierre de caja, final de día {DateTime.Today.ToShortDateString()}."
             };
             return View(caja);
