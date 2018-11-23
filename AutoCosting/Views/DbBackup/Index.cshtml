@@ -61,8 +61,12 @@
             </div>
             <div class="box-body">
                 @if (ViewData["RestoreMessage"] != null && !string.IsNullOrEmpty(ViewData["RestoreMessage"].ToString()))
-                { 
+                {
                     <div class="box-body alert alert-success alert-dismissible">@ViewData["RestoreMessage"]</div>
+                }
+                @if (ViewData["WarningMessage"] != null && !string.IsNullOrEmpty(ViewData["WarningMessage"].ToString()))
+                {
+                    <div class="box-body alert alert-warning alert-dismissible">@ViewData["WarningMessage"]</div>
                 }
                 <div class="form-group">
                     <div class="row">

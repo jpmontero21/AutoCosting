@@ -44,7 +44,7 @@ namespace AutoCosting.Controllers.Backups
         [HttpPost]
         public IActionResult Create(DbBackup dbBackup)
         {
-            string connString = _config.GetConnectionString("DefaultConnection");            
+            string connString = _config.GetConnectionString("DefaultConnection");
             string route = dbBackup.Path;
             string name = dbBackup.Name;
             SqlConnection connection = new SqlConnection(connString);
@@ -67,8 +67,15 @@ namespace AutoCosting.Controllers.Backups
             {
                 dbBackup = new DbBackup() { Empresa = this._context.Empresa.FirstOrDefault() };
                 string file = string.Empty;
+                dbBackup.Name = $"AutoCosting{DateTime.Now.ToString("yyyyMMddHHmmss")}.bak";
+                dbBackup.Path = dbBackup.Empresa.DBBackupPath;
                 if (HttpContext.Request.Form.Files != null)
                 {
+                    if (HttpContext.Request.Form.Files.Count == 0)
+                    {
+                        ViewData["WarningMessage"] = "Debe seleccionar un archivo de Restauración.";                        
+                        return View(nameof(Index), dbBackup);
+                    }
                     IFormFileCollection files = HttpContext.Request.Form.Files;
                     file = ProcessBackupFile(files, dbBackup);
                 }
@@ -84,27 +91,31 @@ namespace AutoCosting.Controllers.Backups
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
-                ViewData["RestoreMessage"] = "Restauración de datos completada con éxito.";
-                dbBackup.Name = $"AutoCosting{DateTime.Now.ToString("yyyyMMddHHmmss")}.bak";
-                dbBackup.Path = dbBackup.Empresa.DBBackupPath;
+                ViewData["RestoreMessage"] = "Restauración de datos completada con éxito.";                
             }
             catch (Exception ex)
-            {                
-                throw ex;
-            }            
-            return View(nameof(Index),dbBackup);
+            {
+                ViewData["WarningMessage"] = ex.Message;                
+                View(nameof(Index), dbBackup);
+            }
+            return View(nameof(Index), dbBackup);
         }
 
         private string ProcessBackupFile(IFormFileCollection files_, DbBackup dbBackup)
-        {            
-            var fileName = string.Empty;            
+        {
+            var fileName = string.Empty;
             IFormFileCollection files = files_;
             var file = files[0];
             if (file == null)
             {
-                return string.Empty; 
+                return string.Empty;
             }
             fileName = Path.Combine(dbBackup.Empresa.DBBackupPath, file.FileName);
+
+            if (!file.FileName.Contains("AutoCosting") || !file.FileName.EndsWith(".bak"))
+            {
+                throw new Exception("Archivo de restauración inválido.");
+            }
 
             if (!System.IO.File.Exists(fileName))
             {                
