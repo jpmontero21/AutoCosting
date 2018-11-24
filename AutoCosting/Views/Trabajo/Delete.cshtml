@@ -11,6 +11,7 @@
 <hr />
 <form asp-action="Delete">    
     <div class="form-group">
+        <div asp-validation-summary="ModelOnly"></div>        
         <div class="box box-danger">
             <div class="box-header with-border">
                 <h3 class="box-title">Información del Trabajo</h3>
@@ -35,6 +36,8 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <span asp-validation-for="ID" class="text-danger"></span>
+                        <br />
                         <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
                         <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
                     </div>
@@ -43,3 +46,7 @@
         </div>
     </div>
 </form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

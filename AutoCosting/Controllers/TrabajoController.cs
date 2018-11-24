@@ -9,6 +9,7 @@ using AutoCosting.Data;
 using AutoCosting.Models.Maintenance;
 using Microsoft.AspNetCore.Authorization;
 using AutoCosting.HelpersAndValidations;
+using AutoCosting.Models.Tracking;
 
 namespace AutoCosting.Controllers
 {
@@ -142,7 +143,14 @@ namespace AutoCosting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            TrackingDetail track = this._context.TrackinDetails.FirstOrDefault(t => t.TrabajoId == id);
+            
             var trabajo = await _context.Trabajos.FindAsync(id);
+            if (track != null)
+            {
+                ModelState.AddModelError("ID", "No se puede eliminar, este trabajo está en uso.");
+                return View(trabajo);
+            }
             _context.Trabajos.Remove(trabajo);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

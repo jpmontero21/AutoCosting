@@ -111,9 +111,13 @@ desired effect
                 <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MENU PRINCIPAL</li>
                     <!-- Optionally, you can add icons to the links -->
-                    <li class="active"><a asp-area="" asp-controller="TrackingHeaders" asp-action="Index"><i class="fa fa-link"></i> <span>Seguimientos</span></a></li>
-                    <li class="active"><a asp-area="" asp-controller="CalcFinanciamiento" asp-action="Index"><i class="fa fa-link"></i> <span>Calcular Financiamiento</span></a></li>
-                    <li class="active"><a asp-area="" asp-controller="TransaccionHeader" asp-action="Index"><i class="fa fa-car"></i> <span>Transacciones</span></a></li>
+                    @if (User.IsInRole(SD.AdminEndUser))
+                    {
+                        <li><a asp-area="" asp-controller="TrackingHeaders" asp-action="Index"><i class="fa fa-gears"></i> <span>Seguimientos</span></a></li>
+                    }
+                    <li><a asp-area="" asp-controller="CalcFinanciamiento" asp-action="Index"><i class="fa fa-calculator"></i> <span>Calcular Financiamiento</span></a></li>
+                    <li><a asp-area="" asp-controller="TransaccionHeader" asp-action="Index"><i class="fa fa-car"></i> <span>Transacciones</span></a></li>
+                    <li><a asp-area="" asp-controller="Caja" asp-action="Index"><i class="fa fa-flag"></i> <span>Caja</span></a></li>
                     <li class="treeview">
                         <a href="#">
                             <i class="fa fa-server"></i>
@@ -134,9 +138,11 @@ desired effect
                     </li>
                     @if (User.IsInRole(SD.AdminEndUser))
                     {
+                        <li><a asp-area="" asp-controller="Comision" asp-action="Index"><i class="fa fa-money"></i> <span>Comisiones</span></a></li>
+                        <li><a asp-area="" asp-controller="DbBackup" asp-action="Index"><i class="fa fa-database"></i> <span>Respaldos</span></a></li>
                         <li><a asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-user-plus"></i> <span>Registrar Usuario</span></a></li>
                     }
-
+                    <li><a href="~/Help/Ayuda.pdf" target="_blank"><i class="fa fa-info-circle"></i> <span>Ayuda</span></a></li>
                 </ul>
                 <!-- /.sidebar-menu -->
             </section>

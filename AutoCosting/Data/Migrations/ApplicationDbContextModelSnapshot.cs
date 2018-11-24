@@ -72,6 +72,32 @@ namespace AutoCosting.Data.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("AutoCosting.Models.CierreAperturaCaja.Caja", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime?>("Fecha")
+                        .IsRequired();
+
+                    b.Property<double?>("Monto")
+                        .IsRequired();
+
+                    b.Property<string>("NumeroCaja");
+
+                    b.Property<string>("Observaciones");
+
+                    b.Property<short>("Tipo");
+
+                    b.Property<string>("Usuario")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.ToTable("tblCaja");
+                });
+
             modelBuilder.Entity("AutoCosting.Models.Maintenance.Cliente", b =>
                 {
                     b.Property<int>("ID")
@@ -140,7 +166,12 @@ namespace AutoCosting.Data.Migrations
 
                     b.Property<string>("ContactEmail");
 
+                    b.Property<string>("DBBackupPath")
+                        .IsRequired();
+
                     b.Property<string>("Direccion");
+
+                    b.Property<bool>("ImprimirLogoYN");
 
                     b.Property<bool>("MultiSedeYN");
 
@@ -186,16 +217,17 @@ namespace AutoCosting.Data.Migrations
 
                     b.Property<int>("EmpresaID");
 
-                    b.Property<string>("Direccion");
+                    b.Property<string>("ContactEmail");
 
-                    b.Property<bool>("ImprimirLogoYN");
+                    b.Property<string>("Direccion");
 
                     b.Property<string>("Nombre")
                         .IsRequired();
 
-                    b.Property<string>("Telefono");
+                    b.Property<string>("NombreContacto")
+                        .IsRequired();
 
-                    b.Property<bool>("UsarCierreCajaYN");
+                    b.Property<string>("Telefono");
 
                     b.HasKey("ID", "EmpresaID");
 
@@ -355,6 +387,30 @@ namespace AutoCosting.Data.Migrations
                     b.ToTable("tblVehiculo");
                 });
 
+            modelBuilder.Entity("AutoCosting.Models.Receipts.Recibo", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<double?>("Abono")
+                        .IsRequired();
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<DateTime?>("Fecha")
+                        .IsRequired();
+
+                    b.Property<int?>("TransID")
+                        .IsRequired();
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TransID");
+
+                    b.ToTable("tblRecibo");
+                });
+
             modelBuilder.Entity("AutoCosting.Models.Tracking.TrackingDetail", b =>
                 {
                     b.Property<int>("ID")
@@ -404,6 +460,30 @@ namespace AutoCosting.Data.Migrations
                     b.HasIndex("VINVehiculo");
 
                     b.ToTable("tblTrackingHeader");
+                });
+
+            modelBuilder.Entity("AutoCosting.Models.Transaction.Comision", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Descripcion");
+
+                    b.Property<double>("Monto");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired();
+
+                    b.Property<short>("TipoComision");
+
+                    b.Property<int>("TransID");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("TransID");
+
+                    b.ToTable("tblComision");
                 });
 
             modelBuilder.Entity("AutoCosting.Models.Transaction.TransaccionDetail", b =>
@@ -584,6 +664,14 @@ namespace AutoCosting.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("AutoCosting.Models.Receipts.Recibo", b =>
+                {
+                    b.HasOne("AutoCosting.Models.Transaction.TransaccionHeader", "Parent")
+                        .WithMany("Recibos")
+                        .HasForeignKey("TransID")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("AutoCosting.Models.Tracking.TrackingDetail", b =>
                 {
                     b.HasOne("AutoCosting.Models.Maintenance.Proveedor", "Proveedor")
@@ -606,6 +694,14 @@ namespace AutoCosting.Data.Migrations
                     b.HasOne("AutoCosting.Models.Maintenance.Vehiculo", "Vehiculo")
                         .WithMany()
                         .HasForeignKey("VINVehiculo")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("AutoCosting.Models.Transaction.Comision", b =>
+                {
+                    b.HasOne("AutoCosting.Models.Transaction.TransaccionHeader", "Parent")
+                        .WithMany()
+                        .HasForeignKey("TransID")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

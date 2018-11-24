@@ -14,50 +14,57 @@
 
 <form asp-action="Delete">
     <div class="form-group">
-        <input type="hidden" asp-for="TransID" />        
+        <input type="hidden" asp-for="TransID" />
         <div class="form-group">
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="VINVehiculo" class="custom-label"></label>
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Información del detalle</h3>
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="Vehiculo.Descripcion" class="form-control" readonly="readonly" />
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="VINVehiculo" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="Vehiculo.Descripcion" class="form-control" readonly="readonly" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="PrecioAcordado" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="PrecioAcordado" class="form-control" readonly="readonly" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="PrecioMinimo" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="PrecioMinimo" readonly="readonly" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="PrecioRecomendado" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="PrecioRecomendado" readonly="readonly" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="form-group">
+                            <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
+                            <a asp-action="Edit" asp-controller="TransaccionHeader" asp-route-id="@Model.TransID" class="btn btn-sm btn-success">Regresar a la Transacción</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="PrecioAcordado" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="PrecioAcordado" class="form-control"  readonly="readonly"  />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="PrecioMinimo" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="PrecioMinimo" readonly="readonly" class="form-control" />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="PrecioRecomendado" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="PrecioRecomendado" readonly="readonly" class="form-control" />
-                </div>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
-                <a asp-action="Edit" asp-controller="TransaccionHeader" asp-route-id="@Model.TransID" class="btn btn-sm btn-success">Regresar a la Transacción</a>
             </div>
         </div>
     </div>
 </form>
-
-@*<form asp-action="Delete">
-    <input type="hidden" asp-for="ID" />
-    <input type="submit" value="Delete" class="btn btn-default" /> |
-    <a asp-action="Index">Back to List</a>
-</form>*@

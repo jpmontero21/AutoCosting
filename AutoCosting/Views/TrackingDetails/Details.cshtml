@@ -11,62 +11,75 @@
 
 <div class="form-group">
     <input type="hidden" asp-for="TrackingId" />
-    <div class="form-group">
-        <div class="row">
-            <div class="col-sm-3">
-                <label asp-for="TrabajoId" class="custom-label"></label>
-            </div>
-            <div class="col-sm-4">
-                <select asp-for="TrabajoId" class="form-control" disabled asp-items="ViewBag.TrabajoId" onchange="">
-                    <option disabled selected>--Seleccionar--</option>
-                </select>
-            </div>
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Información del detalle</h3>
         </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <label asp-for="Costo" class="custom-label"></label>
+        <div class="box-body">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="TrabajoId" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <select asp-for="TrabajoId" class="form-control" disabled asp-items="ViewBag.TrabajoId" onchange="">
+                            <option disabled selected>--Seleccionar--</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Costo" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Costo" readonly="readonly" class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="ProveedorId" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <select asp-for="ProveedorId" disabled class="form-control" asp-items="ViewBag.ProveedorId">
+                            <option disabled selected>--Seleccionar--</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="NumeroFactura" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="NumeroFactura" readonly="readonly" class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="Descripcion" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <input asp-for="Descripcion" readonly="readonly" class="form-control" />
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="AddDescripcion" class="custom-label"></label>
+                    </div>
+                    <div class="col-sm-4">
+                        <textarea asp-for="AddDescripcion" readonly="readonly" class="form-control"></textarea>
+                    </div>
+                </div>
+                <br />
+                <div class="form-group">
+                    <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-sm btn-primary">Editar</a>
+                    <a asp-action="Edit" asp-controller="TrackingHeaders" asp-route-id="@Model.TrackingId" class="btn btn-sm btn-success">Regresar al Seguimiento</a>
+                </div>
             </div>
-            <div class="col-sm-4">
-                <input asp-for="Costo" readonly="readonly" class="form-control" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <label asp-for="ProveedorId" class="custom-label"></label>
-            </div>
-            <div class="col-sm-4">
-                <select asp-for="ProveedorId" disabled class="form-control" asp-items="ViewBag.ProveedorId">
-                    <option disabled selected>--Seleccionar--</option>
-                </select>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <label asp-for="NumeroFactura" class="custom-label"></label>
-            </div>
-            <div class="col-sm-4">
-                <input asp-for="NumeroFactura" readonly="readonly" class="form-control" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <label asp-for="Descripcion" class="custom-label"></label>
-            </div>
-            <div class="col-sm-4">
-                <input asp-for="Descripcion" readonly="readonly" class="form-control" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-3">
-                <label asp-for="AddDescripcion" class="custom-label"></label>
-            </div>
-            <div class="col-sm-4">
-                <textarea asp-for="AddDescripcion" readonly="readonly" class="form-control"></textarea>
-            </div>
-        </div>
-        <div class="form-group">            
-            <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-sm btn-primary">Editar</a>
-            <a asp-action="Edit" asp-controller="TrackingHeaders" asp-route-id="@Model.TrackingId" class="btn btn-sm btn-success">Regresar al Seguimiento</a>
         </div>
     </div>
 </div>

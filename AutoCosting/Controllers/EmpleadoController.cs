@@ -9,6 +9,8 @@ using AutoCosting.Data;
 using AutoCosting.Models.Maintenance;
 using AutoCosting.HelpersAndValidations;
 using Microsoft.AspNetCore.Authorization;
+using AutoCosting.Models.Transaction;
+using AutoCosting.Models;
 
 namespace AutoCosting.Controllers
 {
@@ -143,6 +145,18 @@ namespace AutoCosting.Controllers
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             var empleado = await _context.Empleados.FindAsync(id);
+            TransaccionHeader trans = await this._context.TransaccionHeaders.FirstOrDefaultAsync(t => t.VendedorID == id);
+            if (trans != null)
+            {
+                ModelState.AddModelError("Cedula", "No se puede eliminar este empleado.");
+                return View(empleado);
+            }
+            ApplicationUser user = await this._context.Users.FirstOrDefaultAsync(u => u.EmpleadoID == id);
+            if (user != null)
+            {
+                ModelState.AddModelError("Cedula", "No se puede eliminar este empleado.");
+                return View(empleado);
+            }
             _context.Empleados.Remove(empleado);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

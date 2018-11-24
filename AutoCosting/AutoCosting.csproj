@@ -11,6 +11,10 @@
   <ItemGroup>
     <Compile Remove="Data\Migrations\20181103215320_AddCedulaToCliente.cs" />
     <Compile Remove="Data\Migrations\20181103215320_AddCedulaToCliente.Designer.cs" />
+    <Compile Remove="Data\Migrations\20181117195028_AddCajaToDb.cs" />
+    <Compile Remove="Data\Migrations\20181117195028_AddCajaToDb.Designer.cs" />
+    <Compile Remove="Data\Migrations\20181121033645_addComisionToDB.cs" />
+    <Compile Remove="Data\Migrations\20181121033645_addComisionToDB.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +31,8 @@
   <ItemGroup>
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="wwwroot\AdminLTE\" />
+    <Folder Include="wwwroot\CarImages\" />
+    <Folder Include="wwwroot\Help\" />
   </ItemGroup>
 
 </Project>

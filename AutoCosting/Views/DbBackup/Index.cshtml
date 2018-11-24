@@ -1,0 +1,89 @@
+﻿@model AutoCosting.Models.Backups.DbBackup
+@{
+    ViewData["Title"] = "Respaldos";
+}
+
+<h2>Manejo de Respaldos</h2>
+<hr />
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="form-group">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Crear Respaldos</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            @if (ViewData["CreateMessage"] != null && !string.IsNullOrEmpty(ViewData["CreateMessage"].ToString()))
+            {
+                <div class="box-body alert alert-success alert-dismissible">@ViewData["CreateMessage"]</div>
+            }
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Path" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Path" class="form-control">
+                        </div>
+                        <span asp-validation-for="Path" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Name" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Name" class="form-control" readonly="readonly">
+                        </div>
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Crear Respaldo" class="btn btn-sm btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<form asp-action="Restore" method="post"  enctype="multipart/form-data">
+    <div class="form-group">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Restaurar Respaldo</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                @if (ViewData["RestoreMessage"] != null && !string.IsNullOrEmpty(ViewData["RestoreMessage"].ToString()))
+                {
+                    <div class="box-body alert alert-success alert-dismissible">@ViewData["RestoreMessage"]</div>
+                }
+                @if (ViewData["WarningMessage"] != null && !string.IsNullOrEmpty(ViewData["WarningMessage"].ToString()))
+                {
+                    <div class="box-body alert alert-warning alert-dismissible">@ViewData["WarningMessage"]</div>
+                }
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="RestoreFilePath" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="RestoreFilePath" class="form-control" type="file">
+                        </div>
+                        <span asp-validation-for="RestoreFilePath" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Restaurar" class="btn btn-sm btn-primary" />
+                </div>
+            </div>
+        </div>        
+    </div>
+    
+</form>

@@ -33,7 +33,7 @@
                                 <label asp-for="Direccion" class="custom-label"></label>
                             </div>
                             <div class="col-sm-4">
-                                <input asp-for="Direccion" class="form-control" placeholder="Dirección" readonly="readonly"/>
+                                <input asp-for="Direccion" class="form-control" placeholder="Dirección" readonly="readonly" />
                             </div>
                         </div>
                         <div class="row">
@@ -41,36 +41,55 @@
                                 <label asp-for="Telefono" class="custom-label"></label>
                             </div>
                             <div class="col-sm-4">
-                                <input asp-for="Telefono" class="form-control" data-mask="9999-9999" placeholder="Teléfono" readonly="readonly"/>
+                                <input asp-for="Telefono" class="form-control" data-mask="9999-9999" placeholder="Teléfono" readonly="readonly" />
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-2">
-                                <label asp-for="MultiSedeYN" class="custom-label"></label>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="checkbox">
-                                    <label>
-                                        <input asp-for="MultiSedeYN"  disabled/>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        </div>                        
                         <div class="row">
                             <div class="col-sm-2">
                                 <label asp-for="ContactEmail" class="custom-label"></label>
                             </div>
                             <div class="col-sm-4">
-                                <input asp-for="ContactEmail" class="form-control" placeholder="Correo de Contacto" readonly="readonly"/>
+                                <input asp-for="ContactEmail" class="form-control" placeholder="Correo de Contacto" readonly="readonly" />
                             </div>
-                        </div>
-                        <div class="form-group">
-                            <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
-                            <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la lista</a>
-                        </div>
+                        </div>                        
                     </div>
                 </div>
             </div>
+            <div class="box box-danger">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Configuración</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label asp-for="DBBackupPath" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input asp-for="DBBackupPath" class="form-control" placeholder="C:/DB/..." disabled />
+                            </div>
+                            <span asp-validation-for="DBBackupPath" class="text-danger"></span>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="MultiSedeYN" disabled /> @Html.DisplayNameFor(model => model.MultiSedeYN)
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input asp-for="ImprimirLogoYN" disabled /> @Html.DisplayNameFor(model => model.ImprimirLogoYN)
+                            </label>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+            @*<div class="form-group">
+                <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
+                <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la lista</a>
+            </div>*@
         </div>
     </form>
 </div>

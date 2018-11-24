@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Maintenance;
 using Microsoft.AspNetCore.Authorization;
+using AutoCosting.Models.Tracking;
 
 namespace AutoCosting.Controllers
 {
@@ -142,6 +143,12 @@ namespace AutoCosting.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var proveedor = await _context.Proveedores.FindAsync(id);
+            TrackingDetail trackingDetail = await this._context.TrackinDetails.FirstOrDefaultAsync(t => t.ProveedorId == id);
+            if (trackingDetail != null)
+            {
+                ModelState.AddModelError("ID","No se puede eliminar este proveedor.");
+                return View(proveedor);
+            }
             _context.Proveedores.Remove(proveedor);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

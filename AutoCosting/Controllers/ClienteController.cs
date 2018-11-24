@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Maintenance;
 using Microsoft.AspNetCore.Authorization;
+using AutoCosting.Models.Transaction;
 
 namespace AutoCosting.Controllers
 {
@@ -147,6 +148,12 @@ namespace AutoCosting.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var cliente = await _context.Clientes.FindAsync(id);
+            TransaccionHeader trans = await this._context.TransaccionHeaders.FirstOrDefaultAsync(t => t.ClienteID == id);
+            if (trans != null)
+            {
+                ModelState.AddModelError("ID", "No se puede eliminar este cliente.");
+                return View(cliente);
+            }            
             _context.Clientes.Remove(cliente);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

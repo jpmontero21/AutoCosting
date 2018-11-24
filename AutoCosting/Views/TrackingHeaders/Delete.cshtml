@@ -13,113 +13,127 @@
 
 <form asp-action="Delete">
     <div class="form-group">
+        <div class="box box-danger">
+            <div class="box-header with-border">
+                <h3 class="box-title">Información del Seguimiento</h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.TrackingID" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4" style="padding-top:6px">
+                            @Html.DisplayFor(modelItem => Model.Tracking.TrackingID)
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.VINVehiculo" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="Tracking.VINVehiculo" disabled class="form-control" asp-items="ViewBag.VINVehiculo"></select>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.Fecha" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Tracking.Fecha" readonly="readonly" class="form-control" type="date">
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.CostoTotal" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4" style="padding-top:6px">
+                            @Html.DisplayFor(modelItem => Model.Tracking.CostoTotal)
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Tracking.Notas" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <textarea asp-for="Tracking.Notas" readonly="readonly" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
         <div class="form-group">
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.TrackingID" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4" style="padding-top:6px">
-                    @Html.DisplayFor(modelItem => Model.Tracking.TrackingID)
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.VINVehiculo" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Tracking.VINVehiculo" disabled class="form-control" asp-items="ViewBag.VINVehiculo"></select>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.Fecha" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Tracking.Fecha" readonly="readonly" class="form-control" type="date">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.CostoTotal" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4" style="padding-top:6px">
-                    @Html.DisplayFor(modelItem => Model.Tracking.CostoTotal)
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Tracking.Notas" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <textarea asp-for="Tracking.Notas" readonly="readonly" class="form-control"></textarea>
-                </div>
-            </div>
-            <br />
-            <div class="form-group">
-                <input type="hidden" asp-for="Tracking.TrackingID" />
-                <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
-                <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
-            </div>
+            <input type="hidden" asp-for="Tracking.TrackingID" />
+            <input type="submit" value="Eliminar" class="btn btn-sm btn-danger" />
+            <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
         </div>
     </div>
 </form>
-<hr />
-<h3>Lineas de Detalle</h3>
-<hr />
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.Trabajo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.Costo)
-            </th>            
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.Proveedor)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.NumeroFactura)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.Descripcion)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingDetail.AddDescripcion)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.TrackingDetalles)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Trabajo.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Costo)
-                </td>                
-                <td>
-                    @Html.DisplayFor(modelItem => item.Proveedor.NombreEmpresa)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NumeroFactura)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AddDescripcion)
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
 
-
-@*<form asp-action="Delete">
-        <input type="hidden" asp-for="Tracking.TrackingID" />
-        <input type="submit" value="Delete" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>*@
-
+<div class="box box-danger">
+    <div class="box-header with-border">
+        <h3 class="box-title">Lineas de Detalle</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.Trabajo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.Costo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.Proveedor)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.NumeroFactura)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.Descripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TrackingDetail.AddDescripcion)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.TrackingDetalles)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Trabajo.Descripcion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Costo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Proveedor.NombreEmpresa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumeroFactura)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripcion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddDescripcion)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

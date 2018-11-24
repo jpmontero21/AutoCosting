@@ -26,13 +26,11 @@ namespace AutoCosting.Controllers
         // GET: Sede
         public async Task<IActionResult> Index()
         {
-            //var applicationDbContext = _context.Sede.Include(s => s.Empresa);
             var empresaSede = new EmpresaSedeViewModel()
             {
                 SedeList = await _context.Sede.ToListAsync(),
                 Empresa = await _context.Empresa.FirstOrDefaultAsync()
             };
-            //return View(await applicationDbContext.ToListAsync());
             return View(empresaSede);
         }
 
@@ -72,7 +70,7 @@ namespace AutoCosting.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,EmpresaID,Nombre,Direccion,Telefono,UsarCierreCajaYN,ImprimirLogoYN")] Sede sede)
+        public async Task<IActionResult> Create( Sede sede)
         {
             Empresa empresa = await _context.Empresa.FirstOrDefaultAsync();
             if (empresa == null)
@@ -120,7 +118,7 @@ namespace AutoCosting.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,EmpresaID,Nombre,Direccion,Telefono,UsarCierreCajaYN,ImprimirLogoYN")] Sede sede)
+        public async Task<IActionResult> Edit(int id, Sede sede)
         {
             if (id != sede.ID)
             {

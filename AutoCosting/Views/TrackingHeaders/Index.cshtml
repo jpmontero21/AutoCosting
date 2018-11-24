@@ -8,52 +8,54 @@
 <hr />
 
 <p>
-    <a asp-action="Create"class="btn btn-primary">Crear nuevo</a>
+    <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.TrackingID)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Vehiculo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Fecha)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Notas)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CostoTotal)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="box box-info">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TrackingID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Vehiculo.Descripcion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Fecha)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Notas)
-                </td>
                 <th>
-                    @Html.DisplayFor(modelItem => item.CostoTotal)
+                    @Html.DisplayNameFor(model => model.TrackingID)
                 </th>
-                <td>
-                    @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.TrackingID })
-                </td>
+                <th>
+                    @Html.DisplayNameFor(model => model.Vehiculo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CostoTotal)
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TrackingID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Vehiculo.Descripcion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Notas)
+                    </td>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.CostoTotal)
+                    </th>
+                    <td>
+                        @await Html.PartialAsync("_TableButtonPartialEditDetails", new IndividualButtonPartial { Id = item.TrackingID })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

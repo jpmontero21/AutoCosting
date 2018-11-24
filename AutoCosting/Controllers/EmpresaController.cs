@@ -61,7 +61,7 @@ namespace AutoCosting.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Nombre,Direccion,Telefono,MultiSedeYN,ContactEmail")] Empresa empresa)
+        public async Task<IActionResult> Create(Empresa empresa)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace AutoCosting.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Nombre,Direccion,Telefono,MultiSedeYN,ContactEmail")] Empresa empresa)
+        public async Task<IActionResult> Edit(int id,  Empresa empresa)
         {
             if (id != empresa.ID)
             {

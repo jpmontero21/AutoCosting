@@ -30,7 +30,7 @@
                     </div>
                     <div class="col-sm-4">
                         <input asp-for="Nombre" class="form-control" placeholder="Nombre" readonly="readonly" />
-                    </div>                    
+                    </div>
                 </div>
                 <br />
                 <div class="row">
@@ -47,33 +47,28 @@
                         <label asp-for="Telefono" class="custom-label"></label>
                     </div>
                     <div class="col-sm-4">
-                        <input asp-for="Telefono" class="form-control" data-mask="9999-9999" placeholder="Teléfono" readonly="readonly"/>
+                        <input asp-for="Telefono" class="form-control" data-mask="9999-9999" placeholder="Teléfono" readonly="readonly" />
                     </div>
                 </div>
+                <br />
                 <div class="row">
                     <div class="col-sm-2">
-                        <label asp-for="UsarCierreCajaYN" class="custom-label" style="padding-top:9px"></label>
+                        <label asp-for="NombreContacto" class="custom-label"></label>
                     </div>
                     <div class="col-sm-4">
-                        <div class="checkbox">
-                            <label>
-                                <input asp-for="UsarCierreCajaYN" disabled/>
-                            </label>
-                        </div>
+                        <input asp-for="NombreContacto" class="form-control" placeholder="Contacto" readonly="readonly" />
                     </div>
                 </div>
+                <br />
                 <div class="row">
                     <div class="col-sm-2">
-                        <label asp-for="ImprimirLogoYN" class="custom-label" style="padding-top:9px"></label>
+                        <label asp-for="ContactEmail" class="custom-label"></label>
                     </div>
                     <div class="col-sm-4">
-                        <div class="checkbox">
-                            <label>
-                                <input asp-for="ImprimirLogoYN" disabled />
-                            </label>
-                        </div>
+                        <input asp-for="ContactEmail" class="form-control" placeholder="Email" readonly="readonly" />
                     </div>
                 </div>
+                <br />
                 <div class="form-group">
                     <a asp-action="Edit" asp-route-id="@Model.ID" class="btn btn-sm btn-primary">Editar</a>
                     <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>

@@ -3,10 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using AutoCosting.Models;
 using AutoCosting.Models.Maintenance;
+using AutoCosting.Models.Receipts;
 using AutoCosting.Models.Tracking;
 using AutoCosting.Models.Transaction;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using AutoCosting.Models.Backups;
+using AutoCosting.Models.CierreAperturaCaja;
+using System.Linq;
 
 namespace AutoCosting.Data
 {
@@ -23,6 +27,9 @@ namespace AutoCosting.Data
         public DbSet<TrackingDetail> TrackinDetails { get; set; }
         public DbSet<TransaccionHeader> TransaccionHeaders { get; set; }
         public DbSet<TransaccionDetail> TransaccionDetails { get; set; }
+        public DbSet<Recibo> Recibos { get; set; }
+        public DbSet<Caja> AperturaCierreCaja { get; set; }
+        public DbSet<Comision> Comisiones { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -32,8 +39,8 @@ namespace AutoCosting.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<Sede>().HasKey(c => new { c.ID, c.EmpresaID});
-            builder.Entity<Cliente>(entity => { entity.HasIndex(c => c.Cedula).IsUnique(); });
+            builder.Entity<Sede>().HasKey(c => new { c.ID, c.EmpresaID });
+            builder.Entity<Cliente>(entity => { entity.HasIndex(c => c.Cedula).IsUnique(); });            
         }
     }
 }

@@ -5,11 +5,9 @@
 }
 
 <script type="text/javascript">
-    
-
-    function GetDefaultJobPrice(selEle) {        
-        var trabId = selEle.value.toString() ;
-        $.ajax({            
+    function GetDefaultJobPrice(selEle) {
+        var trabId = selEle.value.toString();
+        $.ajax({
             url: "/TrackingDetails/GetTrabajoInfo",
             type: "POST",
             data: { trabajoID: trabId },
@@ -17,10 +15,9 @@
                 document.getElementById("Costo").value = data;
             },
             error: function () {
-                alert("Ups Hubo un Error.");
-            }  
+                alert("Hubo un Error.");
+            }
         });
-        
     };
 </script>
 
@@ -29,71 +26,84 @@
 <hr />
 
 <form asp-action="Edit">
+    <input type="hidden" asp-for="TrackingId" />
+    <div asp-validation-summary="ModelOnly"></div>
     <div class="form-group">
-        <input type="hidden" asp-for="TrackingId" />
-        <div asp-validation-summary="ModelOnly"></div>
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="TrabajoId" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="TrabajoId" class="form-control" asp-items="ViewBag.TrabajoId" onchange="GetDefaultJobPrice(this)">
-                        <option disabled selected>--Seleccionar--</option>
-                    </select>
-                </div>
-                <span asp-validation-for="TrabajoId" class="text-danger"></span>
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Información del detalle</h3>
             </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Costo" class="custom-label"></label>
+            <div class="box-body">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="TrabajoId" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="TrabajoId" class="form-control" asp-items="ViewBag.TrabajoId" onchange="GetDefaultJobPrice(this)">
+                                <option disabled selected>--Seleccionar--</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="TrabajoId" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Costo" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Costo" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Costo" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="ProveedorId" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <select asp-for="ProveedorId" class="form-control" asp-items="ViewBag.ProveedorId">
+                                <option disabled selected>--Seleccionar--</option>
+                            </select>
+                        </div>
+                        <span asp-validation-for="ProveedorId" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="NumeroFactura" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="NumeroFactura" class="form-control" />
+                        </div>
+                        <span asp-validation-for="NumeroFactura" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="Descripcion" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <input asp-for="Descripcion" class="form-control" />
+                        </div>
+                        <span asp-validation-for="Descripcion" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label asp-for="AddDescripcion" class="custom-label"></label>
+                        </div>
+                        <div class="col-sm-4">
+                            <textarea asp-for="AddDescripcion" class="form-control"></textarea>
+                        </div>
+                        <span asp-validation-for="AddDescripcion" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
+                        <a asp-action="Edit" asp-controller="TrackingHeaders" asp-route-id="@Model.TrackingId" class="btn btn-sm btn-success">Regresar al Seguimiento</a>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="Costo" class="form-control" />
-                </div>
-                <span asp-validation-for="Costo" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="ProveedorId" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="ProveedorId" class="form-control" asp-items="ViewBag.ProveedorId">
-                        <option disabled selected>--Seleccionar--</option>
-                    </select>
-                </div>
-                <span asp-validation-for="ProveedorId" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="NumeroFactura" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="NumeroFactura" class="form-control" />
-                </div>
-                <span asp-validation-for="NumeroFactura" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Descripcion" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Descripcion" class="form-control" />
-                </div>
-                <span asp-validation-for="Descripcion" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="AddDescripcion" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <textarea asp-for="AddDescripcion" class="form-control"></textarea>
-                </div>
-                <span asp-validation-for="AddDescripcion" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
-                <a asp-action="Edit" asp-controller="TrackingHeaders" asp-route-id="@Model.TrackingId" class="btn btn-sm btn-success">Regresar al Seguimiento</a>
             </div>
         </div>
     </div>
