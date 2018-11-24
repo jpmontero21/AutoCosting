@@ -7,74 +7,98 @@
 <h2>Clientes </h2>
 <hr />
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
-</p>
-<div class="box box-info">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Cedula)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Apellido1)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Apellido2)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Direccion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Telefono)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Notas)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+<form asp-controller="Cliente" asp-action="Index" method="get">
+    <div class="box-header with-border">
+        <div class="col-sm-4" style="padding-top:20px">
+            <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
+        </div>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <b>Buscar:  &nbsp;&nbsp;&nbsp; </b>
+                    <label class="radio-inline">@Html.RadioButton("option", "Cedula") Cédula</label>
+                    <label class="radio-inline">@Html.RadioButton("option", "Nombre") Nombre</label>
+                    <label class="radio-inline">@Html.RadioButton("option", "Telefono") Teléfono </label>
+                    <label class="radio-inline">@Html.RadioButton("option", "Email") Correo </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-right">
+                    <button type="submit" name="submit" value="Buscar" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span> Buscar
+                    </button>
+                </div>
+                <div class="pull-right">
+                    @Html.Editor("search", new { HtmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-info">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cedula)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Apellido1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Apellido2)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Direccion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Telefono)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Notas)
-                    </td>
-                    <td>
-                        @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cedula)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Apellido1)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Apellido2)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Direccion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Telefono)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Email)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Notas)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
-
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cedula)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Apellido1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Apellido2)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Direccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Notas)
+                        </td>
+                        <td>
+                            @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

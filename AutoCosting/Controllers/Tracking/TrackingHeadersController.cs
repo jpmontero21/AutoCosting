@@ -24,10 +24,23 @@ namespace AutoCosting.Controllers.Tracking
         }
 
         // GET: TrackingHeaders
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string option = null,string search=null)
         {
-            var applicationDbContext = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(d=>d.TrackingDetails);            
-            return View(await applicationDbContext.ToListAsync());
+            var trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(d=>d.TrackingDetails).ToList();
+            if (option == "Vehiculo" && search != null)
+            {
+                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.Vehiculo.Descripcion.ToLower().Contains(search.ToLower())).ToList();
+            }
+            if (option == "Fecha" && search != null)
+            {
+                search = Convert.ToDateTime(search).ToString("MM/dd/yyyy");
+                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.FechaStr.ToLower().Contains(search.Replace("-", "/").ToLower())).ToList();
+            }
+            if (option == "TrackingID" && search != null)
+            {
+                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.TrackingIdStr.ToLower().Contains(search.ToLower())).ToList();
+            }
+            return View(trackings);
         }
 
         // GET: TrackingHeaders/Details/5

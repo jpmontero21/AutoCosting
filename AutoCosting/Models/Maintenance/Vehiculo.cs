@@ -73,7 +73,7 @@ namespace AutoCosting.Models.Maintenance
 
         [Required(ErrorMessage = "La fecha de Ingreso es requerida.")]
         [Display(Name = "Fecha de Ingreso")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaIngreso { get; set; }
 
         [NotMapped]

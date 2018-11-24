@@ -24,8 +24,12 @@ namespace AutoCosting.Controllers
         }
 
         // GET: Trabajo
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string search = null)
         {
+            if (search != null)
+            {
+                return View(await _context.Trabajos.Where(t=>t.Descripcion.ToLower().Contains(search)).ToListAsync());
+            }
             return View(await _context.Trabajos.ToListAsync());
         }
 

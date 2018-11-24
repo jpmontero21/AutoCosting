@@ -1,79 +1,121 @@
 ﻿@model IEnumerable<AutoCosting.Models.Transaction.TransaccionHeader>
-
 @{
     ViewData["Title"] = "Index";
 }
+<script type="text/javascript">
+    function ShowDate() {
+        document.getElementById("search").type = "date"
+    };
+    function ShowText() {
+        document.getElementById("search").type = "text"
+    };
+    window.onload =
+        function SetFilterOption() {
+            var checked = document.getElementById("Fecha").checked;
+            if (checked == true) {
+                ShowDate();
+            }
+            else {
+                ShowText();
+            }
+        }
+</script>
 
 <h2>Transacciones</h2>
 <hr />
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crear nueva</a>
-</p>
-<div class="box box-info">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.TransID)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Cliente)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Empleado)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fecha)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TipoPago)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TipoTransaccion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Sede)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Saldo)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+<form asp-controller="TransaccionHeader" asp-action="Index" method="get">
+    <div class="box-header with-border">
+        <div class="col-sm-4" style="padding-top:20px">
+            <a asp-action="Create" class="btn btn-primary">Crear nueva</a>
+        </div>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12 text-right" onload="SetFilterOption()">
+                    <b>Buscar:  &nbsp;&nbsp;&nbsp; </b>
+                    <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "Cliente") Cliente</label>
+                    <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "Empleado") Empleado </label>
+                    <label class="radio-inline" onclick="ShowDate()">@Html.RadioButton("option", "Fecha", new { id="Fecha" }) Fecha </label>
+                    <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "Sede") Sede </label>
+                    <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "TransID") Número de Transación </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-right">
+                    <button type="submit" name="submit" value="Buscar" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span> Buscar
+                    </button>
+                </div>
+                <div class="pull-right">
+                    @Html.Editor("search", new { HtmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-info">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TransID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cliente.Informacion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Empleado.NombreCompleto)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fecha)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TipoPago)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TipoTransaccion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Sede.Nombre)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Saldo)
-                    </td>
-                    <td>
-                        @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.TransID })
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TransID)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Cliente)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Empleado)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Fecha)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoPago)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoTransaccion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sede)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Saldo)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TransID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cliente.Informacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Empleado.NombreCompleto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fecha)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoPago)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoTransaccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sede.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Saldo)
+                        </td>
+                        <td>
+                            @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.TransID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

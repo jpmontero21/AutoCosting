@@ -23,9 +23,26 @@ namespace AutoCosting.Controllers
         }
 
         // GET: Proveedores
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string option=null,string search=null)
         {
-            return View(await _context.Proveedores.ToListAsync());
+            var proveedores = await _context.Proveedores.ToListAsync();
+            if (option == "Nombre" && search != null)
+            {
+                proveedores = await _context.Proveedores.Where(p=>p.NombreContacto.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Empresa" && search != null)
+            {
+                proveedores = await _context.Proveedores.Where(p => p.NombreEmpresa.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Telefono" && search != null)
+            {
+                proveedores = await _context.Proveedores.Where(p => p.Telefono.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Email" && search != null)
+            {
+                proveedores = await _context.Proveedores.Where(p => p.Email.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            return View(proveedores);
         }
 
         // GET: Proveedores/Details/5

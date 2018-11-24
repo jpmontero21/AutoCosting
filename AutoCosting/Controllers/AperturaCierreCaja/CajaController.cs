@@ -26,9 +26,23 @@ namespace AutoCosting.Controllers.AperturaCierreCaja
         }
 
         // GET: Caja
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string option = null, string search = null)
         {
-            return View(await _context.AperturaCierreCaja.OrderByDescending(c => c.Fecha).ToListAsync());
+            var caja = await _context.AperturaCierreCaja.OrderByDescending(c => c.Fecha).ToListAsync();
+            if (option == "Fecha" && search != null)
+            {
+                search = Convert.ToDateTime(search).ToString("MM/dd/yyyy");
+                caja = await _context.AperturaCierreCaja.Where(c=>c.Fecha.GetValueOrDefault(DateTime.Today).ToString().ToLower().Contains(search.ToLower())).OrderByDescending(c => c.Fecha).ToListAsync();
+            }
+            if (option == "Tipo" && search != null)
+            {
+                caja = await _context.AperturaCierreCaja.Where(c => c.Tipo.ToString().ToLower().Contains(search.ToLower())).OrderByDescending(c => c.Fecha).ToListAsync();
+            }
+            if (option == "Usuario" && search != null)
+            {
+                caja = await _context.AperturaCierreCaja.Where(c => c.Usuario.ToLower().Contains(search.ToLower())).OrderByDescending(c => c.Fecha).ToListAsync();
+            }
+            return View(caja);
         }
 
         //GET: Caja/Close

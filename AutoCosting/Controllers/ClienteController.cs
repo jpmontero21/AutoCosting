@@ -23,9 +23,29 @@ namespace AutoCosting.Controllers
         }
 
         // GET: Cliente
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string option=null,string search=null)
         {
-            return View(await _context.Clientes.ToListAsync());
+            var clientes = await _context.Clientes.ToListAsync();
+            if (option == "Cedula" && search != null)
+            {
+                clientes = await _context.Clientes.Where(c=> c.Cedula.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Nombre" && search != null)
+            {
+                clientes = await _context.Clientes.Where(c => c.Nombre.ToLower().Contains(search.ToLower()) ||
+                c.Apellido1.ToLower().Contains(search.ToLower()) ||
+                c.Apellido2.ToLower().Contains(search.ToLower())
+                ).ToListAsync();
+            }
+            if (option == "Telefono" && search != null)
+            {
+                clientes = await _context.Clientes.Where(c => c.Telefono.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Email" && search != null)
+            {
+                clientes = await _context.Clientes.Where(c => c.Email.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            return View(clientes);
         }
 
         // GET: Cliente/Details/5

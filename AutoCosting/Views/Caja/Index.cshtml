@@ -4,72 +4,114 @@
     ViewData["Title"] = "Manejo de caja";
 }
 
+<script type="text/javascript">
+    function ShowDate() {
+        document.getElementById("search").type = "date"
+    };
+    function ShowText() {
+        document.getElementById("search").type = "text"
+    };
+    window.onload =
+        function SetFilterOption() {
+            var checked = document.getElementById("Fecha").checked;
+            if (checked == true) {
+                ShowDate();
+            }
+            else {
+                ShowText();
+            }
+        }
+</script>
+
 <h2>Manejo de caja</h2>
 <hr />
-<p>
-    <a asp-action="Create" class="btn btn-primary"><i class="fa fa-unlock"></i> Abrir Caja</a>
-    <a asp-action="Close" class="btn btn-success"><i class="fa fa-lock"></i> Cerrar Caja</a>
-</p>
+<form asp-action="Index" asp-controller="Caja" method="get">
+    <div class="box-header with-border ">
+        <div class="col-sm-4" style="padding-top:20px">
+            <a asp-action="Create" class="btn btn-primary"><i class="fa fa-unlock"></i> Abrir Caja</a>
+            <a asp-action="Close" class="btn btn-success"><i class="fa fa-lock"></i> Cerrar Caja</a>
+        </div>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12 text-right" onload="SetFilterOption()">
+                    <b>Buscar:  &nbsp;&nbsp;&nbsp; </b>
+                    <label class="radio-inline" onclick="ShowDate()">@Html.RadioButton("option", "Fecha", new { id = "Fecha" }) Fecha </label>
+                    <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "Tipo") Tipo </label>
+                    <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "Usuario") Usuario</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-right">
+                    <button type="submit" name="submit" value="Buscar" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span> Buscar
+                    </button>
+                </div>
+                <div class="pull-right">
+                    @Html.Editor("search", new { HtmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+    </div>
 
-<hr />
-
-<div class="box box-info">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Fecha)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Monto)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Tipo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Usuario)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.NumeroCaja)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Observaciones)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <hr />
+    <div class="box box-info">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Fecha)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Monto)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Tipo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Usuario)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NumeroCaja)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Observaciones)
-                    </td>
-                    <td>
-                        @if (item.Tipo == TipoCaja.Cierre)
-                        {
-                            <a asp-action="Summary" class="btn btn-sm btn-primary" asp-route-id="@item.ID">Resumen</a>
-                            <a asp-action="Details" class="btn btn-sm btn-primary" asp-route-id="@item.ID">Detalles</a>
-                        }
-                        @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Fecha)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Monto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Tipo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Usuario)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumeroCaja)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Observaciones)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Fecha)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Monto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tipo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Usuario)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumeroCaja)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Observaciones)
+                        </td>
+                        <td>
+                            @if (item.Tipo == TipoCaja.Cierre)
+                            {
+                                <a asp-action="Summary" class="btn btn-sm btn-primary" asp-route-id="@item.ID">Resumen</a>
+                                <a asp-action="Details" class="btn btn-sm btn-primary" asp-route-id="@item.ID">Detalles</a>
+                            }
+                            @*<a asp-action="Delete" asp-route-id="@item.ID">Delete</a>*@
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

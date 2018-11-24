@@ -39,6 +39,19 @@ namespace AutoCosting.Models.Tracking
             }
         }
         public IEnumerable<TrackingDetail> TrackingDetails { get; set; }
+        [NotMapped]
+        public string FechaStr
+        {
+            get
+            {
+                return this.Fecha.ToString("MM/dd/yyyy");
+            }
+        }
+        [NotMapped]
+        public string TrackingIdStr
+        {
+            get => this.TrackingID.ToString("00000000");
+        }
 
     }
 }

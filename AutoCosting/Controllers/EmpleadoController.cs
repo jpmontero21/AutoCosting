@@ -25,9 +25,26 @@ namespace AutoCosting.Controllers
         }
 
         // GET: Empleado
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string option=null,string search=null)
         {
-            return View(await _context.Empleados.ToListAsync());
+            var empleados = await _context.Empleados.ToListAsync();
+            if (option == "Cedula" && search != null)
+            {
+                empleados = await _context.Empleados.Where(c => c.Cedula.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Nombre" && search != null)
+            {
+                empleados = await _context.Empleados.Where(c => c.Nombre.ToLower().Contains(search.ToLower()) ||
+                c.Apellido1.ToLower().Contains(search.ToLower()) ||
+                c.Apellido2.ToLower().Contains(search.ToLower())
+                ).ToListAsync();
+            }
+            if (option == "Telefono" && search != null)
+            {
+                empleados = await _context.Empleados.Where(c => c.Telefono.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+
+            return View(empleados);
         }
 
         // GET: Empleado/Details/5

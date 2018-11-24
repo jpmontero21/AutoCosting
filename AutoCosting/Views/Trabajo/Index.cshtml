@@ -6,38 +6,53 @@
 
 <h2>Catalogo de Costos </h2>
 <hr />
-
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
-</p>
-<div class="box box-info">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Descripcion)
-                </th>
-                <th style="text-align:right">
-                    @Html.DisplayNameFor(model => model.PrecioPromedio)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+<form asp-action="Index" method="get" asp-controller="Trabajo">
+    <div class="box-header with-border">
+        <div class="col-sm-4" style="padding-top:20px">
+            <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
+        </div>
+        <div class="col-sm-8">            
+            <div class="row">                
+                <div class="pull-right">
+                    <button type="submit" name="submit" value="Buscar" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span> Buscar
+                    </button>
+                </div>
+                <div class="pull-right">
+                    @Html.Editor("search", new { HtmlAttributes = new { @class = "form-control",@placeholder="Descripción" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-info">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
-                    </td>
-                    <td style="text-align:right">
-                        @Html.DisplayFor(modelItem => item.PrecioPromedio)
-                    </td>
-                    <td>
-                        @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </th>
+                    <th style="text-align:right">
+                        @Html.DisplayNameFor(model => model.PrecioPromedio)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripcion)
+                        </td>
+                        <td style="text-align:right">
+                            @Html.DisplayFor(modelItem => item.PrecioPromedio)
+                        </td>
+                        <td>
+                            @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

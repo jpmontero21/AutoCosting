@@ -23,10 +23,31 @@ namespace AutoCosting.Controllers.Transaccion
         }
 
         // GET: TransaccionHeader
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string option = null, string search = null)
         {
-            var applicationDbContext = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede).Where(t=>t.Eliminada == false);
-            return View(await applicationDbContext.ToListAsync());
+            var transaccions = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede).Where(t=>t.Eliminada == false).ToList();
+            if (option == "Cliente" && search != null)
+            {
+                transaccions = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede).Where(t => t.Eliminada == false).Where(h => h.Cliente.Informacion.ToLower().Contains(search.ToLower())).ToList();
+            }
+            if (option == "Empleado" && search != null)
+            {
+                transaccions = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede).Where(t => t.Eliminada == false).Where(h => h.Empleado.NombreCompleto.ToLower().Contains(search.ToLower())).ToList();
+            }
+            if (option == "Fecha" && search != null)
+            {
+                search = Convert.ToDateTime(search).ToString("MM/dd/yyyy");
+                transaccions = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede).Where(t => t.Eliminada == false).Where(h => h.FechaStr.ToLower().Contains(search.Replace("-","/").ToLower())).ToList();
+            }
+            if (option == "Sede" && search != null)
+            {
+                transaccions = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede).Where(t => t.Eliminada == false).Where(h => h.Sede.Nombre.ToLower().Contains(search.ToLower())).ToList();
+            }
+            if (option == "TransID" && search != null)
+            {
+                transaccions = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede).Where(t => t.Eliminada == false).Where(h => h.TransIdStr.ToLower().Contains(search.ToLower())).ToList();
+            }
+            return View(transaccions);
         }
 
         // GET: TransaccionHeader/Details/5

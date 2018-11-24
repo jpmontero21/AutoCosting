@@ -52,9 +52,9 @@ namespace AutoCosting.Models.Transaction
             {
                 return this.Fecha.GetValueOrDefault(DateTime.Today).ToString("MM/dd/yyyy");
             }
-                }
+        }
         [NotMapped]
-        [Display( Name = "Apartado Vencido.")]
+        [Display(Name = "Apartado Vencido.")]
         public bool ApartadoVencidoYN
         {
             get
@@ -65,13 +65,13 @@ namespace AutoCosting.Models.Transaction
                 }
                 return false;
             }
-                
+
         }
 
         [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
         public double? Saldo { get; set; }
-        
-        [NotMapped]        
+
+        [NotMapped]
         [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
         public double? Total
         {
@@ -82,12 +82,12 @@ namespace AutoCosting.Models.Transaction
                     foreach (TransaccionDetail detail in this.TransDetails)
                         sum += detail.PrecioAcordado;
                 return sum;
-            }                
+            }
         }
 
         public bool Eliminada { get; set; }
         public IEnumerable<TransaccionDetail> TransDetails { get; set; }
-        
+
         public IEnumerable<Recibo> Recibos { get; set; }
 
         [NotMapped]

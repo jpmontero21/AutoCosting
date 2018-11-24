@@ -5,57 +5,80 @@
 }
 
 <h2>Comisiones</h2>
-
-<p>
-    <a asp-action="Create" class="btn btn-primary" asp-route-commType="@TipoComision.Externa">Crear Comisión Externa</a>
-    <a asp-action="Create" class="btn btn-primary" asp-route-commType="@TipoComision.Interna">Crear Comisión Interna</a>
-</p>
-<div class="box box-info">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Parent)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Nombre)
-                </th>
-                <th style="text-align:right">
-                    @Html.DisplayNameFor(model => model.Monto)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Descripcion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TipoComision)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+<form asp-controller="Comision" asp-action="Index" method="get">
+    <div class="box-header with-border">
+        <div class="col-sm-4" style="padding-top:20px">
+            <a asp-action="Create" class="btn btn-primary" asp-route-commType="@TipoComision.Externa">Crear Comisión Externa</a>
+            <a asp-action="Create" class="btn btn-primary" asp-route-commType="@TipoComision.Interna">Crear Comisión Interna</a>
+        </div>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <b>Buscar:  &nbsp;&nbsp;&nbsp; </b>
+                    <label class="radio-inline">@Html.RadioButton("option", "Nombre") Nombre</label>
+                    <label class="radio-inline">@Html.RadioButton("option", "Tipo") Tipo</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-right">
+                    <button type="submit" name="submit" value="Buscar" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span> Buscar
+                    </button>
+                </div>
+                <div class="pull-right">
+                    @Html.Editor("search", new { HtmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="box box-info">
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Parent.TransID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Nombre)
-                    </td>
-                    <td style="text-align:right">
-                        @Html.DisplayFor(modelItem => item.Monto)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Descripcion)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TipoComision)
-                    </td>
-                    <td>
-                        @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Parent)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th style="text-align:right">
+                        @Html.DisplayNameFor(model => model.Monto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoComision)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Parent.TransID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td style="text-align:right">
+                            @Html.DisplayFor(modelItem => item.Monto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Descripcion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoComision)
+                        </td>
+                        <td>
+                            @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

@@ -24,13 +24,45 @@ namespace AutoCosting.Controllers
         }
 
         // GET: Sede
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string option = null, string search = null)
         {
             var empresaSede = new EmpresaSedeViewModel()
             {
                 SedeList = await _context.Sede.ToListAsync(),
                 Empresa = await _context.Empresa.FirstOrDefaultAsync()
             };
+            if (option == "Nombre" && search != null)
+            {
+                empresaSede = new EmpresaSedeViewModel()
+                {
+                    SedeList = await _context.Sede.Where(s=> s.Nombre.ToLower().Contains(search.ToLower())).ToListAsync(),
+                    Empresa = await _context.Empresa.FirstOrDefaultAsync()
+                };
+            }
+            if (option == "Email" && search != null)
+            {
+                empresaSede = new EmpresaSedeViewModel()
+                {
+                    SedeList = await _context.Sede.Where(s => s.ContactEmail.ToLower().Contains(search.ToLower())).ToListAsync(),
+                    Empresa = await _context.Empresa.FirstOrDefaultAsync()
+                };
+            }
+            if (option == "Contacto" && search != null)
+            {
+                empresaSede = new EmpresaSedeViewModel()
+                {
+                    SedeList = await _context.Sede.Where(s => s.NombreContacto.ToLower().Contains(search.ToLower())).ToListAsync(),
+                    Empresa = await _context.Empresa.FirstOrDefaultAsync()
+                };
+            }
+            if (option == "Telefono" && search != null)
+            {
+                empresaSede = new EmpresaSedeViewModel()
+                {
+                    SedeList = await _context.Sede.Where(s => s.Telefono.ToLower().Contains(search.ToLower())).ToListAsync(),
+                    Empresa = await _context.Empresa.FirstOrDefaultAsync()
+                };
+            }
             return View(empresaSede);
         }
 
@@ -70,7 +102,7 @@ namespace AutoCosting.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create( Sede sede)
+        public async Task<IActionResult> Create(Sede sede)
         {
             Empresa empresa = await _context.Empresa.FirstOrDefaultAsync();
             if (empresa == null)

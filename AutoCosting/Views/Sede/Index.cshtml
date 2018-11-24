@@ -6,63 +6,87 @@
 
 <h2>Sedes&nbsp;-&nbsp;@Html.DisplayFor(modelItem => modelItem.Empresa.Nombre) </h2>
 <hr />
-
-<p>
-    @if (Model.Empresa != null && Model.Empresa.MultiSedeYN)
-    {
-        <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
-    }
-    else if (Model.Empresa != null && !Model.Empresa.MultiSedeYN && Model.SedeList.Count() == 0)
-    {
-        <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
-    }
-</p>
-<div class="box box-info">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Sede.Nombre)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Sede.ContactEmail)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Sede.NombreContacto)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Sede.Direccion)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Sede.Telefono)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.SedeList)
+<form asp-action="Index" method="get" asp-controller="Sede">
+    <div class="box-header with-border ">
+        <div class="col-sm-4" style="padding-top:20px">
+            @if (Model.Empresa != null && Model.Empresa.MultiSedeYN)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ContactEmail)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.NombreContacto)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Direccion)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
-                </td>
-            </tr>
+                <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
             }
-        </tbody>
-    </table>
-</div>
+            else if (Model.Empresa != null && !Model.Empresa.MultiSedeYN && Model.SedeList.Count() == 0)
+            {
+                <a asp-action="Create" class="btn btn-primary">Crear Nueva</a>
+            }
+        </div>
+        <div class="col-sm-8">
+            <div class="row">
+                <div class="col-sm-12 text-right">
+                    <b>Buscar:  &nbsp;&nbsp;&nbsp; </b>
+                    <label class="radio-inline">@Html.RadioButton("option", "Nombre") Nombre</label>
+                    <label class="radio-inline">@Html.RadioButton("option", "Email") Email </label>
+                    <label class="radio-inline">@Html.RadioButton("option", "Contacto") Contacto </label>
+                    <label class="radio-inline">@Html.RadioButton("option", "Telefono") Teléfono </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="pull-right">
+                    <button type="submit" name="submit" value="Buscar" class="btn btn-primary">
+                        <span class="glyphicon glyphicon-search"></span> Buscar
+                    </button>
+                </div>
+                <div class="pull-right">
+                    @Html.Editor("search", new { HtmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="box box-info">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sede.Nombre)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sede.ContactEmail)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sede.NombreContacto)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sede.Direccion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Sede.Telefono)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.SedeList)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactEmail)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NombreContacto)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Direccion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefono)
+                        </td>
+                        <td>
+                            @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

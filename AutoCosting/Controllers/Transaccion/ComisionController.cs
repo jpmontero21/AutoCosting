@@ -21,10 +21,18 @@ namespace AutoCosting.Controllers.Transaccion
         }
 
         // GET: Comision
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string option=null,string search=null)
         {
-            var applicationDbContext = _context.Comisiones.Include(c => c.Parent);
-            return View(await applicationDbContext.ToListAsync());
+            var comisions = _context.Comisiones.Include(c => c.Parent).ToList();
+            if (option == "Tipo" && search != null)
+            {
+                comisions = _context.Comisiones.Where(c => c.TipoComision.ToString().ToLower().Contains(search.ToLower())).ToList();
+            }
+            if (option == "Nombre" && search != null)
+            {
+                comisions = _context.Comisiones.Where(c => c.Nombre.ToLower().Contains(search.ToLower())).ToList();
+            }
+            return View(comisions);
         }
 
         // GET: Comision/Details/5
