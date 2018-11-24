@@ -8,191 +8,445 @@
 <h2>Editar Vehículo</h2>
 <hr />
 
-<form asp-action="Edit">
-    <div class="form-group">
-        <div asp-validation-summary="ModelOnly"></div>
-        <input type="hidden" asp-for="VIN" />
-        <div class="form-group">
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="VIN" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="VIN" disabled class="form-control">
-                </div>
-                <span asp-validation-for="VIN" class="text-danger"></span>
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Datos Básicos</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>
+        </div>
+        <div class="box-body">
             <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Marca" class="custom-label"></label>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="VIN"></label>
+                        <input asp-for="VIN" class="form-control" placeholder="VIN" disabled>
+                        <span asp-validation-for="VIN" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Marca"></label>
+                        <select asp-for="Marca" class="form-control" asp-items="ViewBag.Brands">
+                            <option disabled selected>--Seleccionar--</option>
+                        </select>
+                        <span asp-validation-for="Marca" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Modelo"></label>
+                        <input asp-for="Modelo" class="form-control" placeholder="Modelo" />
+                        <span asp-validation-for="Modelo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Anno"></label>
+                        <input asp-for="Anno" class="form-control" />
+                        <span asp-validation-for="Anno" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <select asp-for="Marca" class="form-control" asp-items="ViewBag.Brands">
-                        <option disabled selected>--Seleccionar--</option>
-                    </select>
-                </div>
-                <span asp-validation-for="Marca" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Modelo" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Modelo" class="form-control" />
-                </div>
-                <span asp-validation-for="Modelo" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Anno" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Anno" class="form-control" />
-                </div>
-                <span asp-validation-for="Anno" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Transmision" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Transmision" class="form-control" asp-items="Html.GetEnumSelectList<Transmision>()"></select>
-                </div>
-                <span asp-validation-for="Transmision" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Estilo" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    @Html.DropDownList("Estilo", new SelectList(new List<SelectListItem> {
-                        new SelectListItem { Text = "N/A", Value = "N/A"},
-                        new SelectListItem { Text = "Sedán", Value = "Sedán"},
-                        new SelectListItem { Text = "Station Wagon", Value = "Station Wagon"},
-                        new SelectListItem { Text = "Hatchback", Value = "Hatchback"},
-                        new SelectListItem { Text = "Pickup 4x2", Value = "Pickup 4x2"},
-                        new SelectListItem { Text = "Pickup 4x4", Value = "Pickup 4x4"},
-                        new SelectListItem { Text = "Microbús/Minivan", Value = "Microbús/Minivan"},
-                        new SelectListItem { Text = "Todo Terreno 4x2", Value = "Todo Terreno 4x2"},
-                        new SelectListItem { Text = "Todo Terreno 4x4", Value = "Todo Terreno 4x4"},
-                        new SelectListItem { Text = "Casa rodante", Value = "Casa Rodante"},
-                        new SelectListItem { Text = "Comercial", Value = "Comercial"}
-                    }, "Value", "Text"), "Seleccionar Estilo", new { @class = "form-control" })
-                </div>
-                <span asp-validation-for="Estilo" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Combustible" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Combustible" class="form-control" asp-items="Html.GetEnumSelectList<Combustible>()"></select>
-                </div>
-                <span asp-validation-for="Combustible" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="NumeroPuertas" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    @Html.DropDownList("NumeroPuertas", new SelectList(new List<SelectListItem> {
-                        new SelectListItem { Text = "N/A", Value = "N/A"},
-                        new SelectListItem { Text = "2 - 3", Value = "2 - 3"},
-                        new SelectListItem { Text = "4 o más", Value = "4 o más"},
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Transmision"></label>
+                        <select asp-for="Transmision" class="form-control" asp-items="Html.GetEnumSelectList<Transmision>()"></select>
+                        <span asp-validation-for="Transmision" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Estilo"></label>
+                        @Html.DropDownList("Estilo", new SelectList(new List<SelectListItem> {
+                            new SelectListItem { Text = "N/A", Value = "N/A"},
+                            new SelectListItem { Text = "Sedán", Value = "Sedán"},
+                            new SelectListItem { Text = "Station Wagon", Value = "Station Wagon"},
+                            new SelectListItem { Text = "Hatchback", Value = "Hatchback"},
+                            new SelectListItem { Text = "Pickup 4x2", Value = "Pickup 4x2"},
+                            new SelectListItem { Text = "Pickup 4x4", Value = "Pickup 4x4"},
+                            new SelectListItem { Text = "Microbús/Minivan", Value = "Microbús/Minivan"},
+                            new SelectListItem { Text = "Todo Terreno 4x2", Value = "Todo Terreno 4x2"},
+                            new SelectListItem { Text = "Todo Terreno 4x4", Value = "Todo Terreno 4x4"},
+                            new SelectListItem { Text = "Casa rodante", Value = "Casa Rodante"},
+                            new SelectListItem { Text = "Comercial", Value = "Comercial"}
+                        }, "Value", "Text"), "Seleccionar Estilo", new { @class = "form-control" })
+                        <span asp-validation-for="Estilo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Combustible"></label>
+                        <select asp-for="Combustible" class="form-control" asp-items="Html.GetEnumSelectList<Combustible>()"></select>
+                        <span asp-validation-for="Combustible" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NumeroPuertas"></label>
+                        @Html.DropDownList("NumeroPuertas", new SelectList(new List<SelectListItem> {
+                            new SelectListItem { Text = "N/A", Value = "N/A"},
+                            new SelectListItem { Text = "2 - 3", Value = "2 - 3"},
+                            new SelectListItem { Text = "4 o más", Value = "4 o más"},
 
-                    }, "Value", "Text"), "Seleccionar Puertas", new { @class = "form-control" })
+                        }, "Value", "Text"), "Seleccionar Puertas", new { @class = "form-control" })
+                        <span asp-validation-for="NumeroPuertas" class="text-danger"></span>
+                    </div>
                 </div>
-                <span asp-validation-for="NumeroPuertas" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Color" class="custom-label"></label>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Color"></label>
+                        <input asp-for="Color" class="form-control" type="color" />
+                        <span asp-validation-for="Color" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Placa"></label>
+                        <input asp-for="Placa" class="form-control" />
+                        <span asp-validation-for="Placa" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Kilometraje"></label>
+                        <input asp-for="Kilometraje" class="form-control" />
+                        <span asp-validation-for="Kilometraje" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Estado"></label>
+                        <select asp-for="Estado" class="form-control" asp-items="Html.GetEnumSelectList<Estado>()"></select>
+                        <span asp-validation-for="Estado" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="Color" class="form-control" type="color" />
-                </div>
-                <span asp-validation-for="Color" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Placa" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Placa" class="form-control" />
-                </div>
-                <span asp-validation-for="Placa" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Kilometraje" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Kilometraje" class="form-control" />
-                </div>
-                <span asp-validation-for="Kilometraje" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Estado" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <select asp-for="Estado" class="form-control" asp-items="Html.GetEnumSelectList<Estado>()"></select>
-                </div>
-                <span asp-validation-for="Estado" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="Cilindrada" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="Cilindrada" class="form-control" />
-                </div>
-                <span asp-validation-for="Cilindrada" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="PrecioMinimo" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="PrecioMinimo" class="form-control" />
-                </div>
-                <span asp-validation-for="PrecioMinimo" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="PrecioRecomendado" class="custom-label"></label>
-                </div>
-                <div class="col-sm-4">
-                    <input asp-for="PrecioRecomendado" class="form-control" />
-                </div>
-                <span asp-validation-for="PrecioRecomendado" class="text-danger"></span>
-            </div>
-            <div class="row">
-                <div class="col-sm-2">
-                    <label asp-for="ApartadoYN" class="custom-label" style="padding-top:9px"></label>
-                </div>
-                <div class="col-sm-4">
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label asp-for="Cilindrada"></label>
+                        <input asp-for="Cilindrada" class="form-control" />
+                        <span asp-validation-for="Cilindrada" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PrecioMinimo"></label>
+                        <input asp-for="PrecioMinimo" class="form-control" />
+                        <span asp-validation-for="PrecioMinimo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PrecioRecomendado"></label>
+                        <input asp-for="PrecioRecomendado" class="form-control" />
+                        <span asp-validation-for="PrecioRecomendado" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FechaIngreso"></label>
+                        <input asp-for="FechaIngreso" class="form-control" type="date" for />
+                        <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+                    </div>
                     <div class="checkbox">
                         <label>
-                            <input asp-for="ApartadoYN" />
+                            <input asp-for="ApartadoYN" type="checkbox" /> Apartado
                         </label>
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm-3">
-                    <label asp-for="FechaIngreso" class="custom-label"></label>
+        </div>
+    </div>
+    <div class="row">
+        <!-- left column -->
+        <div class="col-md-6">
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Fotografías</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
                 </div>
-                <div class="col-sm-4">
-                    <input asp-for="FechaIngreso" class="form-control" type="date" for />
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group" id="previewImagen1">
+                                <label asp-for="Imagen1"></label>
+                                @{
+                                    string path = "~/" + Model.Imagen1;
+                                    <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
+                                }
+                            </div>
+                            <div class="form-group" style="display:none" id="divImagen1">
+                                <label asp-for="Imagen1"></label>
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                    <div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileinput-new">Seleccionar</span>
+                                            <span class="fileinput-exists">Cambiar</span><input type="file" name="files1">
+                                        </span>
+                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Imagen2"></label>
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                    <div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileinput-new">Seleccionar</span>
+                                            <span class="fileinput-exists">Cambiar</span><input type="file" name="files2">
+                                        </span>
+                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Imagen3"></label>
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                    <div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileinput-new">Seleccionar</span>
+                                            <span class="fileinput-exists">Cambiar</span><input type="file" name="files3">
+                                        </span>
+                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label asp-for="Imagen4"></label>
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                    <div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileinput-new">Seleccionar</span>
+                                            <span class="fileinput-exists">Cambiar</span><input type="file" name="files4">
+                                        </span>
+                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Imagen5"></label>
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
+                                    <div>
+                                        <span class="btn btn-default btn-file">
+                                            <span class="fileinput-new">Seleccionar</span>
+                                            <span class="fileinput-exists">Cambiar</span><input type="file" name="files5">
+                                        </span>
+                                        <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Remover</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
-                <span asp-validation-for="FechaIngreso" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
-                <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
             </div>
         </div>
+        <!--/.col (left) -->
+        <!-- right column -->
+        <div class="col-md-6">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Equipamiento</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="AireAcondicionadoClimatizadoYN" /> @Html.DisplayNameFor(model => model.AireAcondicionadoClimatizadoYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="AireAcondicionadoYN" /> @Html.DisplayNameFor(model => model.AireAcondicionadoYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="AlarmaYN" /> @Html.DisplayNameFor(model => model.AlarmaYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="ArosDeLujoYN" /> @Html.DisplayNameFor(model => model.ArosDeLujoYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="AsientosConMemoriaYN" /> @Html.DisplayNameFor(model => model.AsientosConMemoriaYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="AsientosElectricosYN" /> @Html.DisplayNameFor(model => model.AsientosElectricosYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="BluetoothYN" /> @Html.DisplayNameFor(model => model.BluetoothYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="BolsasDeAireYN" /> @Html.DisplayNameFor(model => model.BolsasDeAireYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="CajaCambiosDualYN" /> @Html.DisplayNameFor(model => model.CajaCambiosDualYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="CamaraRetrocesoYN" /> @Html.DisplayNameFor(model => model.CamaraRetrocesoYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="CassetteYN" /> @Html.DisplayNameFor(model => model.CassetteYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="CierreCentralYN" /> @Html.DisplayNameFor(model => model.CierreCentralYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="ComputadoraViajeYN" /> @Html.DisplayNameFor(model => model.ComputadoraViajeYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="ControlDescensoYN" /> @Html.DisplayNameFor(model => model.ControlDescensoYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="ControlEstabilidadYN" /> @Html.DisplayNameFor(model => model.ControlEstabilidadYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="ControlRadioVolanteYN" /> @Html.DisplayNameFor(model => model.ControlRadioVolanteYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="CruiseControlYN" /> @Html.DisplayNameFor(model => model.CruiseControlYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="DesempanadorTraseroYN" /> @Html.DisplayNameFor(model => model.DesempanadorTraseroYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="DireccionHidraulicaYN" /> @Html.DisplayNameFor(model => model.DireccionHidraulicaYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="DiscoCompactoYN" /> @Html.DisplayNameFor(model => model.DiscoCompactoYN)
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="EspejosElectricosYN" /> @Html.DisplayNameFor(model => model.EspejosElectricosYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="FrenosAbsYN" /> @Html.DisplayNameFor(model => model.FrenosAbsYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="HalogenosYN" /> @Html.DisplayNameFor(model => model.HalogenosYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="LlaveInteligenteYN" /> @Html.DisplayNameFor(model => model.LlaveInteligenteYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="LucesXenonYN" /> @Html.DisplayNameFor(model => model.LucesXenonYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="MonitorPresionLlantasYN" /> @Html.DisplayNameFor(model => model.MonitorPresionLlantasYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="RTValDiaYN" /> @Html.DisplayNameFor(model => model.RTValDiaYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="RadioUsbAuxYN" /> @Html.DisplayNameFor(model => model.RadioUsbAuxYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="RetrovisoreAutoretractilesYN" /> @Html.DisplayNameFor(model => model.RetrovisoreAutoretractilesYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="SensorLluviaYN" /> @Html.DisplayNameFor(model => model.SensorLluviaYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="SensoresFrontalesYN" /> @Html.DisplayNameFor(model => model.SensoresFrontalesYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="SensoresRetrocesoYN" /> @Html.DisplayNameFor(model => model.SensoresRetrocesoYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="SunroofTechoPanoramicoYN" /> @Html.DisplayNameFor(model => model.SunroofTechoPanoramicoYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="TapiceriaDeCueroYN" /> @Html.DisplayNameFor(model => model.TapiceriaDeCueroYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="TurboYN" /> @Html.DisplayNameFor(model => model.TurboYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="VidriosElectricosYN" /> @Html.DisplayNameFor(model => model.VidriosElectricosYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="VidriosTintadosYN" /> @Html.DisplayNameFor(model => model.VidriosTintadosYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="VolanteAjustableYN" /> @Html.DisplayNameFor(model => model.VolanteAjustableYN)
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input asp-for="VolanteMultifuncionalYN" /> @Html.DisplayNameFor(model => model.VolanteMultifuncionalYN)
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
+        <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
     </div>
 </form>
 
