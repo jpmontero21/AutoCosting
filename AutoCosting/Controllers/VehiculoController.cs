@@ -156,6 +156,11 @@ namespace AutoCosting.Controllers
             {
                 try
                 {
+                    if (HttpContext.Request.Form.Files != null)
+                    {
+                        IFormFileCollection files = HttpContext.Request.Form.Files;
+                        ProcessImages(files, vehiculo);
+                    }
                     _context.Update(vehiculo);
                     await _context.SaveChangesAsync();
                 }
