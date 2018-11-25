@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Transaction;
 using System.ComponentModel.DataAnnotations;
+using AutoCosting.HelpersAndValidations;
+using AutoCosting.Models.Maintenance;
 
 namespace AutoCosting.Controllers.Transaccion
 {
@@ -61,7 +63,7 @@ namespace AutoCosting.Controllers.Transaccion
                 Parent = this._context.TransaccionHeaders.FirstOrDefault(h => h.TransID == transID),
                 TransID = transID
             };
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion");
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos.Where(v => !v.ApartadoYN && !v.VendidoYN), "VIN", "Descripcion");
             return View(detail);
         }
 
@@ -70,19 +72,43 @@ namespace AutoCosting.Controllers.Transaccion
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(/*[Bind("ID,TransID,VINVehiculo,PrecioAcordado")]*/ TransaccionDetail transaccionDetail)
+        public async Task<IActionResult> Create(TransaccionDetail transaccionDetail)
         {
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", transaccionDetail.VINVehiculo);
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos.Where(v=>(!v.ApartadoYN && !v.VendidoYN) || v.VIN == transaccionDetail.VINVehiculo), "VIN", "Descripcion", transaccionDetail.VINVehiculo);
             if (ModelState.IsValid)
             {
+                transaccionDetail.Parent = await this._context.TransaccionHeaders.FirstOrDefaultAsync(t => t.TransID == transaccionDetail.TransID);
+                if (transaccionDetail.Parent == null)
+                {
+                    ModelState.AddModelError("VINVehiculo", "Error con la transacción.");
+                    return View(transaccionDetail);
+                }
                 if (transaccionDetail.PrecioAcordado < transaccionDetail.PrecioMinimo)
                 {
                     ModelState.AddModelError("PrecioAcordado", "El precio acordado no puede ser menor que el precio mínimo.");
                     return View(transaccionDetail);
                 }
-                _context.Add(transaccionDetail);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Edit), "TransaccionHeader", new { @id = transaccionDetail.TransID});
+                Vehiculo vehiculo = await this._context.Vehiculos.AsNoTracking().FirstOrDefaultAsync(v => v.VIN == transaccionDetail.VINVehiculo);
+                if (vehiculo != null)
+                {
+                    if (vehiculo.VendidoYN || vehiculo.ApartadoYN)
+                    {
+                        ModelState.AddModelError("VINVehiculo", "El vehículo se encuentra apartado o ya está vendido.");
+                        return View(transaccionDetail);
+                    }
+
+                    if (transaccionDetail.Parent.TipoTransaccion == TipoTransaccion.Venta)
+                        vehiculo.VendidoYN = true;
+                    else if (transaccionDetail.Parent.TipoTransaccion == TipoTransaccion.Apartado)
+                        vehiculo.ApartadoYN = true;
+
+                    this._context.Vehiculos.Update(vehiculo);
+                    _context.Add(transaccionDetail);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Edit), "TransaccionHeader", new { @id = transaccionDetail.TransID });
+                }
+                ModelState.AddModelError("VINVehiculo", "Error al encontrar el vehículo.");
+                return View(transaccionDetail);
             }            
             return View(transaccionDetail);
         }
@@ -106,7 +132,8 @@ namespace AutoCosting.Controllers.Transaccion
                 transaccionDetail.PrecioMinimo = vehiculo.PrecioMinimo;
                 transaccionDetail.PrecioRecomendado = vehiculo.PrecioRecomendado;
             }
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", transaccionDetail.VINVehiculo);
+            //ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", transaccionDetail.VINVehiculo);//_context.Vehiculos.Where(v=>(!v.ApartadoYN && !v.VendidoYN) || v.VIN == transaccionDetail.VINVehiculo)
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos.Where(v => (!v.ApartadoYN && !v.VendidoYN) || v.VIN == transaccionDetail.VINVehiculo), "VIN", "Descripcion", transaccionDetail.VINVehiculo);
             return View(transaccionDetail);
         }
 
@@ -115,9 +142,10 @@ namespace AutoCosting.Controllers.Transaccion
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, /*[Bind("ID,TransID,VINVehiculo,PrecioAcordado")]*/ TransaccionDetail transaccionDetail)
+        public async Task<IActionResult> Edit(int id, TransaccionDetail transaccionDetail)
         {
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", transaccionDetail.VINVehiculo);
+            //ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", transaccionDetail.VINVehiculo);
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos.Where(v => (!v.ApartadoYN && !v.VendidoYN) || v.VIN == transaccionDetail.VINVehiculo), "VIN", "Descripcion", transaccionDetail.VINVehiculo);
             if (id != transaccionDetail.ID)
             {
                 return NotFound();
@@ -185,9 +213,36 @@ namespace AutoCosting.Controllers.Transaccion
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var transaccionDetail = await _context.TransaccionDetails.FindAsync(id);
-            _context.TransaccionDetails.Remove(transaccionDetail);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Edit), "TransaccionHeader", new { @id = transaccionDetail.TransID });
+
+            /**/
+            transaccionDetail.Parent = await this._context.TransaccionHeaders.FirstOrDefaultAsync(t => t.TransID == transaccionDetail.TransID);
+            if (transaccionDetail.Parent == null)
+            {
+                ModelState.AddModelError("VINVehiculo", "Error con la transacción.");
+                return View(transaccionDetail);
+            }
+            Vehiculo vehiculo = await this._context.Vehiculos.AsNoTracking().FirstOrDefaultAsync(v => v.VIN == transaccionDetail.VINVehiculo);
+            if (vehiculo != null)
+            {
+                //if (vehiculo.VendidoYN || vehiculo.ApartadoYN)
+                //{
+                //    ModelState.AddModelError("VINVehiculo", "El vehículo se encuentra apartado o ya está vendido.");
+                //    return View(transaccionDetail);
+                //}
+                if (transaccionDetail.Parent.TipoTransaccion == TipoTransaccion.Venta)
+                    vehiculo.VendidoYN = false;
+                else if (transaccionDetail.Parent.TipoTransaccion == TipoTransaccion.Apartado)
+                    vehiculo.ApartadoYN = false;
+
+                this._context.Vehiculos.Update(vehiculo);
+                this._context.TransaccionDetails.Remove(transaccionDetail);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Edit), "TransaccionHeader", new { @id = transaccionDetail.TransID });
+                /**/
+            }
+            
+            ModelState.AddModelError("VINVehiculo", "Error al encontrar el vehículo.");
+            return View(transaccionDetail.ID);
         }
 
         private bool TransaccionDetailExists(int id)
@@ -215,5 +270,6 @@ namespace AutoCosting.Controllers.Transaccion
             }
             return string.Empty;
         }
+                
     }
 }

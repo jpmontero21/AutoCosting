@@ -79,7 +79,7 @@ namespace AutoCosting.Controllers.Tracking
             TrackingHeader header = new TrackingHeader();
             header.Fecha = DateTime.Today;
             ;
-            ViewData["VINVehiculo"] = new SelectList(this._context.Vehiculos.Where(v => !this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN)), "VIN", "Descripcion");
+            ViewData["VINVehiculo"] = new SelectList(this._context.Vehiculos.Where(v => !this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN)&&!v.VendidoYN && !v.ApartadoYN), "VIN", "Descripcion");
             return View(header);
         }
 
@@ -88,7 +88,7 @@ namespace AutoCosting.Controllers.Tracking
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TrackingID,VINVehiculo,Fecha,Notas")] TrackingHeader trackingHeader)
+        public async Task<IActionResult> Create( TrackingHeader trackingHeader)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +107,7 @@ namespace AutoCosting.Controllers.Tracking
             {
                 return NotFound();
             }
-            var trackingHeader = await _context.TrackingHeaders.FindAsync(id);
+            var trackingHeader = await _context.TrackingHeaders.Include(t=> t.Vehiculo).FirstOrDefaultAsync(t=>t.TrackingID==id);
             if (trackingHeader == null)
             {
                 return NotFound();
@@ -124,7 +124,12 @@ namespace AutoCosting.Controllers.Tracking
                 TrackingDetalles = list
             };
             
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", trackingHeader.VINVehiculo);
+            //ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", trackingHeader.VINVehiculo);//Where(v => !this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN)&&!v.VendidoYN && !v.ApartadoYN)
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos.Where(v => (!this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN) && !v.VendidoYN && !v.ApartadoYN)||v.VIN==trackingHeader.VINVehiculo), "VIN", "Descripcion", trackingHeader.VINVehiculo);//
+            if (trackingHeader.Vehiculo.VendidoYN)
+            {
+                return View(nameof(Details),tracking);
+            }
             return View(tracking);
         }
 
@@ -133,8 +138,10 @@ namespace AutoCosting.Controllers.Tracking
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, /*[Bind("TrackingID,VINVehiculo,Fecha,Notas")] TrackingHeader*/ TrackingViewModel trackingHeader)
+        public async Task<IActionResult> Edit(int id, TrackingViewModel trackingHeader)
         {
+            //ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", trackingHeader.Tracking.VINVehiculo);
+            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos.Where(v => (!this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN) && !v.VendidoYN && !v.ApartadoYN) || v.VIN == trackingHeader.Tracking.VINVehiculo), "VIN", "Descripcion", trackingHeader.Tracking.VINVehiculo);//
             if (id != trackingHeader.Tracking.TrackingID)
             {
                 return NotFound();
@@ -159,8 +166,7 @@ namespace AutoCosting.Controllers.Tracking
                     }
                 }
                 return RedirectToAction(nameof(Index));
-            }
-            ViewData["VINVehiculo"] = new SelectList(_context.Vehiculos, "VIN", "Descripcion", trackingHeader.Tracking.VINVehiculo);
+            }            
             return View(trackingHeader);
         }
 
@@ -190,7 +196,8 @@ namespace AutoCosting.Controllers.Tracking
                 Tracking = trackingHeader,
                 TrackingDetalles = list
             };
-            ViewData["VINVehiculo"] = new SelectList(this._context.Vehiculos.Where(v => !this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN)), "VIN", "Descripcion");
+            //ViewData["VINVehiculo"] = new SelectList(this._context.Vehiculos.Where(v => !this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN)), "VIN", "Descripcion");            
+            ViewData["VINVehiculo"] = new SelectList(this._context.Vehiculos.Where(v => (!this._context.TrackingHeaders.Any(t => t.VINVehiculo == v.VIN) && !v.VendidoYN && !v.ApartadoYN) || v.VIN == trackingHeader.VINVehiculo), "VIN", "Descripcion", trackingHeader.VINVehiculo);
             return View(tracking);
         }
 

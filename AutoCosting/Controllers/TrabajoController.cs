@@ -62,10 +62,16 @@ namespace AutoCosting.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Descripcion,PrecioPromedio")] Trabajo trabajo)
+        public async Task<IActionResult> Create( Trabajo trabajo)
         {
             if (ModelState.IsValid)
             {
+                Trabajo trab = await this._context.Trabajos.FirstOrDefaultAsync(t => t.Descripcion == trabajo.Descripcion);
+                if (trab != null)
+                {
+                    ModelState.AddModelError("Descripcion", "Ya existe un trabajo con esta descripción");
+                    return View(trabajo);
+                }
                 _context.Add(trabajo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -94,7 +100,7 @@ namespace AutoCosting.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Descripcion,PrecioPromedio")] Trabajo trabajo)
+        public async Task<IActionResult> Edit(int id, Trabajo trabajo)
         {
             if (id != trabajo.ID)
             {
@@ -105,6 +111,12 @@ namespace AutoCosting.Controllers
             {
                 try
                 {
+                    Trabajo trab = await this._context.Trabajos.FirstOrDefaultAsync(t => t.Descripcion == trabajo.Descripcion && t.ID != trabajo.ID);
+                    if (trab != null)
+                    {
+                        ModelState.AddModelError("Descripcion", "Ya existe un trabajo con esta descripción");
+                        return View(trabajo);
+                    }
                     _context.Update(trabajo);
                     await _context.SaveChangesAsync();
                 }

@@ -1,4 +1,5 @@
 ﻿@model IEnumerable<AutoCosting.Models.Transaction.TransaccionHeader>
+@using AutoCosting.HelpersAndValidations
 @{
     ViewData["Title"] = "Index";
 }
@@ -34,7 +35,7 @@
                     <b>Buscar:  &nbsp;&nbsp;&nbsp; </b>
                     <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "Cliente") Cliente</label>
                     <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "Empleado") Empleado </label>
-                    <label class="radio-inline" onclick="ShowDate()">@Html.RadioButton("option", "Fecha", new { id="Fecha" }) Fecha </label>
+                    <label class="radio-inline" onclick="ShowDate()">@Html.RadioButton("option", "Fecha", new { id = "Fecha" }) Fecha </label>
                     <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "Sede") Sede </label>
                     <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "TransID") Número de Transación </label>
                 </div>
@@ -79,6 +80,9 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Saldo)
                     </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ApartadoVencidoYN)
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -109,6 +113,16 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Saldo)
+                        </td>
+                        <td>
+                            @if (item.ApartadoVencidoYN && item.TipoTransaccion == TipoTransaccion.Apartado)
+                            {
+                                @Html.DisplayFor(modelItem => item.ApartadoVencidoYN)
+                            }
+                            else if (!item.ApartadoVencidoYN && item.TipoTransaccion == TipoTransaccion.Apartado)
+                            {
+                                @Html.DisplayFor(modelItem => item.ApartadoVencidoYN)
+                            }
                         </td>
                         <td>
                             @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.TransID })

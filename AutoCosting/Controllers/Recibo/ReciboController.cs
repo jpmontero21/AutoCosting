@@ -36,6 +36,11 @@ namespace AutoCosting.Controllers.Recibo
 
             var recibo = await _context.Recibos
                 .Include(r => r.Parent)
+                .Include(r =>r.Parent.Sede )
+                .Include(r => r.Parent.TransDetails)
+                .Include(r => r.Parent.Cliente)
+                .Include(r => r.Parent.Empleado)
+                .Include(r => r.Parent.Sede.Empresa)
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (recibo == null)
             {

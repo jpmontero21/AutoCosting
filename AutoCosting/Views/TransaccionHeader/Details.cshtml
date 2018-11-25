@@ -24,7 +24,7 @@
                             <div class="col-sm-3">
                                 <label asp-for="Transaccion.VendedorID" class="custom-label"></label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select asp-for="Transaccion.VendedorID" class="form-control" disabled asp-items="ViewBag.VendedorID"></select>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                             <div class="col-sm-3">
                                 <label asp-for="Transaccion.ClienteID" class="custom-label"></label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select asp-for="Transaccion.ClienteID" class="form-control" disabled asp-items="ViewBag.ClienteID">
                                     <option disabled selected>--Seleccionar--</option>
                                 </select>
@@ -43,7 +43,7 @@
                             <div class="col-sm-3">
                                 <label asp-for="Transaccion.EmpresaID" class="custom-label"></label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select asp-for="Transaccion.EmpresaID" class="form-control" disabled asp-items="ViewBag.EmpresaID"></select>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                             <div class="col-sm-3">
                                 <label asp-for="Transaccion.SedeID" class="custom-label"></label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select asp-for="Transaccion.SedeID" class="form-control" disabled asp-items="ViewBag.SedeID"></select>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="col-sm-3">
                                 <label asp-for="Transaccion.TipoPago" class="custom-label"></label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select asp-for="Transaccion.TipoPago" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoPago>()"></select>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                             <div class="col-sm-3">
                                 <label asp-for="Transaccion.TipoTransaccion" class="custom-label"></label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <select asp-for="Transaccion.TipoTransaccion" class="form-control" disabled asp-items="Html.GetEnumSelectList<TipoTransaccion>()"></select>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             <div class="col-sm-3">
                                 <label asp-for="Transaccion.Fecha" class="custom-label"></label>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-5">
                                 <input asp-for="Transaccion.Fecha" readonly="readonly" class="form-control" type="date" />
                             </div>
                         </div>
@@ -88,10 +88,20 @@
                             <div class="col-sm-3">
                                 <label asp-for="Transaccion.Total" class="custom-label"></label>
                             </div>
-                            <div class="col-sm-4" style="padding-top:6px">
+                            <div class="col-sm-5" style="padding-top:6px">
                                 @Html.DisplayFor(modelItem => Model.Transaccion.Total)
                             </div>
                             <span asp-validation-for="Transaccion.Total" class="text-danger"></span>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="Transaccion.Saldo" class="custom-label"></label>
+                            </div>
+                            <div class="col-sm-5" style="padding-top:6px">
+                                @Html.DisplayFor(modelItem => Model.Transaccion.Saldo)
+                            </div>
+                            <span asp-validation-for="Transaccion.Saldo" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -112,6 +122,9 @@
                             <thead>
                                 <tr>
                                     <th>
+                                        @Html.DisplayNameFor(model => model.Recibo.ID)
+                                    </th>
+                                    <th>
                                         @Html.DisplayNameFor(model => model.Recibo.Descripcion)
                                     </th>
                                     <th style="text-align:right">
@@ -128,6 +141,9 @@
                                 {
                                     <tr>
                                         <td>
+                                            @Html.DisplayFor(modelItem => item.ID)
+                                        </td>
+                                        <td>
                                             @Html.DisplayFor(modelItem => item.Descripcion)
                                         </td>
                                         <td style="text-align:right">
@@ -136,6 +152,7 @@
                                         <td style="text-align:right">
                                             @Html.DisplayFor(modelItem => item.Fecha)
                                         </td>
+                                        <td></td>
                                     </tr>
                                 }
                             </tbody>

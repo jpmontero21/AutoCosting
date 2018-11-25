@@ -35,7 +35,9 @@
                             <label asp-for="Tracking.VINVehiculo" class="custom-label"></label>
                         </div>
                         <div class="col-sm-4">
-                            <select asp-for="Tracking.VINVehiculo" class="form-control" asp-items="ViewBag.VINVehiculo"></select>
+                            @*<select asp-for="Tracking.VINVehiculo" class="form-control" asp-items="ViewBag.VINVehiculo"></select>*@
+                            <input type="hidden" asp-for="Tracking.VINVehiculo" />
+                            @Html.DisplayFor(modelItem => Model.Tracking.Vehiculo.Descripcion)
                         </div>
                         <span asp-validation-for="Tracking.VINVehiculo" class="text-danger"></span>
                     </div>

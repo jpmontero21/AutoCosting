@@ -52,9 +52,11 @@
                             <label asp-for="VINVehiculo" class="custom-label"></label>
                         </div>
                         <div class="col-sm-4">
-                            <select asp-for="VINVehiculo" class="form-control" asp-items="ViewBag.VINVehiculo" onchange="GetMinPrice(this)">
+                            @*<select asp-for="VINVehiculo" class="form-control" asp-items="ViewBag.VINVehiculo" onchange="GetMinPrice(this)">
                                 <option disabled selected>--Seleccionar--</option>
-                            </select>
+                            </select>*@
+                            <input type="hidden" asp-for="VINVehiculo" />
+                            @Html.DisplayTextFor(modelItem => modelItem.Vehiculo.Descripcion )
                         </div>
                         <span asp-validation-for="VINVehiculo" class="text-danger"></span>
                     </div>

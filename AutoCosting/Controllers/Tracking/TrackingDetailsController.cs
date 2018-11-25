@@ -71,7 +71,7 @@ namespace AutoCosting.Controllers.Tracking
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TrackingId,Costo,TrabajoId,ProveedorId,NumeroFactura,Descripcion,AddDescripcion")] TrackingDetail trackingDetail)
+        public async Task<IActionResult> Create( TrackingDetail trackingDetail)
         {
             if (ModelState.IsValid)
             {
@@ -118,7 +118,7 @@ namespace AutoCosting.Controllers.Tracking
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TrackingId,Costo,TrabajoId,ProveedorId,NumeroFactura,Descripcion,AddDescripcion")] TrackingDetail trackingDetail)
+        public async Task<IActionResult> Edit(int id, TrackingDetail trackingDetail)
         {
             if (id != trackingDetail.ID)
             {

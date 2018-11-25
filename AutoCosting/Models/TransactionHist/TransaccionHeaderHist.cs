@@ -1,6 +1,6 @@
 ﻿using AutoCosting.HelpersAndValidations;
 using AutoCosting.Models.Maintenance;
-using AutoCosting.Models.Receipts;
+using AutoCosting.Models.ReceiptsHist;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -8,10 +8,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AutoCosting.Models.Transaction
+namespace AutoCosting.Models.TransactionHist
 {
-    [Table("tblTransHeader")]
-    public class TransaccionHeader
+    [Table("tblTransHeaderHist")]
+    public class TransaccionHeaderHist
     {
         [Key]
         [Display(Name = "Número de Transacción")]
@@ -88,16 +88,16 @@ namespace AutoCosting.Models.Transaction
             {
                 double? sum = 0;
                 if (this.TransDetails != null)
-                    foreach (TransaccionDetail detail in this.TransDetails)
+                    foreach (TransaccionDetailHist detail in this.TransDetails)
                         sum += detail.PrecioAcordado;
                 return sum;
             }
         }
 
         public bool Eliminada { get; set; }
-        public IEnumerable<TransaccionDetail> TransDetails { get; set; }
+        public IEnumerable<TransaccionDetailHist> TransDetails { get; set; }
 
-        public IEnumerable<Recibo> Recibos { get; set; }
+        public IEnumerable<ReciboHist> Recibos { get; set; }
 
         [NotMapped]
         public string TransIdStr

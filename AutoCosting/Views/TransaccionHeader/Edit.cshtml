@@ -38,7 +38,7 @@
                                 <div class="col-sm-3">
                                     <label asp-for="Transaccion.VendedorID" class="custom-label"></label>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select asp-for="Transaccion.VendedorID" class="form-control" asp-items="ViewBag.VendedorID"></select>
                                 </div>
                                 <span asp-validation-for="Transaccion.VendedorID" class="text-danger"></span>
@@ -48,7 +48,7 @@
                                 <div class="col-sm-3">
                                     <label asp-for="Transaccion.ClienteID" class="custom-label"></label>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select asp-for="Transaccion.ClienteID" class="form-control" disabled asp-items="ViewBag.ClienteID">
                                         <option disabled selected>--Seleccionar--</option>
                                     </select>
@@ -59,7 +59,7 @@
                                 <div class="col-sm-3">
                                     <label asp-for="Transaccion.EmpresaID" class="custom-label"></label>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select asp-for="Transaccion.EmpresaID" class="form-control" asp-items="ViewBag.EmpresaID"></select>
                                 </div>
                                 <span asp-validation-for="Transaccion.EmpresaID" class="text-danger"></span>
@@ -69,7 +69,7 @@
                                 <div class="col-sm-3">
                                     <label asp-for="Transaccion.SedeID" class="custom-label"></label>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select asp-for="Transaccion.SedeID" class="form-control" asp-items="ViewBag.SedeID"></select>
                                 </div>
                                 <span asp-validation-for="Transaccion.SedeID" class="text-danger"></span>
@@ -79,7 +79,7 @@
                                 <div class="col-sm-3">
                                     <label asp-for="Transaccion.TipoPago" class="custom-label"></label>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <select asp-for="Transaccion.TipoPago" class="form-control" asp-items="Html.GetEnumSelectList<TipoPago>()"></select>
                                 </div>
                                 <span asp-validation-for="Transaccion.TipoPago" class="text-danger"></span>
@@ -89,17 +89,25 @@
                                 <div class="col-sm-3">
                                     <label asp-for="Transaccion.TipoTransaccion" class="custom-label"></label>
                                 </div>
-                                <div class="col-sm-4">
-                                    <select asp-for="Transaccion.TipoTransaccion" class="form-control" asp-items="Html.GetEnumSelectList<TipoTransaccion>()"></select>
+                                <div class="col-sm-5">
+                                    @*<select asp-for="Transaccion.TipoTransaccion" class="form-control" asp-items="Html.GetEnumSelectList<TipoTransaccion>()"></select>*@
+                                    <input type="hidden" asp-for="Transaccion.TipoTransaccion" />
+                                    <input asp-for="Transaccion.TipoTransaccion" readonly="readonly" class="form-control" />
                                 </div>
                                 <span asp-validation-for="Transaccion.TipoTransaccion" class="text-danger"></span>
+                                @if (Model.Transaccion.TipoTransaccion == TipoTransaccion.Apartado)
+                                {
+                                    <a asp-action="ConvertToSale" asp-controller="TransaccionHeader" asp-route-transId="@Model.Transaccion.TransID" class="btn btn-sm btn-success" style="padding-top:9px">Convertir a Venta</a>
+                                    @*asp-action="CloseReserve" asp-controller="TransaccionHeader" asp-route-transId="@Model.Transaccion.TransID"*@
+                                    <a class="btn btn-sm btn-warning" style="padding-top:9px" onclick="alert('Commin Soon')">Cerrar Apartado</a>
+                                }
                             </div>
                             <br />
                             <div class="row">
                                 <div class="col-sm-3">
                                     <label asp-for="Transaccion.Fecha" class="custom-label"></label>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <input asp-for="Transaccion.Fecha" class="form-control" type="date" />
                                 </div>
                                 <span asp-validation-for="Transaccion.Fecha" class="text-danger"></span>
@@ -109,10 +117,20 @@
                                 <div class="col-sm-3">
                                     <label asp-for="Transaccion.Total" class="custom-label"></label>
                                 </div>
-                                <div class="col-sm-4" style="padding-top:6px">
+                                <div class="col-sm-5" style="padding-top:6px">
                                     @Html.DisplayFor(modelItem => Model.Transaccion.Total)
                                 </div>
                                 <span asp-validation-for="Transaccion.Total" class="text-danger"></span>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label asp-for="Transaccion.Saldo" class="custom-label"></label>
+                                </div>
+                                <div class="col-sm-5" style="padding-top:6px">
+                                    @Html.DisplayFor(modelItem => Model.Transaccion.Saldo)
+                                </div>
+                                <span asp-validation-for="Transaccion.Saldo" class="text-danger"></span>
                             </div>
                         </div>
                     </div>
@@ -133,6 +151,9 @@
                                 <thead>
                                     <tr>
                                         <th>
+                                            @Html.DisplayNameFor(model => model.Recibo.ID)
+                                        </th>
+                                        <th>
                                             @Html.DisplayNameFor(model => model.Recibo.Descripcion)
                                         </th>
                                         <th style="text-align:right">
@@ -149,6 +170,9 @@
                                     {
                                         <tr>
                                             <td>
+                                                @Html.DisplayFor(modelItem => item.ID)
+                                            </td>
+                                            <td>
                                                 @Html.DisplayFor(modelItem => item.Descripcion)
                                             </td>
                                             <td style="text-align:right">
@@ -156,6 +180,9 @@
                                             </td>
                                             <td style="text-align:right">
                                                 @Html.DisplayFor(modelItem => item.Fecha)
+                                            </td>
+                                            <td>
+                                                <a asp-action="Details" asp-route-id="@item.ID" asp-controller="Recibo" class="btn btn-sm btn-primary"><i class="fa fa-print"></i> Imprimir</a>
                                             </td>
                                         </tr>
                                     }

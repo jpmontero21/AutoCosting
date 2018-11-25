@@ -103,14 +103,19 @@ namespace AutoCosting.Controllers
         public async Task<IActionResult> Create(Vehiculo vehiculo)
         {
             Vehiculo existingVehiculo = await _context.Vehiculos.SingleOrDefaultAsync(m => m.VIN == vehiculo.VIN);
+            ViewData["Brands"] = new SelectList(Brands);
             if (existingVehiculo != null)
             {
-                ModelState.AddModelError("VIN", "Ya existe un vehículo con este VIN");
-                ViewData["Brands"] = new SelectList(Brands);
+                ModelState.AddModelError("VIN", "Ya existe un vehículo con este VIN");                
                 return View(vehiculo);
             }
             if (ModelState.IsValid)
             {
+                if (vehiculo.PrecioMinimo > vehiculo.PrecioRecomendado)
+                {
+                    ModelState.AddModelError("PrecioRecomendado","El precio recomendado debe ser mayor que el precio mínimo.");
+                    return View(vehiculo);
+                }
                 if (HttpContext.Request.Form.Files != null)
                 {
                     IFormFileCollection files = HttpContext.Request.Form.Files;
@@ -147,6 +152,7 @@ namespace AutoCosting.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id, Vehiculo vehiculo)
         {
+            ViewData["Brands"] = new SelectList(Brands);
             if (id != vehiculo.VIN)
             {
                 return NotFound();
@@ -156,6 +162,11 @@ namespace AutoCosting.Controllers
             {
                 try
                 {
+                    if (vehiculo.PrecioMinimo > vehiculo.PrecioRecomendado)
+                    {
+                        ModelState.AddModelError("PrecioRecomendado", "El precio recomendado debe ser mayor que el precio mínimo.");
+                        return View(vehiculo);
+                    }
                     if (HttpContext.Request.Form.Files != null)
                     {
                         IFormFileCollection files = HttpContext.Request.Form.Files;
@@ -219,46 +230,114 @@ namespace AutoCosting.Controllers
             get
             {
                 List<string> brands = new List<string>();
+                brands.Add("Acura");
                 brands.Add("Alfa Romeo");
+                brands.Add("AMC");
+                brands.Add("Aro");
+                brands.Add("Asia");
+                brands.Add("Aston Martin");
                 brands.Add("Audi");
+                brands.Add("Austin");
+                brands.Add("Bentley");
+                brands.Add("Bluebird");
                 brands.Add("BMW");
+                brands.Add("Buick");
                 brands.Add("BYD");
+                brands.Add("Cadillac");
+                brands.Add("Chana");
                 brands.Add("Changan");
+                brands.Add("Chery");
                 brands.Add("Chevrolet");
                 brands.Add("Chrysler");
                 brands.Add("Citroen");
-                brands.Add("Dodge");
-                brands.Add("DS");
+                brands.Add("Dacia");
+                brands.Add("Daewoo");
+                brands.Add("Daihatsu");
+                brands.Add("Datsun");
+                brands.Add("Dodge/RAM");
+                brands.Add("Donfeng (ZNA)");
+                brands.Add("Eagle");
+                brands.Add("Faw");
+                brands.Add("Ferrari");
                 brands.Add("Fiat");
                 brands.Add("Ford");
-                brands.Add("Fuso");
+                brands.Add("Foton");
+                brands.Add("Freightliner");
                 brands.Add("Geely");
+                brands.Add("Genesis");
+                brands.Add("Geo");
+                brands.Add("GMC");
+                brands.Add("Gonow");
                 brands.Add("Great Wall");
+                brands.Add("Hafei");
+                brands.Add("Heibao");
+                brands.Add("Higer");
                 brands.Add("Hino");
                 brands.Add("Honda");
+                brands.Add("Hummer");
                 brands.Add("Hyundai");
+                brands.Add("Infiniti");
+                brands.Add("International");
                 brands.Add("Isuzu");
+                brands.Add("Iveco");
                 brands.Add("JAC");
                 brands.Add("Jaguar");
                 brands.Add("Jeep");
+                brands.Add("Jinbei");
+                brands.Add("JMC");
+                brands.Add("Kenworth");
                 brands.Add("Kia");
+                brands.Add("Lada");
+                brands.Add("Lamborghini");
+                brands.Add("Lancia");
                 brands.Add("Land Rover");
                 brands.Add("Lexus");
+                brands.Add("Lifan");
+                brands.Add("Lincoln");
+                brands.Add("Lotus");
+                brands.Add("Mack");
+                brands.Add("Magiruz");
+                brands.Add("Mahindra");
+                brands.Add("Maserati");
                 brands.Add("Mazda");
                 brands.Add("Mercedes Benz");
+                brands.Add("Mercury");
                 brands.Add("MG");
+                brands.Add("Mini");
                 brands.Add("Mitsubishi");
                 brands.Add("Nissan");
+                brands.Add("Oldsmobile");
+                brands.Add("Opel");
+                brands.Add("Peterbilt");
+                brands.Add("Peugeot");
+                brands.Add("Plymouth");
+                brands.Add("Polarsun");
+                brands.Add("Pontiac");
                 brands.Add("Porsche");
-                brands.Add("RAM");
+                brands.Add("Proton");
+                brands.Add("Rambler");
                 brands.Add("Renault");
+                brands.Add("Reva");
+                brands.Add("Rolls Royce");
+                brands.Add("Rover");
+                brands.Add("Saab");
+                brands.Add("Samsung");
+                brands.Add("Saturn");
+                brands.Add("Scania");
+                brands.Add("Scion");
+                brands.Add("Seat");
+                brands.Add("Skoda");
+                brands.Add("Smart");
                 brands.Add("Ssang Yong");
                 brands.Add("Subaru");
                 brands.Add("Suzuki");
+                brands.Add("Tianma");
+                brands.Add("Tiger Truck");
                 brands.Add("Toyota");
                 brands.Add("Volkswagen");
                 brands.Add("Volvo");
-                brands.Add("ZNA (DongFeng)");
+                brands.Add("Western Star");
+                brands.Add("Yugo");
                 return brands;
             }
         }
