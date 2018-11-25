@@ -1,0 +1,86 @@
+﻿@model AutoCosting.Models.ReceiptsHist.ReciboHist
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<div class="box-header">
+    <h2>Recibo de dinero</h2>
+    <div>
+        <h4><b>Número de Recibo: @Model.ID</b></h4>
+        <hr />
+    </div>
+    <div class="col-sm-6">
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td class="col-sm-3">
+                        <b>@Html.DisplayNameFor(model => model.Parent.Sede.Empresa): </b>
+                        <br />
+                        @Html.DisplayTextFor(model => model.Parent.Sede.Empresa.Nombre)
+                        <br />
+                        <b>@Html.DisplayNameFor(model => model.Parent.Sede.Empresa.Telefono): </b>
+                        @Html.DisplayTextFor(model => model.Parent.Sede.Empresa.Telefono)
+                        <br />
+                        <b>@Html.DisplayNameFor(model => model.Parent.Sede.Empresa.Direccion): </b>
+                        @Html.DisplayTextFor(model => model.Parent.Sede.Empresa.Direccion)
+                    </td>
+                    <td class="col-sm-3">
+                        <b>@Html.DisplayNameFor(model => model.Parent.Sede): </b>
+                        <br />
+                        @Html.DisplayTextFor(model => model.Parent.Sede.Nombre)
+                        <br />
+                        <b>@Html.DisplayNameFor(model => model.Parent.Sede.Telefono): </b>
+                        @Html.DisplayTextFor(model => model.Parent.Sede.Telefono)
+                        <br />
+                        <b>@Html.DisplayNameFor(model => model.Parent.Sede.Direccion): </b>
+                        @Html.DisplayTextFor(model => model.Parent.Sede.Direccion)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br />
+
+        <table class="table">
+            <tr>
+                <td>
+                    <b>@Html.DisplayNameFor(model => model.Fecha) del Recibo: </b>
+                    @Html.DisplayFor(model => model.Fecha)
+                    <br />
+                    <b>@Html.DisplayNameFor(model => model.Parent.TransID): </b>
+                    @Html.DisplayFor(model => model.Parent.TransIdStr)
+                    <br />
+                    <b>@Html.DisplayNameFor(model => model.Parent.Cliente.Cedula): </b>
+                    @Html.DisplayFor(model => model.Parent.Cliente.Cedula)
+                    <br />
+                    <b>@Html.DisplayNameFor(model => model.Parent.Cliente): </b>
+                    @Html.DisplayFor(model => model.Parent.Cliente.Nombre)&nbsp;
+                    @Html.DisplayFor(model => model.Parent.Cliente.Apellido1)&nbsp;
+                    @Html.DisplayFor(model => model.Parent.Cliente.Apellido2)
+                    <br />
+                    <b>Recibo de dinero por Concepto de:</b> @Html.DisplayTextFor(model => model.Descripcion)
+                    <br />
+                    <b>Monto: </b>
+                    @Html.DisplayFor(model => model.Abono)
+                    <br />
+                    <br />
+                    <b>
+                        @Html.DisplayNameFor(model => model.Parent.Saldo):
+                        @Html.DisplayFor(model => model.Parent.Saldo)
+                    </b>
+                    <br />
+                    <br />
+                    <br />
+                    GRACIAS POR SU VISITA
+                </td>
+            </tr>
+        </table>
+        <div>
+            <input type="submit" value="Imprimir" class="btn btn-sm btn-primary no-print" onclick="window.print();" />
+            <a asp-action="Details" asp-controller="TransaccionHeaderHist" asp-route-id="@Model.TransID" class="btn btn-sm btn-success no-print">Regresar a la transacción</a>
+        </div>
+    </div>
+</div>
+
+

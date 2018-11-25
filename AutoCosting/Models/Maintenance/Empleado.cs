@@ -32,7 +32,7 @@ namespace AutoCosting.Models.Maintenance
         public string Notas { get; set; }
         [Required(ErrorMessage = "La fecha de nacimiento es requerida.")]
         [Display(Name = "Fecha de Nacimiento")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime FechaNacimiento { get; set; }
         [Display(Name = "Descripción del Puesto")]
         public string DescripcionPuesto { get; set; }

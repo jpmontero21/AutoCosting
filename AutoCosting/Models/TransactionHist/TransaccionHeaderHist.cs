@@ -43,14 +43,14 @@ namespace AutoCosting.Models.TransactionHist
         [Required(ErrorMessage = "El Tipo de transacción es requerido.")]
         public TipoTransaccion TipoTransaccion { get; set; }
         [Required(ErrorMessage = "La Fecha es requerida.")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? Fecha { get; set; }
         [NotMapped]
         public string FechaStr
         {
             get
             {
-                return this.Fecha.GetValueOrDefault(DateTime.Today).ToString("MM/dd/yyyy");
+                return this.Fecha.GetValueOrDefault(DateTime.Today).ToString("dd/MM/yyyy");
             }
         }
         [NotMapped]

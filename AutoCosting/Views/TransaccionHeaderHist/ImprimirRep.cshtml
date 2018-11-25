@@ -1,4 +1,4 @@
-﻿@model AutoCosting.Models.Transaction.TransaccionHeader
+﻿@model AutoCosting.Models.TransactionHist.TransaccionHeaderHist
 @using AutoCosting.HelpersAndValidations;
 @{
     ViewData["Title"] = "ImprimirRep";
@@ -113,6 +113,6 @@ else
 
 <div>
     <input type="submit" value="Imprimir" class="btn btn-sm btn-primary no-print" onclick="window.print();" />
-    <a asp-action="Edit" asp-route-id="@Model.TransID" class="btn btn-sm btn-success no-print">Regresar a la transacción</a>
+    <a asp-action="Details" asp-route-id="@Model.TransID" class="btn btn-sm btn-success no-print">Regresar a la transacción</a>
 </div>
 

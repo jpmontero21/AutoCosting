@@ -39,7 +39,7 @@ namespace AutoCosting.Controllers.Transaccion
             }
             if (option == "Fecha" && search != null)
             {
-                search = Convert.ToDateTime(search).ToString("MM/dd/yyyy");
+                search = Convert.ToDateTime(search).ToString("dd/MM/yyyy");
                 transaccions = _context.TransaccionHeaders.Include(t => t.Cliente).Include(t => t.Empleado).Include(t => t.Sede).Include(t => t.Recibos).Include(t => t.TransDetails).Where(t => t.Eliminada == false).Where(h => h.FechaStr.ToLower().Contains(search.Replace("-", "/").ToLower())).ToList();
             }
             if (option == "Sede" && search != null)

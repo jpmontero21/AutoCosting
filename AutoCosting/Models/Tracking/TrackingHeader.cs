@@ -21,7 +21,7 @@ namespace AutoCosting.Models.Tracking
         [Display(Name = "Vehículo")]
         [ForeignKey("VINVehiculo")]
         public Vehiculo Vehiculo { get; set; }
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Fecha { get; set; }
         public string Notas { get; set; }
         [NotMapped]
@@ -44,7 +44,7 @@ namespace AutoCosting.Models.Tracking
         {
             get
             {
-                return this.Fecha.ToString("MM/dd/yyyy");
+                return this.Fecha.ToString("dd/MM/yyyy");
             }
         }
         [NotMapped]

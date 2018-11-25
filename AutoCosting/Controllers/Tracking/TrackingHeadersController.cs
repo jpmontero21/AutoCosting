@@ -33,7 +33,7 @@ namespace AutoCosting.Controllers.Tracking
             }
             if (option == "Fecha" && search != null)
             {
-                search = Convert.ToDateTime(search).ToString("MM/dd/yyyy");
+                search = Convert.ToDateTime(search).ToString("dd/MM/yyyy");
                 trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.FechaStr.ToLower().Contains(search.Replace("-", "/").ToLower())).ToList();
             }
             if (option == "TrackingID" && search != null)

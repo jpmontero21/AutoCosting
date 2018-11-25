@@ -27,7 +27,7 @@ namespace AutoCosting.Models.Receipts
         [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
         public double? Abono { get; set; }
         [Required(ErrorMessage = "La fecha es requerida.")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime? Fecha { get; set; }
     }
 }

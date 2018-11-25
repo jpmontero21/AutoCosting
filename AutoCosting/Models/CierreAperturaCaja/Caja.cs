@@ -13,7 +13,7 @@ namespace AutoCosting.Models.CierreAperturaCaja
     {
         public int ID { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:d}")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "La fecha es requerida.")]
         public DateTime? Fecha { get; set; }
         [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
