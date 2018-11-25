@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Models.Backups;
 using AutoCosting.Models.CierreAperturaCaja;
 using System.Linq;
+using AutoCosting.Models.TransactionHist;
+using AutoCosting.Models.ReceiptsHist;
 
 namespace AutoCosting.Data
 {
@@ -30,6 +32,11 @@ namespace AutoCosting.Data
         public DbSet<Recibo> Recibos { get; set; }
         public DbSet<Caja> AperturaCierreCaja { get; set; }
         public DbSet<Comision> Comisiones { get; set; }
+        //History Tables
+        public DbSet<TransaccionHeaderHist> TransHistoryHeader {get; set;}
+        public DbSet<TransaccionDetailHist> TransDetailHistory { get; set; }
+        public DbSet<ReciboHist> ReciboHistory { get; set; }
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

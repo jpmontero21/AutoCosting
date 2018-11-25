@@ -59,7 +59,7 @@ namespace AutoCosting.Controllers.Transaccion
         public IActionResult Create(TipoComision commType)
         {
             ViewData["VendedorID"] = new SelectList(_context.Empleados, "NombreCompleto", "NombreCompleto");
-            ViewData["TransID"] = new SelectList(_context.TransaccionHeaders, "TransID", "TransIdStr");
+            ViewData["TransID"] = new SelectList(_context.TransaccionHeaders.Where(t=>!t.Eliminada && t.TipoTransaccion == TipoTransaccion.Venta), "TransID", "TransIdStr");
             Comision comision = new Comision()
             {
                 TipoComision = commType

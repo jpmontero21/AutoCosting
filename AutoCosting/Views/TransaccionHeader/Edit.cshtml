@@ -11,12 +11,28 @@
     </div>
     <div style="text-align:right;padding:0px 20px 0px 0px">
         <br />
-        <a asp-action="Create" asp-route-transID="@Model.Transaccion.TransID" asp-controller="Recibo" class="btn btn-success">Agregar Recibo</a>
+        @if (Model.Transaccion.TipoTransaccion != TipoTransaccion.Cotizacion)
+        {
+            <a asp-action="Create" asp-route-transID="@Model.Transaccion.TransID" asp-controller="Recibo" class="btn btn-success">Agregar Recibo</a>
+        }
         <a asp-action="ImprimirRep" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-primary"><i class="fa fa-print"></i> Imprimir</a>
     </div>
 </div>
 
 <hr />
+@if (TempData["ErrorMessage"] != null && !string.IsNullOrEmpty(TempData["ErrorMessage"].ToString()))
+{
+    <div class="form-group">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">No se puede convertir.</h3>
+            </div>
+            <div class="box-body">
+                <div class="box-body alert alert-warning alert-dismissible">@TempData["ErrorMessage"]</div>                
+            </div>
+        </div>
+    </div>
+}
 <form asp-action="Edit">
     <input type="hidden" asp-for="Transaccion.TransID" />
     <input type="hidden" asp-for="Transaccion.ClienteID" />
@@ -98,9 +114,15 @@
                                 @if (Model.Transaccion.TipoTransaccion == TipoTransaccion.Apartado)
                                 {
                                     <a asp-action="ConvertToSale" asp-controller="TransaccionHeader" asp-route-transId="@Model.Transaccion.TransID" class="btn btn-sm btn-success" style="padding-top:9px">Convertir a Venta</a>
-                                    @*asp-action="CloseReserve" asp-controller="TransaccionHeader" asp-route-transId="@Model.Transaccion.TransID"*@
-                                    <a class="btn btn-sm btn-warning" style="padding-top:9px" onclick="alert('Commin Soon')">Cerrar Apartado</a>
+                                    <a asp-action="CloseReserve" asp-controller="TransaccionHeader" asp-route-transId="@Model.Transaccion.TransID" class="btn btn-sm btn-warning" style="padding-top:9px">Cerrar Apartado</a>
                                 }
+                                else if (Model.Transaccion.TipoTransaccion == TipoTransaccion.Cotizacion)
+                                {
+                                    <a asp-action="ConvertToSale" asp-controller="TransaccionHeader" asp-route-transId="@Model.Transaccion.TransID" class="btn btn-sm btn-success" style="padding-top:9px">Convertir a Venta</a>
+                                    <a asp-action="ConvertToReserve" asp-controller="TransaccionHeader" asp-route-transId="@Model.Transaccion.TransID" class="btn btn-sm btn-success" style="padding-top:9px">Apartar</a>
+                                    <a asp-action="CloseQuote" asp-controller="TransaccionHeader" asp-route-transId="@Model.Transaccion.TransID" class="btn btn-sm btn-warning" style="padding-top:9px">Cerrar Cotización</a>
+                                }
+
                             </div>
                             <br />
                             <div class="row">

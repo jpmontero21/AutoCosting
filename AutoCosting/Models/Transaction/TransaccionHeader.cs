@@ -65,7 +65,6 @@ namespace AutoCosting.Models.Transaction
                 }
                 return false;
             }
-
         }
 
         [DisplayFormat(DataFormatString = "{0:#,###0.00}")]
@@ -95,6 +94,7 @@ namespace AutoCosting.Models.Transaction
         }
 
         public bool Eliminada { get; set; }
+
         public IEnumerable<TransaccionDetail> TransDetails { get; set; }
 
         public IEnumerable<Recibo> Recibos { get; set; }
