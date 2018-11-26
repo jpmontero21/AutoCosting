@@ -1,4 +1,5 @@
-﻿@{
+﻿@model AutoCosting.Models.ViewModel.IndexViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -55,40 +56,40 @@
 
 <div class="row">
     <h1 class="text-center">Movimientos recientes</h1>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <h2>Vehículos Nuevos</h2>
         <ul>
-            <li>Hyundai Elantra</li>
-            @*<li>Theming using <a href="https://go.microsoft.com/fwlink/?LinkID=398939">Bootstrap</a></li>*@
-            <li>Audi Q5</li>
-            <li>BMW 7401</li>
+            @foreach (var item in Model.Vehiculos)
+            {
+            <li><a asp-action="Details" asp-controller="Vehiculo" asp-route-id="@item.VIN" class="btn btn-sm btn-success glyphicon glyphicon-list"></a> @item.Marca &nbsp; @item.Modelo &nbsp; @item.Anno &nbsp;  </li>            
+            }
+            
         </ul>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <h2>Seguimientos</h2>
         <ul>
-            <li>00000014	545664 BMW 740 I</li>
-            <li>00000012	8888888 Hyundai Elantra</li>
-            <li>00000008	369852 Land Rover Discovery Sport HSE</li>
+            @foreach (var item in Model.Trackings)
+            {
+            <li><a asp-action="Details" asp-controller="TrackingHeaders" asp-route-id="@item.TrackingID" class="btn btn-sm btn-success glyphicon glyphicon-list"></a> @item.TrackingIdStr &nbsp; @item.Vehiculo.Marca &nbsp; @item.Vehiculo.Modelo &nbsp; </li>
+            }
         </ul>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <h2>Transacciones</h2>
         <ul>
-            <li>00000001 Alexander Rojas</li>
-            <li>00000002 Jose Arturo Sibaja</li>
-            <li>00000003 Paula Alfaro</li>
-            <li>00000004 Ignacio Rojas</li>
-            <li>00000005 Enrrique Soto</li>
-            <li>00000006 Alexander Rojas</li>            
+            @foreach (var item in Model.Transaccions)
+            {
+            <li><a asp-action="Details" asp-controller="TransaccionHeader" asp-route-id="@item.TransID" class="btn btn-sm btn-success glyphicon glyphicon-list"></a> @item.TransIdStr &nbsp; @item.Cliente.Nombre &nbsp; @item.Cliente.Apellido1 &nbsp; @item.TipoTransaccion</li>
+            }
         </ul>
     </div>
     @*<div class="col-md-3">
-        <h2>Run &amp; Deploy</h2>
-        <ul>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
-            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
-        </ul>
-    </div>*@
+            <h2>Run &amp; Deploy</h2>
+            <ul>
+                <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
+                <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
+                <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
+            </ul>
+        </div>*@
 </div>

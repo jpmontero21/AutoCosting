@@ -6,15 +6,31 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AutoCosting.Models;
 using Microsoft.AspNetCore.Authorization;
+using AutoCosting.Models.ViewModel;
+using AutoCosting.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoCosting.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public HomeController(ApplicationDbContext db)            
         {
-            return View();
+            this._context = db;
+        }
+
+        public async Task<IActionResult> Index()
+        {
+            IndexViewModel indexModel = new IndexViewModel()
+            {
+                Vehiculos = await _context.Vehiculos.OrderByDescending (v => v.FechaIngreso).Take(7).ToListAsync(),
+                Trackings = await this._context.TrackingHeaders.OrderByDescending(t => t.Fecha).Take(7).Include(t=>t.TrackingDetails).Include(t=>t.Vehiculo).ToListAsync(),
+                Transaccions = await this._context.TransaccionHeaders.OrderByDescending(t => t.Fecha).Take(7).Include(t=>t.Cliente).ToListAsync()
+            };
+            return View(indexModel);
         }
 
         public IActionResult About()
