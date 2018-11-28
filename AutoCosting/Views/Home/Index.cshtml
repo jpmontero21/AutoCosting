@@ -61,7 +61,9 @@
         <ul>
             @foreach (var item in Model.Vehiculos)
             {
-            <li><a asp-action="Details" asp-controller="Vehiculo" asp-route-id="@item.VIN" class="btn btn-sm btn-success glyphicon glyphicon-list"></a> @item.Marca &nbsp; @item.Modelo &nbsp; @item.Anno &nbsp;  </li>            
+            <li><a asp-action="Details" asp-controller="Vehiculo" asp-route-id="@item.VIN" class="btn btn-sm btn-success glyphicon glyphicon-list"></a> @item.Marca &nbsp; @item.Modelo &nbsp; @item.Anno &nbsp; 
+                <a asp-action="VehicleHistory" asp-controller="Vehiculo" asp-route-VIN="@item.VIN" class="btn btn-sm btn-primary glyphicon glyphicon-list"></a>
+            </li>
             }
             
         </ul>

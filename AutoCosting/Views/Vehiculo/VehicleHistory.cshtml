@@ -1,0 +1,303 @@
+﻿@model AutoCosting.Models.ViewModel.VehiculoHistoryViewModel
+@using AutoCosting.HelpersAndValidations
+@{
+    ViewData["Title"] = "VehicleHistory";
+}
+<br />
+
+<h2>Historial del Vehículo</h2>
+
+
+<div class="box box-primary">
+    <div class="box-header with-border">
+        <h3 class="box-title">Datos Básicos</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-3">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.VIN): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.VIN)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Marca): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Marca)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Modelo): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Modelo)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Anno): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Anno)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Transmision): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Transmision)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Estilo): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Estilo)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Combustible): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Combustible)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.NumeroPuertas): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.NumeroPuertas)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Cilindrada): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Cilindrada)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Placa): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Placa)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Kilometraje): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Kilometraje)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.Estado): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.Estado)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-md-3">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.PrecioMinimo): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.PrecioMinimo)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.PrecioRecomendado): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.PrecioRecomendado)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Vehiculo.FechaIngreso): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Vehiculo.FechaIngreso)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.Tracking != null)
+{
+    <div class="box box-warning">
+        <div class="box-header with-border">
+            <h3 class="box-title">Seguimientos</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            <div class="col-md-3">
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Tracking.TrackingID): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Tracking.TrackingIdStr)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Tracking.Fecha): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Tracking.Fecha)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Tracking.Notas): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Tracking.Notas)</td>
+                        </tr>
+                        <tr>
+                            <td><b>@Html.DisplayNameFor(model => model.Tracking.CostoTotal): </b></td>
+                            <td style="text-align:right">@Html.DisplayFor(model => model.Tracking.CostoTotal)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            @if (Model.Tracking.TrackingDetails != null)
+            {
+                <div class="col-md-9">
+                    <h4>Detalles</h4>
+                    <br />
+                    @foreach (var item in Model.Tracking.TrackingDetails)
+                    {
+                        <div class="row">
+                            <b>@Html.DisplayNameFor(modelItem => item.Descripcion): </b>
+                            @Html.DisplayFor(modelItem => item.Descripcion)<br />
+
+                            <b>@Html.DisplayNameFor(modelItem => item.AddDescripcion): </b>
+                            @Html.DisplayFor(modelItem => item.AddDescripcion)<br />
+
+                            <b>@Html.DisplayNameFor(modelItem => item.NumeroFactura): </b>
+                            @Html.DisplayFor(modelItem => item.NumeroFactura)<br />
+
+                            <b>@Html.DisplayNameFor(modelItem => item.Costo): </b>
+                            @Html.DisplayFor(modelItem => item.Costo)
+                            <br /><br />
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}
+
+
+<div class="box box-info">
+    <div class="box-header with-border">
+        <h3 class="box-title">Transacciones</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        @foreach (var item in Model.TransaccionHeaderList)
+        {
+            
+                <div class="col-md-3">
+                    <b>@Html.DisplayNameFor(modelItem => item.TransID): </b>
+                    @Html.DisplayFor(modelItem => item.TransIdStr)
+                    <br />
+                    <b>@Html.DisplayNameFor(modelItem => item.Cliente): </b>
+                    @Html.DisplayFor(modelItem => item.Cliente.Informacion)
+                    <br />
+                    <b>@Html.DisplayNameFor(modelItem => item.TipoTransaccion): </b>
+                    @Html.DisplayFor(modelItem => item.TipoTransaccion)
+                    <br />
+
+                    <b>@Html.DisplayNameFor(modelItem => item.Fecha): </b>
+                    @Html.DisplayFor(modelItem => item.FechaStr)
+                    <br />
+
+                    <b>@Html.DisplayNameFor(modelItem => item.Empleado): </b>
+                    @Html.DisplayFor(modelItem => item.Empleado.NombreCompleto)
+                    <br />
+
+                    <b>@Html.DisplayNameFor(modelItem => item.Sede): </b>
+                    @Html.DisplayFor(modelItem => item.SedeID)
+                    <br />
+
+                    <b>@Html.DisplayNameFor(modelItem => item.Total): </b>
+                    @Html.DisplayFor(modelItem => item.Total)
+                    <br />
+
+                    <b>@Html.DisplayNameFor(modelItem => item.Eliminada): </b>
+                    @if (item.Eliminada)
+                    {
+                        <label>Si</label>
+                    }
+                    else
+                    {
+                        <label>No</label>
+                    }
+                    <br />
+                    @if (item != null && item.TransDetails != null)
+                    {
+                        @foreach (var detail in item.TransDetails)
+                        {
+                            @if (detail.VINVehiculo == Model.Vehiculo.VIN)
+                            {
+                                <b>@Html.DisplayNameFor(modelItem => detail.PrecioAcordado): </b>
+                                @Html.DisplayFor(modelItem => detail.PrecioAcordado)<br />
+                            }
+                        }
+                    }
+                    <br />
+                    <br />
+                </div>
+            
+        }
+    </div>
+</div>
+
+<div class="box box-success">
+    <div class="box-header with-border">
+        <h3 class="box-title">Histórico</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
+        @foreach (var item in Model.TransaccionHeaderHistList)
+        {
+
+            <div class="col-md-3">
+                <b>@Html.DisplayNameFor(modelItem => item.TransID): </b>
+                @Html.DisplayFor(modelItem => item.TransIdStr)
+                <br />
+                <b>@Html.DisplayNameFor(modelItem => item.Cliente): </b>
+                @Html.DisplayFor(modelItem => item.Cliente.Informacion)
+                <br />
+                <b>@Html.DisplayNameFor(modelItem => item.TipoTransaccion): </b>
+                @Html.DisplayFor(modelItem => item.TipoTransaccion)
+                <br />
+
+                <b>@Html.DisplayNameFor(modelItem => item.Fecha): </b>
+                @Html.DisplayFor(modelItem => item.FechaStr)
+                <br />
+
+                <b>@Html.DisplayNameFor(modelItem => item.Empleado): </b>
+                @Html.DisplayFor(modelItem => item.Empleado.NombreCompleto)
+                <br />
+
+                <b>@Html.DisplayNameFor(modelItem => item.Sede): </b>
+                @Html.DisplayFor(modelItem => item.SedeID)
+                <br />
+
+                <b>@Html.DisplayNameFor(modelItem => item.Total): </b>
+                @Html.DisplayFor(modelItem => item.Total)
+                <br />
+
+                <b>@Html.DisplayNameFor(modelItem => item.Eliminada): </b>
+                @if (item.Eliminada)
+                {
+                    <label>Si</label>
+                }
+                else
+                {
+                    <label>No</label>
+                }
+                <br />
+                @if (item != null && item.TransDetails != null)
+                {
+                    @foreach (var detail in item.TransDetails)
+                    {
+                        @if (detail.VINVehiculo == Model.Vehiculo.VIN)
+                        {
+                            <b>@Html.DisplayNameFor(modelItem => detail.PrecioAcordado): </b>
+                            @Html.DisplayFor(modelItem => detail.PrecioAcordado)<br />
+                        }
+                    }
+                }
+                <br />
+                <br />
+            </div>
+        }
+    </div>
+</div>
+<div class="form-group">
+    <input type="submit" value="Imprimir" class="btn btn-sm btn-primary no-print" onclick="window.print();" />
+</div>
