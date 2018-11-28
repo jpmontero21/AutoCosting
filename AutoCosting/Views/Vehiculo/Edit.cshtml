@@ -22,6 +22,7 @@
                 <div class="col-md-3">
                     <div class="form-group">
                         <label asp-for="VIN"></label>
+                        <input type="hidden" asp-for="VIN" />
                         <input asp-for="VIN" class="form-control" placeholder="VIN" disabled>
                         <span asp-validation-for="VIN" class="text-danger"></span>
                     </div>
@@ -126,10 +127,10 @@
                         <span asp-validation-for="FechaIngreso" class="text-danger"></span>
                     </div>
                     @*<div class="checkbox">
-                        <label>
-                            <input asp-for="ApartadoYN" type="checkbox" /> Apartado
-                        </label>
-                    </div>*@
+                            <label>
+                                <input asp-for="ApartadoYN" type="checkbox" /> Apartado
+                            </label>
+                        </div>*@
                 </div>
             </div>
         </div>
@@ -146,18 +147,20 @@
                 </div>
                 <div class="box-body">
                     <div class="row">
+                        <input type="hidden" asp-for="Imagen1" />
+                        <input type="hidden" asp-for="Imagen2" />
+                        <input type="hidden" asp-for="Imagen3" />
+                        <input type="hidden" asp-for="Imagen4" />
+                        <input type="hidden" asp-for="Imagen5" />
                         <div class="col-md-6">
                             <div class="form-group" id="previewImagen1">
-                                <input type="hidden" asp-for="Imagen1" />
-                                <input type="hidden" asp-for="Imagen2" />
-                                <input type="hidden" asp-for="Imagen3" />
-                                <input type="hidden" asp-for="Imagen4" />
-                                <input type="hidden" asp-for="Imagen5" />
                                 <label asp-for="Imagen1"></label>
                                 @{
                                     string path = "~/" + Model.Imagen1;
                                     <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
                                 }
+                                <br />
+                                <button type="button" class="btn btn-default btn-file" onclick="changeImage1()">Cambiar</button>
                             </div>
                             <div class="form-group" style="display:none" id="divImagen1">
                                 <label asp-for="Imagen1"></label>
@@ -172,7 +175,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="previewImagen2">
+                                <label asp-for="Imagen2"></label>
+                                @{
+                                    path = "~/" + Model.Imagen2;
+                                    <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
+                                }
+                                <br />
+                                <button type="button" class="btn btn-default btn-file" onclick="changeImage2()">Cambiar</button>
+                            </div>
+                            <div class="form-group" style="display:none" id="divImagen2">
                                 <label asp-for="Imagen2"></label>
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
@@ -185,7 +197,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="previewImagen3">
+                                <label asp-for="Imagen3"></label>
+                                @{
+                                    path = "~/" + Model.Imagen3;
+                                    <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
+                                }
+                                <br />
+                                <button type="button" class="btn btn-default btn-file" onclick="changeImage3()">Cambiar</button>
+                            </div>
+                            <div class="form-group" style="display:none" id="divImagen3">
                                 <label asp-for="Imagen3"></label>
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
@@ -200,7 +221,16 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-group">
+                            <div class="form-group" id="previewImagen4">
+                                <label asp-for="Imagen4"></label>
+                                @{
+                                    path = "~/" + Model.Imagen4;
+                                    <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
+                                }
+                                <br />
+                                <button type="button" class="btn btn-default btn-file" onclick="changeImage4()">Cambiar</button>
+                            </div>
+                            <div class="form-group" style="display:none" id="divImagen4">
                                 <label asp-for="Imagen4"></label>
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
@@ -213,7 +243,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group" id="previewImagen5">
+                                <label asp-for="Imagen5"></label>
+                                @{
+                                    path = "~/" + Model.Imagen5;
+                                    <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
+                                }
+                                <br />
+                                <button type="button" class="btn btn-default btn-file" onclick="changeImage5()">Cambiar</button>
+                            </div>
+                            <div class="form-group" style="display:none" id="divImagen5">
                                 <label asp-for="Imagen5"></label>
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
@@ -456,6 +495,70 @@
 </form>
 
 
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+<script>
+    function changeImage1() {
+        var y = document.getElementById("previewImagen1");
+        var x = document.getElementById("divImagen1");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+         
+    }
+
+    function changeImage2() {
+        var y = document.getElementById("previewImagen2");
+        var x = document.getElementById("divImagen2");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+    }
+
+    function changeImage3() {
+        var y = document.getElementById("previewImagen3");
+        var x = document.getElementById("divImagen3");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+    }
+
+    function changeImage4() {
+        var y = document.getElementById("previewImagen4");
+        var x = document.getElementById("divImagen4");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+    }
+    function changeImage5() {
+        var y = document.getElementById("previewImagen5");
+        var x = document.getElementById("divImagen5");
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.style.display = "none";
+        } else {
+            x.style.display = "none";
+            y.style.display = "block";
+        }
+    }
+</script>
+
 }
