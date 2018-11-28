@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using R = AutoCosting.Models.Receipts;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoCosting.Controllers.Recibo
 {
+    [Authorize]
     public class ReciboController : Controller
     {
         private readonly ApplicationDbContext _context;

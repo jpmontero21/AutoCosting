@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.TransactionHist;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoCosting.Controllers.TransaccionHistory
 {
+    [Authorize]
     public class TransaccionHeaderHistController : Controller
     {
         private readonly ApplicationDbContext _context;

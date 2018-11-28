@@ -10,9 +10,11 @@ using AutoCosting.Models.Transaction;
 using System.ComponentModel.DataAnnotations;
 using AutoCosting.HelpersAndValidations;
 using AutoCosting.Models.Maintenance;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoCosting.Controllers.Transaccion
 {
+    [Authorize]
     public class TransaccionDetailController : Controller
     {
         private readonly ApplicationDbContext _context;

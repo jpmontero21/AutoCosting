@@ -36,6 +36,7 @@ namespace AutoCosting.Data
         public DbSet<TransaccionHeaderHist> TransHistoryHeader {get; set;}
         public DbSet<TransaccionDetailHist> TransDetailHistory { get; set; }
         public DbSet<ReciboHist> ReciboHistory { get; set; }
+        public DbSet<ComisionHist> ComisionHistory { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

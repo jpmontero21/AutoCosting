@@ -130,21 +130,37 @@
                     <div class="col-md-6">
                         <div class="form-group" id="previewImagen1">
                             <label asp-for="Imagen1"></label>
-                            @{
-                                string path = "~/" + Model.Imagen1;
+                            @{ string path = string.Empty; }
+                            @if (string.IsNullOrEmpty(Model.Imagen1))
+                            {
+                                <img src="@Url.Content("~/images/defaultVehicle.jpg")" style="width: 200px; height: 150px;" />
+                            }
+                            else
+                            {
+                                path = "~/" + Model.Imagen1;
                                 <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
                             }
                         </div>
                         <div class="form-group" id="previewImagen2">
                             <label asp-for="Imagen2"></label>
-                            @{
+                            @if (string.IsNullOrEmpty(Model.Imagen2))
+                            {
+                                <img src="@Url.Content("~/images/defaultVehicle.jpg")" style="width: 200px; height: 150px;" />
+                            }
+                            else
+                            {
                                 path = "~/" + Model.Imagen2;
                                 <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
                             }
                         </div>
                         <div class="form-group" id="previewImagen3">
                             <label asp-for="Imagen3"></label>
-                            @{
+                            @if (string.IsNullOrEmpty(Model.Imagen3))
+                            {
+                                <img src="@Url.Content("~/images/defaultVehicle.jpg")" style="width: 200px; height: 150px;" />
+                            }
+                            else
+                            {
                                 path = "~/" + Model.Imagen3;
                                 <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
                             }
@@ -153,14 +169,24 @@
                     <div class="col-md-6">
                         <div class="form-group" id="previewImagen4">
                             <label asp-for="Imagen4"></label>
-                            @{
+                            @if (string.IsNullOrEmpty(Model.Imagen4))
+                            {
+                                <img src="@Url.Content("~/images/defaultVehicle.jpg")" style="width: 200px; height: 150px;" />
+                            }
+                            else
+                            {
                                 path = "~/" + Model.Imagen4;
                                 <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
                             }
                         </div>
                         <div class="form-group" id="previewImagen5">
                             <label asp-for="Imagen5"></label>
-                            @{
+                            @if (string.IsNullOrEmpty(Model.Imagen5))
+                            {
+                                <img src="@Url.Content("~/images/defaultVehicle.jpg")" style="width: 200px; height: 150px;" />
+                            }
+                            else
+                            {
                                 path = "~/" + Model.Imagen5;
                                 <img src="@Url.Content(path)" style="width: 200px; height: 150px;" />
                             }

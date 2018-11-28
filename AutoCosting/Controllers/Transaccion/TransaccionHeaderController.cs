@@ -13,9 +13,11 @@ using R = AutoCosting.Models.Receipts;
 using AutoCosting.Models.Maintenance;
 using AutoCosting.Models.TransactionHist;
 using AutoCosting.Models.ReceiptsHist;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoCosting.Controllers.Transaccion
 {
+    [Authorize]
     public class TransaccionHeaderController : Controller
     {
         private readonly ApplicationDbContext _context;

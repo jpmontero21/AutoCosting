@@ -11,9 +11,11 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using AutoCosting.HelpersAndValidations;
 using AutoCosting.Models.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoCosting.Controllers.AperturaCierreCaja
 {
+    [Authorize]
     public class CajaController : Controller
     {
         private readonly ApplicationDbContext _context;
