@@ -84,7 +84,7 @@ namespace AutoCosting.Controllers
             {
                 return NotFound();
             }
-
+            ViewData["Brands"] = new SelectList(Brands);
             return View(vehiculo);
         }
 
@@ -121,7 +121,7 @@ namespace AutoCosting.Controllers
                 if (HttpContext.Request.Form.Files != null)
                 {
                     IFormFileCollection files = HttpContext.Request.Form.Files;
-                    ProcessImages(files, vehiculo);
+                    ProcessImages(files, vehiculo, true);
                 }
                 _context.Add(vehiculo);
                 await _context.SaveChangesAsync();
@@ -172,7 +172,7 @@ namespace AutoCosting.Controllers
                     if (HttpContext.Request.Form.Files != null)
                     {
                         IFormFileCollection files = HttpContext.Request.Form.Files;
-                        ProcessImages(files, vehiculo);
+                        ProcessImages(files, vehiculo, false);
                     }
                     _context.Update(vehiculo);
                     await _context.SaveChangesAsync();
@@ -344,15 +344,18 @@ namespace AutoCosting.Controllers
             }
         }
 
-        private void ProcessImages(IFormFileCollection files_, Vehiculo vehiculo)
+        private void ProcessImages(IFormFileCollection files_, Vehiculo vehiculo, bool isAdd)
         {
             var newFileName = string.Empty;
             var fileName = string.Empty;
             string PathDB = string.Empty;
             IFormFileCollection files = files_;
-            fileName = Path.Combine(_environment.WebRootPath, "CarImages", vehiculo.VIN);
-            if (System.IO.Directory.Exists(fileName))
-                System.IO.Directory.Delete(fileName, true);
+            if (isAdd)
+            {
+                fileName = Path.Combine(_environment.WebRootPath, "CarImages", vehiculo.VIN);
+                if (System.IO.Directory.Exists(fileName))
+                    System.IO.Directory.Delete(fileName, true);
+            }
             foreach (var file in files)
             {
                 if (file.Length > 0)
@@ -390,20 +393,65 @@ namespace AutoCosting.Controllers
                         switch (file.Name)
                         {
                             case "files1":
+                            {
+                                if (!string.IsNullOrEmpty(vehiculo.Imagen1) && !isAdd)
+                                {
+                                    string fileNameExistent = Path.Combine(_environment.WebRootPath, vehiculo.Imagen1);
+                                    fileNameExistent = fileNameExistent.Replace(@"\", "//");
+                                    if (System.IO.File.Exists(fileNameExistent))
+                                        System.IO.File.Delete(fileNameExistent);
+                                }
                                 vehiculo.Imagen1 = PathDB;
                                 break;
+                            }
                             case "files2":
+                            {
+                                if (!string.IsNullOrEmpty(vehiculo.Imagen2) && !isAdd)
+                                {
+                                    string fileNameExistent = Path.Combine(_environment.WebRootPath, vehiculo.Imagen2);
+                                    fileNameExistent = fileNameExistent.Replace(@"\", "//");
+                                    if (System.IO.File.Exists(fileNameExistent))
+                                        System.IO.File.Delete(fileNameExistent);
+                                }
                                 vehiculo.Imagen2 = PathDB;
                                 break;
+                            }
                             case "files3":
+                            {
+                                if (!string.IsNullOrEmpty(vehiculo.Imagen3) && !isAdd)
+                                {
+                                    string fileNameExistent = Path.Combine(_environment.WebRootPath, vehiculo.Imagen3);
+                                    fileNameExistent = fileNameExistent.Replace(@"\", "//");
+                                    if (System.IO.File.Exists(fileNameExistent))
+                                        System.IO.File.Delete(fileNameExistent);
+                                }
                                 vehiculo.Imagen3 = PathDB;
                                 break;
+                            }
                             case "files4":
+                            {
+                                if (!string.IsNullOrEmpty(vehiculo.Imagen4) && !isAdd)
+                                {
+                                    string fileNameExistent = Path.Combine(_environment.WebRootPath, vehiculo.Imagen4);
+                                    fileNameExistent = fileNameExistent.Replace(@"\", "//");
+                                    if (System.IO.File.Exists(fileNameExistent))
+                                        System.IO.File.Delete(fileNameExistent);
+                                }
                                 vehiculo.Imagen4 = PathDB;
                                 break;
+                            }
                             case "files5":
+                            {
+                                if (!string.IsNullOrEmpty(vehiculo.Imagen5) && !isAdd)
+                                {
+                                    string fileNameExistent = Path.Combine(_environment.WebRootPath, vehiculo.Imagen5);
+                                    fileNameExistent = fileNameExistent.Replace(@"\", "//");
+                                    if (System.IO.File.Exists(fileNameExistent))
+                                        System.IO.File.Delete(fileNameExistent);
+                                }
                                 vehiculo.Imagen5 = PathDB;
                                 break;
+                            }
                         }
                 }
             }
