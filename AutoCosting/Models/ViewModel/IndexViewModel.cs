@@ -13,5 +13,6 @@ namespace AutoCosting.Models.ViewModel
         public List<Vehiculo> Vehiculos { get; set; }
         public List<TransaccionHeader> Transaccions { get; set; }
         public List<TrackingHeader> Trackings { get; set; }
+        public Empresa Empresa { get; set; }
     }
 }

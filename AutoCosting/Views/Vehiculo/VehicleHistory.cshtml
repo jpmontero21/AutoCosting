@@ -165,18 +165,19 @@
     </div>
 }
 
-
-<div class="box box-info">
-    <div class="box-header with-border">
-        <h3 class="box-title">Transacciones</h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+@if (Model.TransaccionHeaderList != null && Model.TransaccionHeaderList.Count > 0)
+{
+    <div class="box box-info">
+        <div class="box-header with-border">
+            <h3 class="box-title">Transacciones</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
         </div>
-    </div>
-    <div class="box-body">
-        @foreach (var item in Model.TransaccionHeaderList)
-        {
-            
+        <div class="box-body">
+            @foreach (var item in Model.TransaccionHeaderList)
+            {
+
                 <div class="col-md-3">
                     <b>@Html.DisplayNameFor(modelItem => item.TransID): </b>
                     @Html.DisplayFor(modelItem => item.TransIdStr)
@@ -228,76 +229,82 @@
                     <br />
                     <br />
                 </div>
-            
-        }
-    </div>
-</div>
 
-<div class="box box-success">
-    <div class="box-header with-border">
-        <h3 class="box-title">Histórico</h3>
-        <div class="box-tools pull-right">
-            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            }
         </div>
     </div>
-    <div class="box-body">
-        @foreach (var item in Model.TransaccionHeaderHistList)
-        {
+}
 
-            <div class="col-md-3">
-                <b>@Html.DisplayNameFor(modelItem => item.TransID): </b>
-                @Html.DisplayFor(modelItem => item.TransIdStr)
-                <br />
-                <b>@Html.DisplayNameFor(modelItem => item.Cliente): </b>
-                @Html.DisplayFor(modelItem => item.Cliente.Informacion)
-                <br />
-                <b>@Html.DisplayNameFor(modelItem => item.TipoTransaccion): </b>
-                @Html.DisplayFor(modelItem => item.TipoTransaccion)
-                <br />
+@if (Model.TransaccionHeaderHistList != null && Model.TransaccionHeaderHistList.Count > 0)
+{
+    <div class="box box-success">
+        <div class="box-header with-border">
+            <h3 class="box-title">Histórico</h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+            </div>
+        </div>
+        <div class="box-body">
+            @foreach (var item in Model.TransaccionHeaderHistList)
+            {
 
-                <b>@Html.DisplayNameFor(modelItem => item.Fecha): </b>
-                @Html.DisplayFor(modelItem => item.FechaStr)
-                <br />
+                <div class="col-md-3">
+                    <b>@Html.DisplayNameFor(modelItem => item.TransID): </b>
+                    @Html.DisplayFor(modelItem => item.TransIdStr)
+                    <br />
+                    <b>@Html.DisplayNameFor(modelItem => item.Cliente): </b>
+                    @Html.DisplayFor(modelItem => item.Cliente.Informacion)
+                    <br />
+                    <b>@Html.DisplayNameFor(modelItem => item.TipoTransaccion): </b>
+                    @Html.DisplayFor(modelItem => item.TipoTransaccion)
+                    <br />
 
-                <b>@Html.DisplayNameFor(modelItem => item.Empleado): </b>
-                @Html.DisplayFor(modelItem => item.Empleado.NombreCompleto)
-                <br />
+                    <b>@Html.DisplayNameFor(modelItem => item.Fecha): </b>
+                    @Html.DisplayFor(modelItem => item.FechaStr)
+                    <br />
 
-                <b>@Html.DisplayNameFor(modelItem => item.Sede): </b>
-                @Html.DisplayFor(modelItem => item.SedeID)
-                <br />
+                    <b>@Html.DisplayNameFor(modelItem => item.Empleado): </b>
+                    @Html.DisplayFor(modelItem => item.Empleado.NombreCompleto)
+                    <br />
 
-                <b>@Html.DisplayNameFor(modelItem => item.Total): </b>
-                @Html.DisplayFor(modelItem => item.Total)
-                <br />
+                    <b>@Html.DisplayNameFor(modelItem => item.Sede): </b>
+                    @Html.DisplayFor(modelItem => item.SedeID)
+                    <br />
 
-                <b>@Html.DisplayNameFor(modelItem => item.Eliminada): </b>
-                @if (item.Eliminada)
-                {
-                    <label>Si</label>
-                }
-                else
-                {
-                    <label>No</label>
-                }
-                <br />
-                @if (item != null && item.TransDetails != null)
-                {
-                    @foreach (var detail in item.TransDetails)
+                    <b>@Html.DisplayNameFor(modelItem => item.Total): </b>
+                    @Html.DisplayFor(modelItem => item.Total)
+                    <br />
+
+                    <b>@Html.DisplayNameFor(modelItem => item.Eliminada): </b>
+                    @if (item.Eliminada)
                     {
-                        @if (detail.VINVehiculo == Model.Vehiculo.VIN)
+                        <label>Si</label>
+                    }
+                    else
+                    {
+                        <label>No</label>
+                    }
+                    <br />
+                    @if (item != null && item.TransDetails != null)
+                    {
+                        @foreach (var detail in item.TransDetails)
                         {
-                            <b>@Html.DisplayNameFor(modelItem => detail.PrecioAcordado): </b>
-                            @Html.DisplayFor(modelItem => detail.PrecioAcordado)<br />
+                            @if (detail.VINVehiculo == Model.Vehiculo.VIN)
+                            {
+                                <b>@Html.DisplayNameFor(modelItem => detail.PrecioAcordado): </b>
+                                @Html.DisplayFor(modelItem => detail.PrecioAcordado)<br />
+                            }
                         }
                     }
-                }
-                <br />
-                <br />
-            </div>
-        }
+                    <br />
+                    <br />
+                </div>
+            }
+        </div>
     </div>
-</div>
-<div class="form-group">
-    <input type="submit" value="Imprimir" class="btn btn-sm btn-primary no-print" onclick="window.print();" />
-</div>
+}
+
+    <div class="form-group">
+        <input type="submit" value="Imprimir" class="btn btn-sm btn-primary no-print" onclick="window.print();" />
+        <a asp-action="Index" asp-controller="Vehiculo" class="btn btn-sm btn-success no-print">Regresar a la Lista</a>
+    </div>

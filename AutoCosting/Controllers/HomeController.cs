@@ -28,7 +28,8 @@ namespace AutoCosting.Controllers
             {
                 Vehiculos = await _context.Vehiculos.OrderByDescending (v => v.FechaIngreso).Take(7).ToListAsync(),
                 Trackings = await this._context.TrackingHeaders.OrderByDescending(t => t.Fecha).Take(7).Include(t=>t.TrackingDetails).Include(t=>t.Vehiculo).ToListAsync(),
-                Transaccions = await this._context.TransaccionHeaders.OrderByDescending(t => t.Fecha).Take(7).Include(t=>t.Cliente).ToListAsync()
+                Transaccions = await this._context.TransaccionHeaders.OrderByDescending(t => t.Fecha).Take(7).Include(t=>t.Cliente).ToListAsync(),
+                Empresa = await this._context.Empresa.FirstOrDefaultAsync()
             };
             return View(indexModel);
         }

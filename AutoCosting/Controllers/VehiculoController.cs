@@ -439,7 +439,7 @@ namespace AutoCosting.Controllers
 
             //var transDetails = await this._context.TransaccionDetails.Where(d => d.VINVehiculo == VIN).ToListAsync();
 
-
+            
 
             VehiculoHistoryViewModel historyModel = new VehiculoHistoryViewModel()
             {
