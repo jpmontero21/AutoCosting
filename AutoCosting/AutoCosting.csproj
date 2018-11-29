@@ -35,4 +35,11 @@
     <Folder Include="wwwroot\Help\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="FacturaElectronica">
+      <HintPath>..\..\..\..\..\Desktop\FE\FacturaElectronica.dll</HintPath>
+      <Private></Private>
+    </Reference>
+  </ItemGroup>
+
 </Project>

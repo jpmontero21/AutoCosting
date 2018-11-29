@@ -13,6 +13,8 @@ using R = AutoCosting.Models.Receipts;
 using AutoCosting.Models.Maintenance;
 using AutoCosting.Models.TransactionHist;
 using AutoCosting.Models.ReceiptsHist;
+using FacturaElectronica.ClasesDatos;
+using System.Xml;
 
 namespace AutoCosting.Controllers.Transaccion
 {
@@ -285,6 +287,65 @@ namespace AutoCosting.Controllers.Transaccion
             });
             transaccion.Sede.Empresa = this._context.Empresa.FirstOrDefault(e => e.ID == transaccion.EmpresaID);
             return View(transaccion);
+        }
+        public IActionResult EnviarFacturaElectronica(int transID)
+        {
+            var dbContext = this._context.TransaccionHeaders.Include(d => d.TransDetails).Where(t => t.TransID == transID);
+            if (dbContext == null)
+            {
+                return NotFound();
+            }
+            var transaccion = dbContext.ToList().FirstOrDefault();
+            if (transaccion == null)
+            {
+                return NotFound();
+            }
+            if (transaccion != null && !transaccion.EnviadaHacienda)
+            {
+                Datos datos = new Datos();
+                string consecutivo = datos.CreaNumeroSecuencia("1", "1", "01", transaccion.TransIdStr);
+                DateTime date = DateTime.Now;
+                string codigoSeguridad = datos.CreaCodigoSeguridad("01", "1", "1", date, transaccion.TransIdStr);
+                string clave = datos.CreaClave("506", date.Day.ToString(), date.Month.ToString(), date.Year.ToString(), "207030159", consecutivo, "1", codigoSeguridad);
+
+                Cliente client = this._context.Clientes.FirstOrDefault(cliente => cliente.ID == transaccion.ClienteID);
+                if (client != null)
+                {
+                    string rutaCertificado = "C:\\ATV Alexis\\Llave criptografica y Contrasena\\020703015917.p12";
+                    string rutaOutput = "C:\\OutputFiles\\";
+                    Receptor receptor = new Receptor(client.NombreCompleto, "01", client.CedulaSinGuiones, "506", client.Telefono, client.Email);
+                    Emisor emisor = new Emisor("JOSE ALEXIS JIMENEZ PEREZ", "1", "207030159", "2", "3", "1", "5",
+                "300 MTS SUR Y 25 MTS OESTE DE LA DELEGACIÓN DE POLICÍA DE GRECIA", "506", "89984194", "alexisjp26@gmail.com", rutaCertificado, "4194", "cpf-02-0703-0159@stag.comprobanteselectronicos.go.cr", "{.r{.!9}lLo_3TVa($s+", string.Empty);
+                    int numeroLinea = 0;
+                    List<LineaDetalle> listaDetalles = new List<LineaDetalle>();
+                    foreach (TransaccionDetail det in transaccion.TransDetails)
+                    {
+                        LineaDetalle detalle = new LineaDetalle();
+                        detalle.NumeroLinea = ++numeroLinea;
+                        detalle.ArticuloTipo = "03";
+                        detalle.ArticuloCodigo = det.VINVehiculo;
+                        detalle.Cantidad = 1;
+                        detalle.UnidadMedida = "Sp";
+                        detalle.DetalleArticulo = "venta de vehiculo " + det.VINVehiculo;
+                        detalle.PrecioUnitario = Convert.ToDouble (det.PrecioAcordado);
+                        detalle.MontoDescuento = 0;
+                        detalle.NaturalezaDescuento = "0";
+                        detalle.ImpuestoCodigo = "07";
+                        detalle.ImpuestoTarifa = 0;
+                        detalle.isGravado = false;
+                        detalle.isServicio = true;
+                        listaDetalles.Add(detalle);
+                    }
+                    FacturaElectronicaCR fact = new FacturaElectronicaCR(consecutivo, clave, emisor, receptor, "01", string.Empty, "01", listaDetalles, "CRC", 1);
+                    XmlDocument xmlSinFirmar = fact.CreaXMLFacturaElectronica();
+                    emisor.OutputFolder = rutaOutput;
+                    fact.Procesa(xmlSinFirmar.OuterXml, emisor.OutputFolder, consecutivo);
+                    transaccion.ClaveHacienda = clave;
+                    transaccion.EnviadaHacienda = true;
+                }
+            }
+            return RedirectToAction(nameof(Edit));
+
         }
 
         public async Task<IActionResult> ConvertToSale(int? transId)

@@ -14,7 +14,7 @@ namespace AutoCosting.Models.Maintenance
         [Required(ErrorMessage = "El Nombre es requerido.")]
         public string Nombre { get; set; }
         [Required(ErrorMessage = "El Primer Apellido es requerido.")]
-        [Display(Name ="Primer Apellido")]
+        [Display(Name = "Primer Apellido")]
         public string Apellido1 { get; set; }
         [Display(Name = "Segundo Apellido")]
         public string Apellido2 { get; set; }
@@ -29,7 +29,7 @@ namespace AutoCosting.Models.Maintenance
         public string Email { get; set; }
         public string Notas { get; set; }
 
-        [Display (Name = "Cédula")]        
+        [Display(Name = "Cédula")]
         [Required(ErrorMessage = "La Cédula es Requerida.")]
         public string Cedula { get; set; }
 
@@ -39,6 +39,23 @@ namespace AutoCosting.Models.Maintenance
             get
             {
                 return $"{Cedula} - {Nombre} {Apellido1} {Apellido2}";
+            }
+        }
+        [NotMapped]
+        public string NombreCompleto
+        {
+            get
+            {
+                string nombre = $" {Nombre} {Apellido1} {Apellido2} ";
+                return nombre.ToUpper();
+            }
+        }
+        [NotMapped]
+        public string CedulaSinGuiones
+        {
+            get
+            {
+                return Cedula.Replace("-", string.Empty);
             }
         }
     }

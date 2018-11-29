@@ -86,6 +86,9 @@
                             </div>
                             <div class="col-sm-4">
                                 <input asp-for="Transaccion.Fecha" readonly="readonly" class="form-control" type="date" />
+                                <input type="hidden" asp-for="Transaccion.EnviadaHacienda" />
+                                <input type="hidden" asp-for="Transaccion.AceptadaHacienda" />
+                                <input type="hidden" asp-for="Transaccion.ClaveHacienda" />
                             </div>
                         </div>
                     </div>

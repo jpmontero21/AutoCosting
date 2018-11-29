@@ -83,6 +83,9 @@
                         </div>
                         <div class="col-sm-4">
                             <input asp-for="Fecha" class="form-control" type="date" />
+                            <input type="hidden" asp-for="EnviadaHacienda" />
+                            <input type="hidden" asp-for="AceptadaHacienda" />
+                            <input type="hidden" asp-for="ClaveHacienda" />
                         </div>
                         <span asp-validation-for="Fecha" class="text-danger"></span>
                     </div>
