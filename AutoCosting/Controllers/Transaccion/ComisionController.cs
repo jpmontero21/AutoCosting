@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using AutoCosting.Models.Transaction;
 using AutoCosting.HelpersAndValidations;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AutoCosting.Controllers.Transaccion
 {
+    [Authorize(Roles = SD.AdminEndUser)]
     public class ComisionController : Controller
     {
         private readonly ApplicationDbContext _context;
