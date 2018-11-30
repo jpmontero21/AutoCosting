@@ -85,6 +85,15 @@ namespace AutoCosting.Models.Maintenance
             }
         }
 
+        [NotMapped]
+        public string IndexInfo
+        {
+            get
+            {
+                return string.Format("{0} {1} {2}", this.Marca, this.Modelo, this.Anno.ToString());
+            }
+        }
+
         // En estos campos se guardan las rutas de cada imagen.
         [Display(Name = "Imagen/Fotografía 1")]
         public string Imagen1 { get; set; }

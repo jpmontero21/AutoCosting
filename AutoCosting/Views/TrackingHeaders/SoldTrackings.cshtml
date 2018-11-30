@@ -23,13 +23,12 @@
         }
 </script>
 
-<h2>Seguimientos</h2>
+<h2>Seguimientos (Vehículos Vendidos)</h2>
 <hr />
-<form asp-controller="TrackingHeaders" asp-action="Index" method="get" >
+<form asp-controller="TrackingHeaders" asp-action="SoldTrackings" method="get">
     <div class="box-header with-border">
         <div class="col-sm-4" style="padding-top:20px">
-            <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
-            <a asp-action="SoldTrackings" class="btn btn-success">Historial Seguimientos</a>
+            <a asp-action="Index" class="btn btn-success">Seguimientos Activos</a>
         </div>
         <div class="col-sm-8">
             <div class="row">
@@ -93,8 +92,8 @@
                         <th>
                             @Html.DisplayFor(modelItem => item.CostoTotal)
                         </th>
-                        <td>
-                            @await Html.PartialAsync("_TableButtonPartialEditDetails", new IndividualButtonPartial { Id = item.TrackingID })
+                        <td>                            
+                            <a asp-action="Details" asp-controller="TrackingHeaders" asp-route-Id="@item.TrackingID" class="btn btn-sm btn-success glyphicon glyphicon-list"></a>
                         </td>
                     </tr>
                 }

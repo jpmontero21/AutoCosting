@@ -25,18 +25,18 @@
             }
         }
 </script>
-<h2>Vehículos Disponibles</h2>
+<h2>Vehículos Reservados</h2>
 <hr />
-<form asp-action="Index" asp-controller="Vehiculo" method="get">
+<form asp-action="ReservedVehicles" asp-controller="Vehiculo" method="get">
     <div class="box-header with-border">
-        <div class="col-sm-5" style="padding-top:20px">
-            <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
+        <div class="col-sm-4" style="padding-top:20px">
+            <a asp-action="Index" class="btn btn-primary">Ver Disponibles</a>
             <a asp-action="SoldVehicles" class="btn btn-success">Ver Vendidos</a>
-            <a asp-action="ReservedVehicles" class="btn btn-success">Ver Reservados</a>
         </div>
-        <div class="col-sm-7">
+        <div class="col-sm-8">
             <div class="row">
                 <div class="col-sm-12 text-right" onload="SetFilterOption()">
+
                     <div>
                         <b>Buscar:  &nbsp;&nbsp;&nbsp; </b>
                         <label class="radio-inline" onclick="ShowText()">@Html.RadioButton("option", "Marca") Marca</label>
@@ -91,15 +91,6 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Estado)
                 </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.PrecioMinimo)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.PrecioRecomendado)
-                </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.ApartadoYN)
-                </th>*@
                 <th>
                     @Html.DisplayNameFor(model => model.FechaIngreso)
                 </th>
@@ -111,7 +102,7 @@
             {
                 <tr>
                     <td>
-                        <a asp-action="VehicleHistory" asp-controller="Vehiculo" asp-route-VIN="@item.VIN" ><i class="fa fa-list-alt"></i></a>
+                        <a asp-action="VehicleHistory" asp-controller="Vehiculo" asp-route-VIN="@item.VIN"><i class="fa fa-list-alt"></i></a>
                         @Html.DisplayFor(modelItem => item.VIN)
                     </td>
                     <td>
@@ -135,20 +126,11 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Estado)
                     </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.PrecioMinimo)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PrecioRecomendado)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.ApartadoYN)
-                    </td>*@
                     <td>
                         @Html.DisplayFor(modelItem => item.FechaIngreso)
                     </td>
                     <td>
-                        @await Html.PartialAsync("_TableButtonPartialEditDetails", new IndividualButtonPartial { StrId = item.VIN })
+                        <a asp-action="Details" asp-controller="Vehiculo" asp-route-id="@item.VIN" class="btn btn-sm btn-success glyphicon glyphicon-list"></a>
                     </td>
                 </tr>
             }

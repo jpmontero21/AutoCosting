@@ -26,19 +26,19 @@ namespace AutoCosting.Controllers.Tracking
         // GET: TrackingHeaders
         public IActionResult Index(string option = null,string search=null)
         {
-            var trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(d=>d.TrackingDetails).ToList();
+            var trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(d=>d.TrackingDetails).Where(h=> !h.Vehiculo.VendidoYN).ToList();
             if (option == "Vehiculo" && search != null)
             {
-                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.Vehiculo.Descripcion.ToLower().Contains(search.ToLower())).ToList();
+                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => !h.Vehiculo.VendidoYN && h.Vehiculo.Descripcion.ToLower().Contains(search.ToLower())).ToList();
             }
             if (option == "Fecha" && search != null)
             {
                 search = Convert.ToDateTime(search).ToString("dd/MM/yyyy");
-                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.FechaStr.ToLower().Contains(search.Replace("-", "/").ToLower())).ToList();
+                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => !h.Vehiculo.VendidoYN && h.FechaStr.ToLower().Contains(search.Replace("-", "/").ToLower())).ToList();
             }
             if (option == "TrackingID" && search != null)
             {
-                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.TrackingIdStr.ToLower().Contains(search.ToLower())).ToList();
+                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => !h.Vehiculo.VendidoYN && h.TrackingIdStr.ToLower().Contains(search.ToLower())).ToList();
             }
             return View(trackings);
         }
@@ -216,5 +216,24 @@ namespace AutoCosting.Controllers.Tracking
         {
             return _context.TrackingHeaders.Any(e => e.TrackingID == id);
         }
+
+        public IActionResult SoldTrackings(string option = null, string search = null)
+        {
+            var trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(d => d.TrackingDetails).Where(t=>t.Vehiculo.VendidoYN).ToList();
+            if (option == "Vehiculo" && search != null)
+            {
+                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.Vehiculo.VendidoYN && h.Vehiculo.Descripcion.ToLower().Contains(search.ToLower())).ToList();
+            }
+            if (option == "Fecha" && search != null)
+            {
+                search = Convert.ToDateTime(search).ToString("dd/MM/yyyy");
+                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.Vehiculo.VendidoYN && h.FechaStr.ToLower().Contains(search.Replace("-", "/").ToLower())).ToList();
+            }
+            if (option == "TrackingID" && search != null)
+            {
+                trackings = _context.TrackingHeaders.Include(t => t.Vehiculo).Include(t => t.TrackingDetails).Where(h => h.Vehiculo.VendidoYN && h.TrackingIdStr.ToLower().Contains(search.ToLower())).ToList();
+            }
+            return View(trackings);
+        }        
     }
 }

@@ -53,5 +53,14 @@ namespace AutoCosting.Models.Tracking
             get => this.TrackingID.ToString("00000000");
         }
 
+        [NotMapped]
+        public string IndexInfo
+        {
+            get
+            {
+                return string.Format("{0} {1} {2}", this.TrackingIdStr, this.Vehiculo.Marca, this.Vehiculo.Modelo);
+            }
+        }
+
     }
 }

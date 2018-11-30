@@ -107,5 +107,14 @@ namespace AutoCosting.Models.Transaction
         {
             get => this.TransID.ToString("00000000");
         }
+
+        [NotMapped]
+        public string IndexInfo
+        {
+            get
+            {
+                return $" {this.TransIdStr} {this.TipoTransaccion} - {this.Cliente.Nombre} {this.Cliente.Apellido1} ";
+            }
+        }
     }
 }

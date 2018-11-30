@@ -32,40 +32,40 @@ namespace AutoCosting.Controllers
         // GET: Vehiculo
         public async Task<IActionResult> Index(string option = null,string search = null)
         {
-            var vehiculos = await _context.Vehiculos.ToListAsync();
+            var vehiculos = await _context.Vehiculos.Where(v=>!v.ApartadoYN && !v.VendidoYN).ToListAsync();
             if (option == "Marca" && search != null)
             {
-                vehiculos = await _context.Vehiculos.Where(v=> v.Marca.ToLower().Contains(search.ToLower())).ToListAsync();
+                vehiculos = await _context.Vehiculos.Where(v=> !v.ApartadoYN && !v.VendidoYN && v.Marca.ToLower().Contains(search.ToLower())).ToListAsync();
             }
             if (option == "Modelo" && search != null)
             {
-                vehiculos = await _context.Vehiculos.Where(v => v.Modelo.ToLower().Contains(search.ToLower())).ToListAsync();
+                vehiculos = await _context.Vehiculos.Where(v => !v.ApartadoYN && !v.VendidoYN && v.Modelo.ToLower().Contains(search.ToLower())).ToListAsync();
             }
             if (option == "Anno" && search != null)
             {
-                vehiculos = await _context.Vehiculos.Where(v => v.Anno.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+                vehiculos = await _context.Vehiculos.Where(v => !v.ApartadoYN && !v.VendidoYN && v.Anno.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
             }
             if (option == "Transmision" && search != null)
             {
-                vehiculos = await _context.Vehiculos.Where(v => v.Transmision.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+                vehiculos = await _context.Vehiculos.Where(v => !v.ApartadoYN && !v.VendidoYN && v.Transmision.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
             }
 
             if (option == "Estilo" && search != null)
             {
-                vehiculos = await _context.Vehiculos.Where(v => v.Estilo.ToLower().Contains(search.ToLower())).ToListAsync();
+                vehiculos = await _context.Vehiculos.Where(v => !v.ApartadoYN && !v.VendidoYN && v.Estilo.ToLower().Contains(search.ToLower())).ToListAsync();
             }
             if (option == "Combustible" && search != null)
             {
-                vehiculos = await _context.Vehiculos.Where(v => v.Combustible.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+                vehiculos = await _context.Vehiculos.Where(v => !v.ApartadoYN && !v.VendidoYN && v.Combustible.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
             }
             if (option == "Estado" && search != null)
             {
-                vehiculos = await _context.Vehiculos.Where(v => v.Estado.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+                vehiculos = await _context.Vehiculos.Where(v => !v.ApartadoYN && !v.VendidoYN && v.Estado.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
             }
             if (option == "Fecha" && search != null)
             {
                 search = Convert.ToDateTime(search).ToString("MM/dd/yyyy");
-                vehiculos = await _context.Vehiculos.Where(v => v.FechaIngreso.ToString("MM/dd/yyyy").ToLower().Contains(search.Replace("-","/").ToLower())).ToListAsync();
+                vehiculos = await _context.Vehiculos.Where(v => !v.ApartadoYN && !v.VendidoYN && v.FechaIngreso.ToString("MM/dd/yyyy").ToLower().Contains(search.Replace("-","/").ToLower())).ToListAsync();
             }
             return View(vehiculos);
         }
@@ -143,6 +143,12 @@ namespace AutoCosting.Controllers
             {
                 return NotFound();
             }
+
+            if (vehiculo.VendidoYN)
+            {
+                return View(nameof(Details), vehiculo);
+            }
+
             ViewData["Brands"] = new SelectList(Brands);
             return View(vehiculo);
         }
@@ -458,9 +464,85 @@ namespace AutoCosting.Controllers
 
         }
 
+        public async Task<IActionResult> SoldVehicles(string option = null, string search = null)
+        {
+            var vehiculos = await _context.Vehiculos.Where(v=>v.VendidoYN).ToListAsync();
+            if (option == "Marca" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.VendidoYN && v.Marca.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Modelo" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.VendidoYN && v.Modelo.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Anno" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.VendidoYN && v.Anno.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Transmision" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.VendidoYN && v.Transmision.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+            }
 
+            if (option == "Estilo" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.VendidoYN && v.Estilo.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Combustible" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.VendidoYN && v.Combustible.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Estado" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.VendidoYN && v.Estado.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Fecha" && search != null)
+            {
+                search = Convert.ToDateTime(search).ToString("MM/dd/yyyy");
+                vehiculos = await _context.Vehiculos.Where(v => v.VendidoYN && v.FechaIngreso.ToString("MM/dd/yyyy").ToLower().Contains(search.Replace("-", "/").ToLower())).ToListAsync();
+            }
+            return View(vehiculos);
+        }
 
+        public async Task<IActionResult> ReservedVehicles(string option = null, string search = null)
+        {
+            var vehiculos = await _context.Vehiculos.Where(v => v.ApartadoYN).ToListAsync();
+            if (option == "Marca" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.ApartadoYN && v.Marca.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Modelo" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.ApartadoYN && v.Modelo.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Anno" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.ApartadoYN && v.Anno.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Transmision" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.ApartadoYN && v.Transmision.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+            }
 
+            if (option == "Estilo" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.ApartadoYN && v.Estilo.ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Combustible" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.ApartadoYN && v.Combustible.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Estado" && search != null)
+            {
+                vehiculos = await _context.Vehiculos.Where(v => v.ApartadoYN && v.Estado.ToString().ToLower().Contains(search.ToLower())).ToListAsync();
+            }
+            if (option == "Fecha" && search != null)
+            {
+                search = Convert.ToDateTime(search).ToString("MM/dd/yyyy");
+                vehiculos = await _context.Vehiculos.Where(v => v.ApartadoYN && v.FechaIngreso.ToString("MM/dd/yyyy").ToLower().Contains(search.Replace("-", "/").ToLower())).ToListAsync();
+            }
+            return View(vehiculos);
+        }
 
         public async Task<IActionResult> VehicleHistory(string VIN)
         {
