@@ -552,33 +552,27 @@ namespace AutoCosting.Controllers
                 return NotFound();
             }
             var trackingHeader = await this._context.TrackingHeaders.Include(t=>t.TrackingDetails).FirstOrDefaultAsync(t => t.VINVehiculo == VIN);
-
-
-            var transHeaders = await this._context.TransaccionHeaders.Include(t => t.TransDetails).Include(t=>t.Cliente).Include(t => t.Empleado).Where(t => t.TransDetails.FirstOrDefault(d => d.VINVehiculo == VIN) != null).ToListAsync();
-
-            // t => new{
-            //    TransaccionHeader = t,
-            //    TransaccionDetail = t.TransDetails.Where(d => d.VINVehiculo == VIN)
-            //}).Include(t=> t.TransaccionHeader.Cliente).Include(t=>t.TransaccionHeader.Empleado).ToListAsync();
-
-            var transHistory = await this._context.TransHistoryHeader.Include(t => t.TransDetails).Include(t=>t.Cliente).Include(t => t.Empleado).Where(t => t.TransDetails.FirstOrDefault(d => d.VINVehiculo == VIN) != null).ToListAsync();
-            //{
-            //    TransaccionHeaderHist = t,
-            //    TransaccionDetailHist = t.TransDetails.Where(d=>d.VINVehiculo == VIN)
-            //}).Include(t => t.TransaccionHeaderHist.Cliente).Include(t => t.TransaccionHeaderHist.Empleado).ToListAsync();
-
-            //var transDetails = await this._context.TransaccionDetails.Where(d => d.VINVehiculo == VIN).ToListAsync();
-
             
-
+            var transHeaders = await this._context.TransaccionHeaders
+                .Include(t => t.TransDetails)
+                .Include(t=>t.Cliente)
+                .Include(t => t.Sede)
+                .Include(t=>t.Recibos)
+                .Include(t => t.Empleado).Where(t => !t.Eliminada && t.TransDetails.FirstOrDefault(d => d.VINVehiculo == VIN) != null).ToListAsync();
+            
+            var transHistory = await this._context.TransHistoryHeader
+                .Include(t => t.TransDetails)
+                .Include(t => t.Cliente)
+                .Include(t => t.Recibos)
+                .Include(t => t.Sede)
+                .Include(t => t.Empleado).Where(t => t.TransDetails.FirstOrDefault(d => d.VINVehiculo == VIN) != null).ToListAsync();
+            
             VehiculoHistoryViewModel historyModel = new VehiculoHistoryViewModel()
             {
                 Vehiculo = vehiculo,
                 Tracking = trackingHeader,
                 TransaccionHeaderList = transHeaders,
                 TransaccionHeaderHistList =transHistory
-                //TransaccionHeaderList = 
-                //TransaccionHeaderHistList = transHistory
             };
 
             return View(historyModel);

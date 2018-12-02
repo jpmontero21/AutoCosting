@@ -113,7 +113,9 @@ namespace AutoCosting.Models.Transaction
         {
             get
             {
-                return $" {this.TransIdStr} {this.TipoTransaccion} - {this.Cliente.Nombre} {this.Cliente.Apellido1} ";
+                string nombre = this.Cliente != null ? this.Cliente.Nombre : string.Empty;
+                string apellido1 = this.Cliente != null ? this.Cliente.Apellido1 : string.Empty;
+                return $" {this.TransIdStr} {this.TipoTransaccion} - {nombre} {apellido1} ";
             }
         }
     }

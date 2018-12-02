@@ -8,6 +8,8 @@ using Microsoft.EntityFrameworkCore;
 using AutoCosting.Data;
 using R = AutoCosting.Models.Receipts;
 using Microsoft.AspNetCore.Authorization;
+using AutoCosting.HelpersAndValidations;
+using AutoCosting.Models.CierreAperturaCaja;
 
 namespace AutoCosting.Controllers.Recibo
 {
@@ -53,7 +55,7 @@ namespace AutoCosting.Controllers.Recibo
         }
 
         // GET: Recibo/Create
-        public IActionResult Create(int transId)
+        public async Task<IActionResult> Create(int transId)
         {
             R.Recibo recibo = new R.Recibo();
             recibo.TransID = transId;
@@ -63,7 +65,13 @@ namespace AutoCosting.Controllers.Recibo
                 return NotFound();
             }
             recibo.Parent = transaccion;
-            recibo.Fecha = DateTime.Today;            
+            recibo.Fecha = DateTime.Today;
+
+            var caja = await this._context.AperturaCierreCaja.FirstOrDefaultAsync(c => c.Tipo == TipoCaja.Cierre && c.Fecha.Value.ToShortDateString() == DateTime.Today.ToShortDateString());
+            if (caja != null)
+            {
+                this.ViewData["CajaMessage"] = "Ya cerró caja el día de hoy, si registra un nuevo recibo se actualizará el cierre.";
+            }
             return View(recibo);
         }
 
@@ -72,13 +80,22 @@ namespace AutoCosting.Controllers.Recibo
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,TransID,Descripcion,Abono,Fecha")] R.Recibo recibo)
+        public async Task<IActionResult> Create(R.Recibo recibo)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(recibo);
                 await _context.SaveChangesAsync();
-                //                return RedirectToAction(nameof(Index));
+                //Actualizar Caja
+                Caja caja = await this._context.AperturaCierreCaja.AsNoTracking().FirstOrDefaultAsync(c => c.Tipo == TipoCaja.Cierre && c.Fecha.Value.ToShortDateString() == DateTime.Today.ToShortDateString());
+                if (caja != null)
+                {
+                    caja.Monto += recibo.Abono;
+                    _context.AperturaCierreCaja.Update(caja);
+                    await _context.SaveChangesAsync();
+                }
+                
+
                 return RedirectToAction(nameof(Edit), "TransaccionHeader", new { @id = recibo.TransID });
             }            
             return View(recibo);
@@ -106,7 +123,7 @@ namespace AutoCosting.Controllers.Recibo
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,TransID,Descripcion,Abono,Fecha")] R.Recibo recibo)
+        public async Task<IActionResult> Edit(int id, R.Recibo recibo)
         {
             if (id != recibo.ID)
             {
@@ -137,6 +154,7 @@ namespace AutoCosting.Controllers.Recibo
             return View(recibo);
         }
 
+        //[Authorize(Roles = "Dev")]
         // GET: Recibo/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
