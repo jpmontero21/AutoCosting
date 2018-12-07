@@ -1,25 +1,22 @@
-﻿@model IEnumerable<AutoCosting.Models.Maintenance.Proveedor>
-
+﻿@model IEnumerable<AutoCosting.Models.TransactionHist.ComisionHist>
+@using AutoCosting.HelpersAndValidations
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Comisiones";
 }
 
-<h2>Proveedores </h2>
-<hr />
-
-<form asp-action="Index" asp-controller="Proveedores" method="get">
+<h2>Comisiones</h2>
+<form asp-controller="ComisionHist" asp-action="Index" method="get">
     <div class="box-header with-border">
         <div class="col-sm-4" style="padding-top:20px">
-            <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
+            
+            <a asp-action="Index" asp-controller="Comision" class="btn btn-success">Ver Comisiones Actuales</a>
         </div>
         <div class="col-sm-8">
             <div class="row">
                 <div class="col-sm-12 text-right">
                     <b>Buscar:  &nbsp;&nbsp;&nbsp; </b>
-                    <label class="radio-inline">@Html.RadioButton("option", "Nombre") Contacto</label>
-                    <label class="radio-inline">@Html.RadioButton("option", "Empresa") Empresa </label>
-                    <label class="radio-inline">@Html.RadioButton("option", "Telefono") Teléfono </label>
-                    <label class="radio-inline">@Html.RadioButton("option", "Email") Email </label>
+                    <label class="radio-inline">@Html.RadioButton("option", "Nombre") Nombre</label>
+                    <label class="radio-inline">@Html.RadioButton("option", "Tipo") Tipo</label>
                 </div>
             </div>
             <div class="row">
@@ -34,27 +31,25 @@
             </div>
         </div>
     </div>
+    <br />
     <div class="box box-info">
         <table class="table table-striped">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.NombreContacto)
+                        @Html.DisplayNameFor(model => model.Parent)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.NombreEmpresa)
+                        @Html.DisplayNameFor(model => model.Nombre)
+                    </th>
+                    <th style="text-align:right">
+                        @Html.DisplayNameFor(model => model.Monto)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Direccion)
+                        @Html.DisplayNameFor(model => model.Descripcion)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Telefono)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Email)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Notas)
+                        @Html.DisplayNameFor(model => model.TipoComision)
                     </th>
                     <th></th>
                 </tr>
@@ -64,22 +59,19 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.NombreContacto)
+                            @Html.DisplayFor(modelItem => item.Parent.TransID)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.NombreEmpresa)
+                            @Html.DisplayFor(modelItem => item.Nombre)
+                        </td>
+                        <td style="text-align:right">
+                            @Html.DisplayFor(modelItem => item.Monto)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Direccion)
+                            @Html.DisplayFor(modelItem => item.Descripcion)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Telefono)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Email)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Notas)
+                            @Html.DisplayFor(modelItem => item.TipoComision)
                         </td>
                         <td>
                             @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })

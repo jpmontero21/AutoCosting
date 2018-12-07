@@ -78,17 +78,17 @@ namespace AutoCosting.Areas.Identity.Pages.Account
         public void OnGet(string returnUrl = null)
         {
             ReturnUrl = returnUrl;
-            IEnumerable<string> rolesList;
+            IEnumerable<RoleHelper> rolesList;
             if (this._db.Users.Count() == 0)
             {
-                rolesList = new List<string>() { SD.AdminEndUser };
+                rolesList = new List<RoleHelper>() { new RoleHelper() { Role = SD.AdminEndUser, Description= "Administrador" } };
             }
             else
             {
-                rolesList = new List<string>() {  SD.SalesAgentUser, SD.AdminEndUser };
+                rolesList = new List<RoleHelper>() { new RoleHelper() { Role = SD.SalesAgentUser, Description = "Vendedor"}, new RoleHelper() { Role = SD.AdminEndUser, Description = "Administrador" } };
             }        
             ViewData["Empleado"] = new SelectList(_db.Empleados.Where(e => !this._db.Users.Any(u => u.EmpleadoID == e.Cedula)), "Cedula", "NombreCompleto");
-            ViewData["Roles"] = new SelectList(rolesList);
+            ViewData["Roles"] = new SelectList(rolesList,"Role","Description");
         }
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
@@ -145,5 +145,13 @@ namespace AutoCosting.Areas.Identity.Pages.Account
             OnGet();
             return Page();
         }
+
+
     }
+}
+
+public class RoleHelper
+{
+    public string Role { get; set; }
+    public string Description { get; set; }
 }
