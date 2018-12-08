@@ -7,6 +7,19 @@
 <h2>Crear Recibo</h2>
 <h2>Para la Transacción # @Html.DisplayFor(modelItem => Model.TransID)</h2>
 <hr />
+@if (ViewData["CajaMessage"] != null && !string.IsNullOrEmpty(ViewData["CajaMessage"].ToString()))
+{
+    <div class="form-group">
+        <div class="box box-warning">
+            <div class="box-header with-border">
+                <h3 class="box-title">Cierre de caja Realizado.</h3>
+            </div>
+            <div class="box-body">
+                <div class="box-body alert alert-success alert-dismissible">@ViewData["CajaMessage"]</div>                
+            </div>
+        </div>
+    </div>
+}
 <form asp-action="Create">
     <input type="hidden" asp-for="TransID" />
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>

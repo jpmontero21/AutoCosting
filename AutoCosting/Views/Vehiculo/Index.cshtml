@@ -64,94 +64,96 @@
             </div>
         </div>
     </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.VIN)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Marca)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Modelo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Anno)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Transmision)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Estilo)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Combustible)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Estado)
-                </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.PrecioMinimo)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.PrecioRecomendado)
-                </th>
-                @*<th>
-                    @Html.DisplayNameFor(model => model.ApartadoYN)
-                </th>*@
-                <th>
-                    @Html.DisplayNameFor(model => model.FechaIngreso)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div class="box box-info">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>
-                        <a asp-action="VehicleHistory" asp-controller="Vehiculo" asp-route-VIN="@item.VIN" ><i class="fa fa-list-alt"></i></a>
-                        @Html.DisplayFor(modelItem => item.VIN)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Marca)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Modelo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Anno)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Transmision)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Estilo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Combustible)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Estado)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.PrecioMinimo)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PrecioRecomendado)
-                    </td>
-                    @*<td>
-                        @Html.DisplayFor(modelItem => item.ApartadoYN)
-                    </td>*@
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FechaIngreso)
-                    </td>
-                    <td>
-                        @await Html.PartialAsync("_TableButtonPartialEditDetails", new IndividualButtonPartial { StrId = item.VIN })
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.VIN)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Marca)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Modelo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Anno)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Transmision)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Estilo)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Combustible)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Estado)
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.PrecioMinimo)
+                        </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.PrecioRecomendado)
+                    </th>
+                    @*<th>
+                            @Html.DisplayNameFor(model => model.ApartadoYN)
+                        </th>*@
+                    <th>
+                        @Html.DisplayNameFor(model => model.FechaIngreso)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <a asp-action="VehicleHistory" asp-controller="Vehiculo" asp-route-VIN="@item.VIN"><i class="fa fa-list-alt"></i></a>
+                            @Html.DisplayFor(modelItem => item.VIN)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Marca)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Modelo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Anno)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Transmision)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Estilo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Combustible)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Estado)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.PrecioMinimo)
+                            </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PrecioRecomendado)
+                        </td>
+                        @*<td>
+                                @Html.DisplayFor(modelItem => item.ApartadoYN)
+                            </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FechaIngreso)
+                        </td>
+                        <td>
+                            @await Html.PartialAsync("_TableButtonPartialEditDetails", new IndividualButtonPartial { StrId = item.VIN })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
 </form>
