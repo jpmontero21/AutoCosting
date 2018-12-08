@@ -1,0 +1,70 @@
+﻿@model IEnumerable<AutoCosting.Models.FacturacionElectronica.Emisor>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Emisor </h2>
+<hr />
+<form asp-controller="Emisors" asp-action="Index" method="get">
+    <div class="box-header with-border">
+        <div class="col-sm-4" style="padding-top:20px">
+            <a asp-action="Create" class="btn btn-primary">Crear nuevo</a>
+        </div>
+    </div>
+    <div class="box box-info">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TipoIdentificacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumeroIdentificacion)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.NumeroTelefono)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CorreoElectronico)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.RutaArchivoCertificado)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OutputFolder)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TipoIdentificacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumeroIdentificacion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NumeroTelefono)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CorreoElectronico)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RutaArchivoCertificado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OutputFolder)
+                        </td>
+                        <td>
+                            @await Html.PartialAsync("_TableButtonPartial", new IndividualButtonPartial { Id = item.ID })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</form>

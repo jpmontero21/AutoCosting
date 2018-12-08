@@ -222,7 +222,7 @@
     <div class="form-group">
         <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
         <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
-        @*<a asp-action="EnviarFacturaElectronica" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-sm btn-info">Enviar Factura Electronica</a>*@
+        <a asp-action="EnviarFacturaElectronicaAsync" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-sm btn-info">Enviar Factura Electronica</a>
     </div>
 </form>
 <hr />

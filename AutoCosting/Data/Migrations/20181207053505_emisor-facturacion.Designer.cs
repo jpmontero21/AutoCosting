@@ -4,14 +4,16 @@ using AutoCosting.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AutoCosting.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181207053505_emisor-facturacion")]
+    partial class emisorfacturacion
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,33 +100,6 @@ namespace AutoCosting.Data.Migrations
                     b.ToTable("tblCaja");
                 });
 
-            modelBuilder.Entity("AutoCosting.Models.FacturacionElectronica.CodificacionMH", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("idBarrio");
-
-                    b.Property<string>("idCanton");
-
-                    b.Property<string>("idDistrito");
-
-                    b.Property<string>("idProvincia");
-
-                    b.Property<string>("nombreBarrio");
-
-                    b.Property<string>("nombreCanton");
-
-                    b.Property<string>("nombreDistrito");
-
-                    b.Property<string>("nombreProvincia");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("CodificacionMH");
-                });
-
             modelBuilder.Entity("AutoCosting.Models.FacturacionElectronica.Emisor", b =>
                 {
                     b.Property<int>("ID")
@@ -147,9 +122,6 @@ namespace AutoCosting.Data.Migrations
                         .IsRequired();
 
                     b.Property<string>("Distrito")
-                        .IsRequired();
-
-                    b.Property<string>("NombreCompleto")
                         .IsRequired();
 
                     b.Property<string>("NumeroIdentificacion")

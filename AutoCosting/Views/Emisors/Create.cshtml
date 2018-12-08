@@ -1,0 +1,187 @@
+﻿@model AutoCosting.Models.FacturacionElectronica.Emisor
+@using AutoCosting.HelpersAndValidations
+
+@{
+    ViewData["Title"] = "Crear Emisor";
+}
+<script type="text/javascript">
+    function LoadCanton(selEle) {
+        var provId = selEle.value.toString();
+        $.ajax({
+            url: "/Emisors/LoadCanton",
+            type: "POST",
+            data: { provinciaId: provId },
+            datatype: "json",
+            success: function (data) {
+                var ddlCantones = $('#cboCantones');
+                ddlCantones.empty();
+                $.each(data, function (idCanton, nombreCanton) {
+                    ddlCantones.append(
+                        $('<option></option>').val(nombreCanton.idCanton).html(nombreCanton.nombreCanton)
+                    );
+                });
+            },
+            error: function () {
+                alert("Hubo un Error.");
+            }
+        });
+    };
+
+    function LoadDistritos(selEle) {
+        var provId = document.getElementById("cboProvincias").value;
+        var cantId = selEle.value.toString();
+        $.ajax({
+            url: "/Emisors/LoadDistritos",
+            type: "POST",
+            data: { provinciaId: provId, cantonId: cantId },
+            datatype: "json",
+            success: function (data) {
+                var ddlDistritos = $('#cboDistritos');
+                ddlDistritos.empty();
+                $.each(data, function (idDistrito, nombreDistrito) {
+                    ddlDistritos.append(
+                        $('<option></option>').val(nombreDistrito.idDistrito).html(nombreDistrito.nombreDistrito)
+                    );
+                });
+            },
+            error: function () {
+                alert("Hubo un Error.");
+            }
+        });
+    };
+
+    function LoadBarrios(selEle) {
+        var provId = document.getElementById("cboProvincias").value;
+        var cantId = document.getElementById("cboCantones").value;
+        var distId = selEle.value.toString();
+        $.ajax({
+            url: "/Emisors/LoadBarrios",
+            type: "POST",
+            data: { provinciaId: provId, cantonId: cantId, distritoId: distId },
+            datatype: "json",
+            success: function (data) {
+                var ddlBarrios = $('#cboBarrios');
+                ddlBarrios.empty();
+                $.each(data, function (idBarrio, nombreBarrio) {
+                    ddlBarrios.append(
+                        $('<option></option>').val(nombreBarrio.idBarrio).html(nombreBarrio.nombreBarrio)
+                    );
+                });
+            },
+            error: function () {
+                alert("Hubo un Error.");
+            }
+        });
+    };
+</script>
+<h2>Crear Emisor</h2>
+<hr />
+<form asp-action="Create">
+    <div asp-validation-summary="ModelOnly"></div>
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            <h3 class="box-title">Datos Básicos</h3>
+            @*<div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                </div>*@
+        </div>
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="TipoIdentificacion"></label>
+                        <select asp-for="TipoIdentificacion" class="form-control" asp-items="Html.GetEnumSelectList<TipoCedula>()"></select>
+                        <span asp-validation-for="TipoIdentificacion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NumeroIdentificacion"></label>
+                        <input asp-for="NumeroIdentificacion" class="form-control" />
+                        <span asp-validation-for="NumeroIdentificacion" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NombreCompleto"></label>
+                        <input asp-for="NombreCompleto" class="form-control" />
+                        <span asp-validation-for="NombreCompleto" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Provincia"></label>
+                        <select asp-for="Provincia" class="form-control" asp-items="Html.GetEnumSelectList<Provincia>()" onchange="LoadCanton(this)" id="cboProvincias"></select>
+                        <span asp-validation-for="Provincia" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Canton"></label>
+                        <select asp-for="Canton" class="form-control" asp-items="ViewBag.Cantones" onchange="LoadDistritos(this)" id="cboCantones"></select>
+                        <span asp-validation-for="Canton" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Distrito"></label>
+                        <select asp-for="Distrito" class="form-control" asp-items="ViewBag.Distritos" onchange="LoadBarrios(this)" id="cboDistritos"></select>
+                        <span asp-validation-for="Distrito" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Barrio"></label>
+                        <select asp-for="Barrio" class="form-control" asp-items="ViewBag.Barrios" id="cboBarrios"></select>
+                        <span asp-validation-for="Barrio" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OtrasSenas"></label>
+                        <input asp-for="OtrasSenas" class="form-control" />
+                        <span asp-validation-for="OtrasSenas" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CodigoPaisTelefono"></label>
+                        <input asp-for="CodigoPaisTelefono" class="form-control" />
+                        <span asp-validation-for="CodigoPaisTelefono" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="NumeroTelefono"></label>
+                        <input asp-for="NumeroTelefono" class="form-control" />
+                        <span asp-validation-for="NumeroTelefono" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CorreoElectronico"></label>
+                        <input asp-for="CorreoElectronico" class="form-control" />
+                        <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="RutaArchivoCertificado"></label>
+                        <input asp-for="RutaArchivoCertificado" class="form-control" />
+                        <span asp-validation-for="RutaArchivoCertificado" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PinCertificado"></label>
+                        <input asp-for="PinCertificado" class="form-control" />
+                        <span asp-validation-for="PinCertificado" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UsuarioApi"></label>
+                        <input asp-for="UsuarioApi" class="form-control" />
+                        <span asp-validation-for="UsuarioApi" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ClaveApi"></label>
+                        <input asp-for="ClaveApi" class="form-control" />
+                        <span asp-validation-for="ClaveApi" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="OutputFolder"></label>
+                        <input asp-for="OutputFolder" class="form-control" />
+                        <span asp-validation-for="OutputFolder" class="text-danger"></span>
+                    </div>
+                    </div>
+             </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Crear" class="btn btn-sm btn-primary" />
+        <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+    </div>
+</form>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

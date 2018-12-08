@@ -141,6 +141,18 @@ desired effect
                         <li><a asp-area="" asp-controller="Comision" asp-action="Index"><i class="fa fa-money"></i> <span>Comisiones</span></a></li>
                         <li><a asp-area="" asp-controller="DbBackup" asp-action="Index"><i class="fa fa-database"></i> <span>Respaldos</span></a></li>
                         <li><a asp-area="Identity" asp-page="/Account/Register"><i class="fa fa-user-plus"></i> <span>Registrar Usuario</span></a></li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-institution"></i>
+                                <span>Factura Electrónica</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a asp-area="" asp-controller="Emisors" asp-action="Index"><i class="fa  fa-user"></i> Emisor</a></li>
+                            </ul>
+                        </li>
                     }
                     <li><a href="~/Help/Ayuda.pdf" target="_blank"><i class="fa fa-info-circle"></i> <span>Ayuda</span></a></li>
                 </ul>

@@ -1,0 +1,114 @@
+﻿@model AutoCosting.Models.FacturacionElectronica.Emisor
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Emisor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoIdentificacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TipoIdentificacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroIdentificacion)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroIdentificacion)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreCompleto)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NombreCompleto)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Provincia)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Provincia)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Canton)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Canton)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Distrito)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Distrito)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Barrio)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Barrio)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OtrasSenas)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OtrasSenas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CodigoPaisTelefono)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CodigoPaisTelefono)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.NumeroTelefono)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.NumeroTelefono)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CorreoElectronico)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CorreoElectronico)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.RutaArchivoCertificado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RutaArchivoCertificado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PinCertificado)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PinCertificado)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.UsuarioApi)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.UsuarioApi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.ClaveApi)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ClaveApi)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OutputFolder)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OutputFolder)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.ID">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

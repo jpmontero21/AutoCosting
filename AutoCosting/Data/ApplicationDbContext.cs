@@ -13,6 +13,7 @@ using AutoCosting.Models.CierreAperturaCaja;
 using System.Linq;
 using AutoCosting.Models.TransactionHist;
 using AutoCosting.Models.ReceiptsHist;
+using AutoCosting.Models.FacturacionElectronica;
 
 namespace AutoCosting.Data
 {
@@ -32,6 +33,8 @@ namespace AutoCosting.Data
         public DbSet<Recibo> Recibos { get; set; }
         public DbSet<Caja> AperturaCierreCaja { get; set; }
         public DbSet<Comision> Comisiones { get; set; }
+        public DbSet<Emisor> Emisor { get; set; }
+        public DbSet<CodificacionMH> CodificacionMH { get; set; }
         //History Tables
         public DbSet<TransaccionHeaderHist> TransHistoryHeader {get; set;}
         public DbSet<TransaccionDetailHist> TransDetailHistory { get; set; }

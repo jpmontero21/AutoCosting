@@ -26,6 +26,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" PrivateAssets="All" />
+    <PackageReference Include="System.ServiceModel.Duplex" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.4.*" />
+    <PackageReference Include="System.ServiceModel.Security" Version="4.4.*" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,9 +41,12 @@
 
   <ItemGroup>
     <Reference Include="FacturaElectronica">
-      <HintPath>..\..\..\..\..\Desktop\FE\FacturaElectronica.dll</HintPath>
-      <Private></Private>
+      <HintPath>..\..\..\..\..\Desktop\FacturaElectronica\FacturaElectronica.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>

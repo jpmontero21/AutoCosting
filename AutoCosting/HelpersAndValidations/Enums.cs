@@ -64,4 +64,25 @@ namespace AutoCosting.HelpersAndValidations
         Cierre = 0,
         Apertura = 1
     }
+    public enum TipoCedula : short
+    {
+        [Display(Name = "Cédula Física")]
+        CedulaFisica = 1,
+        [Display(Name = "Cédula Jurídica")]
+        CedulaJuridica = 2,
+        DIMEX = 3,
+        NITE = 4
+    }
+    public enum Provincia : short
+    {
+        [Display(Name = "San José")]
+        SanJose = 1,
+        Alajuela = 2,
+        Cartago = 3,
+        Heredia = 4,
+        Guanacaste = 5,
+        Puntarenas = 6,
+        [Display(Name = "Limón")]
+        Limon = 7
+    }
 }
