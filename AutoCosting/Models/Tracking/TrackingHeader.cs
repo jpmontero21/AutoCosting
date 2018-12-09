@@ -58,7 +58,7 @@ namespace AutoCosting.Models.Tracking
         {
             get
             {
-                return string.Format("{0} {1} {2}", this.TrackingIdStr, this.Vehiculo.Marca, this.Vehiculo.Modelo);
+                return string.Format("{0} {1} {2}", this.TrackingIdStr, this.Vehiculo != null ? this.Vehiculo.Marca : string.Empty, this.Vehiculo != null ? this.Vehiculo.Modelo : string.Empty);
             }
         }
 
