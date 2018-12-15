@@ -345,9 +345,72 @@ namespace AutoCosting.Controllers.Transaccion
                     CustomFacturaElectronicaCR fact = new CustomFacturaElectronicaCR(consecutivo, clave, emisor, receptor, "01", string.Empty, "01", listaDetalles, "CRC", 1);
                     XmlDocument xmlSinFirmar = fact.CreaXMLFacturaElectronica();
                     emisor.OutputFolder = rutaOutput;
-                    await fact.ProcesaAsync(xmlSinFirmar.OuterXml, emisor.OutputFolder, consecutivo);
+                    try
+                    {
+                        await fact.ProcesaAsync(xmlSinFirmar.OuterXml, emisor.OutputFolder, consecutivo);
+                    }
+                    catch (Exception )
+                    {
+                        transaccion.EnviadaHacienda = false;
+                        ///throw;
+                        this.TempData["ErrorMessage"] = "Error al enviar a Hacienda. Intente de nuevo más tarde.";
+                    }
                     transaccion.ClaveHacienda = clave;
                     transaccion.EnviadaHacienda = true;
+                    this._context.TransaccionHeaders.Update(transaccion);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            return this.RedirectToAction(nameof(Edit), new { id = transID });
+
+        }
+
+        public async Task<IActionResult> ConsultarFacturaElectronicaAsync(int transID)
+        {
+            var dbContext = this._context.TransaccionHeaders.Include(d => d.TransDetails).Where(t => t.TransID == transID);
+            if (dbContext == null)
+            {
+                return NotFound();
+            }
+            var transaccion = dbContext.ToList().FirstOrDefault();
+            if (transaccion == null)
+            {
+                return NotFound();
+            }
+            if (transaccion != null && transaccion.EnviadaHacienda && !string.IsNullOrEmpty(transaccion.ClaveHacienda))
+            {
+                
+                EmisorModel.Emisor emi = this._context.Emisor.FirstOrDefault(emisor => emisor.ID > 0);
+                if (emi != null)
+                {
+                    FacturaElectronicaCR fact = new FacturaElectronicaCR();
+                    string rutaCertificado = emi.RutaArchivoCertificado;
+                    string rutaOutput = emi.OutputFolder;
+                    Emisor emisor = new Emisor(emi.NombreCompleto, emi.TipoIdentificacion, emi.NumeroIdentificacion, emi.Provincia, emi.Canton, emi.Distrito, emi.Barrio,
+                emi.OtrasSenas, emi.CodigoPaisTelefono, emi.NumeroTelefono, emi.CorreoElectronico, rutaCertificado, emi.PinCertificado, emi.UsuarioApi.Trim(), emi.ClaveApi.Trim(), emi.OutputFolder);
+                    emisor.OutputFolder = emi.OutputFolder;
+                    fact.Emisor = emisor;
+                    string message = string.Empty;
+                    try
+                    {
+                        message = fact.ConsultaFactura(transaccion.ClaveHacienda, emisor.OutputFolder);
+                    }
+                    catch (Exception)
+                    {
+                        this.TempData["ErrorMessage"] = "Hubo un error consultando la factura. Intente mas tarde.";
+                    }
+                    if (message.ToLower().Equals("aceptada"))
+                    {
+                        transaccion.AceptadaHacienda = "true";
+                        this.TempData["OKMessage"] = message;
+                    }
+                    else
+                    {
+                        transaccion.AceptadaHacienda = "false";
+                        this.TempData["ErrorMessage"] = message;
+                    }
+                    this._context.TransaccionHeaders.Update(transaccion);
+                    await _context.SaveChangesAsync();
                 }
             }
             return this.RedirectToAction(nameof(Edit), new { id = transID });

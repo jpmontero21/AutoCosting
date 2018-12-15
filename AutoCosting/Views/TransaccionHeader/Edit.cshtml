@@ -25,10 +25,23 @@
     <div class="form-group">
         <div class="box box-warning">
             <div class="box-header with-border">
-                <h3 class="box-title">No se puede convertir.</h3>
+                <h3 class="box-title">Error.</h3>
             </div>
             <div class="box-body">
-                <div class="box-body alert alert-warning alert-dismissible">@TempData["ErrorMessage"]</div>                
+                <div class="box-body alert alert-warning alert-dismissible">@TempData["ErrorMessage"]</div>
+            </div>
+        </div>
+    </div>
+}
+@if (TempData["OKMessage"] != null && !string.IsNullOrEmpty(TempData["OKMessage"].ToString()))
+{
+    <div class="form-group">
+        <div class="box box-success">
+            <div class="box-header with-border">
+                <h3 class="box-title">Completado.</h3>
+            </div>
+            <div class="box-body">
+                <div class="box-body alert alert-warning alert-dismissible">@TempData["OKMessage"]</div>
             </div>
         </div>
     </div>
@@ -223,6 +236,7 @@
         <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
         <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
         <a asp-action="EnviarFacturaElectronicaAsync" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-sm btn-info">Enviar Factura Electronica</a>
+        <a asp-action="ConsultarFacturaElectronicaAsync" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-sm btn-info">Consultar F.E</a>
     </div>
 </form>
 <hr />
