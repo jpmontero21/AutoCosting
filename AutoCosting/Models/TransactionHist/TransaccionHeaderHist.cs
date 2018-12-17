@@ -95,6 +95,10 @@ namespace AutoCosting.Models.TransactionHist
         }
 
         public bool Eliminada { get; set; }
+        public bool EnviadaHacienda { get; set; }
+        public string ClaveHacienda { get; set; }
+        public string AceptadaHacienda { get; set; }
+
         public IEnumerable<TransaccionDetailHist> TransDetails { get; set; }
 
         public IEnumerable<ReciboHist> Recibos { get; set; }

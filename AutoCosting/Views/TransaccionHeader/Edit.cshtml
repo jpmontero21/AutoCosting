@@ -235,8 +235,12 @@
     <div class="form-group">
         <input type="submit" value="Actualizar" class="btn btn-sm btn-primary" />
         <a asp-action="Index" class="btn btn-sm btn-success">Regresar a la Lista</a>
+        @if (Model.Transaccion.TipoTransaccion == TipoTransaccion.Venta)
+        {
         <a asp-action="EnviarFacturaElectronicaAsync" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-sm btn-info">Enviar Factura Electronica</a>
         <a asp-action="ConsultarFacturaElectronicaAsync" asp-route-transID="@Model.Transaccion.TransID" class="btn btn-sm btn-info">Consultar F.E</a>
+        <a asp-action="CloseSale" asp-controller="TransaccionHeader" asp-route-transId="@Model.Transaccion.TransID" class="btn btn-sm btn-warning">Cerrar venta</a>
+        }
     </div>
 </form>
 <hr />

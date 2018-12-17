@@ -291,6 +291,7 @@ namespace AutoCosting.Controllers.Transaccion
             transaccion.Sede.Empresa = this._context.Empresa.FirstOrDefault(e => e.ID == transaccion.EmpresaID);
             return View(transaccion);
         }
+
         public async Task<IActionResult> EnviarFacturaElectronicaAsync(int transID)
         {
             var dbContext = this._context.TransaccionHeaders.Include(d => d.TransDetails).Where(t => t.TransID == transID);
@@ -415,7 +416,7 @@ namespace AutoCosting.Controllers.Transaccion
             }
             return this.RedirectToAction(nameof(Edit), new { id = transID });
 
-        }
+        }        
 
         public async Task<IActionResult> ConvertToSale(int? transId)
         {
@@ -621,6 +622,105 @@ namespace AutoCosting.Controllers.Transaccion
             }
             return NotFound();
 
+        }
+
+        public async Task<IActionResult> CloseSale(int? transId)
+        {
+            var transHeader = await this._context.TransaccionHeaders.AsNoTracking().Include(t => t.TransDetails).AsNoTracking().Include(t => t.Recibos).AsNoTracking().FirstOrDefaultAsync(t => t.TransID == transId);
+            if (transHeader != null)
+            {
+                TransaccionHeaderHist histHeader = new TransaccionHeaderHist()
+                {
+                    TransID = transHeader.TransID,
+                    VendedorID = transHeader.VendedorID,
+                    ClienteID = transHeader.ClienteID,
+                    SedeID = transHeader.SedeID,
+                    EmpresaID = transHeader.EmpresaID,
+                    TipoPago = transHeader.TipoPago,
+                    TipoTransaccion = transHeader.TipoTransaccion,
+                    Fecha = transHeader.Fecha,
+                    Eliminada = transHeader.Eliminada,
+                    AceptadaHacienda = transHeader.AceptadaHacienda,
+                    ClaveHacienda = transHeader.ClaveHacienda,
+                    EnviadaHacienda = transHeader.EnviadaHacienda                    
+                };
+
+                //Create Details
+                List<TransaccionDetailHist> histDetails = new List<TransaccionDetailHist>();
+                transHeader.TransDetails.ToList().ForEach(detail =>
+                {
+                    TransaccionDetailHist histDetail = new TransaccionDetailHist()
+                    {
+                        ID = detail.ID,
+                        TransID = detail.TransID,
+                        VINVehiculo = detail.VINVehiculo,
+                        PrecioAcordado = detail.PrecioAcordado
+                    };
+                    histDetails.Add(histDetail);
+                    //Set ApartadoYN = false
+                    Vehiculo vehiculo = this._context.Vehiculos.AsNoTracking().FirstOrDefault(v => v.VIN == detail.VINVehiculo);
+                    if (vehiculo != null)
+                    {
+                        vehiculo.ApartadoYN = true;
+                        vehiculo.VendidoYN = true;
+                        this._context.Vehiculos.Update(vehiculo);
+                        this._context.SaveChanges();
+                    }
+                });
+
+                //Create Receipts
+                List<ReciboHist> histReceipts = new List<ReciboHist>();
+                transHeader.Recibos.ToList().ForEach(recibo =>
+                {
+                    ReciboHist histReceipt = new ReciboHist()
+                    {
+                        ID = recibo.ID,
+                        TransID = recibo.TransID,
+                        Descripcion = recibo.Descripcion,
+                        Abono = recibo.Abono,
+                        Fecha = recibo.Fecha
+                    };
+                    histReceipts.Add(histReceipt);
+                });
+
+                List<Comision> comisiones = await this._context.Comisiones.Where(c => c.TransID == transId).ToListAsync();
+                List<ComisionHist> histComm = new List<ComisionHist>();
+                comisiones.ForEach(comm =>
+                {
+                    ComisionHist hist = new ComisionHist()
+                    {
+                        ID = comm.ID,
+                        Descripcion = comm.Descripcion,
+                        Monto = comm.Monto,
+                        Nombre = comm.Nombre,
+                        TipoComision = comm.TipoComision,
+                        TransID = comm.TransID
+                    };
+                    histComm.Add(hist);
+                });
+
+                //Update Header
+                await this._context.TransHistoryHeader.AddRangeAsync(histHeader);
+                //Update Details
+                await this._context.TransDetailHistory.AddRangeAsync(histDetails);
+                //Update Receipts
+                await this._context.ReciboHistory.AddRangeAsync(histReceipts);
+                //Update Commission Receipts
+                await this._context.ComisionHistory.AddRangeAsync(histComm);
+
+
+                await _context.SaveChangesAsync();
+
+
+                this._context.TransaccionDetails.RemoveRange(transHeader.TransDetails);
+                this._context.Recibos.RemoveRange(transHeader.Recibos);
+                this._context.TransaccionHeaders.Remove(transHeader);
+                this._context.Comisiones.RemoveRange(comisiones);
+                await _context.SaveChangesAsync();
+
+                return RedirectToAction(nameof(Index));
+            }
+            return NotFound();
         }
     }
 }
