@@ -12,9 +12,9 @@ using Microsoft.AspNetCore.Hosting;
 using System.Net.Http.Headers;
 using System.IO;
 using Microsoft.AspNetCore.Http;
-using ImageMagick;
+//using ImageMagick;
 using AutoCosting.Models.ViewModel;
-using AutoCosting.Models.Transaction;
+//using AutoCosting.Models.Transaction;
 
 namespace AutoCosting.Controllers
 {
@@ -391,11 +391,11 @@ namespace AutoCosting.Controllers
                         file.CopyTo(fs);
                         fs.Flush();
                     }
-                    using (MagickImage image = new MagickImage(fileName))
-                    {
-                        image.Resize(640, 480);
-                        image.Write(fileName);
-                    }
+                    //using (MagickImage image = new MagickImage(fileName))
+                    //{
+                    //    image.Resize(640, 480);
+                    //    image.Write(fileName);
+                    //}
                         switch (file.Name)
                         {
                             case "files1":
