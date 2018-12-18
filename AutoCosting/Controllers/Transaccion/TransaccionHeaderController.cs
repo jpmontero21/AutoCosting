@@ -307,9 +307,11 @@ namespace AutoCosting.Controllers.Transaccion
             if (transaccion != null && !transaccion.EnviadaHacienda)
             {
                 Datos datos = new Datos();
-                string consecutivo = datos.CreaNumeroSecuencia("1", "1", "01", transaccion.TransIdStr);
+                string consecutivo = datos.CreaNumeroSecuencia("1", "1", "01", "00000019");
+                //string consecutivo = datos.CreaNumeroSecuencia("1", "1", "01", transaccion.TransIdStr);
                 DateTime date = DateTime.Now;
-                string codigoSeguridad = datos.CreaCodigoSeguridad("01", "1", "1", date, transaccion.TransIdStr);
+                //string codigoSeguridad = datos.CreaCodigoSeguridad("01", "1", "1", date, transaccion.TransIdStr);
+                string codigoSeguridad = datos.CreaCodigoSeguridad("01", "1", "1", date, "00000019");
                 string clave = datos.CreaClave("506", date.Day.ToString(), date.Month.ToString(), date.Year.ToString(), "207030159", consecutivo, "1", codigoSeguridad);
 
                 Cliente client = this._context.Clientes.FirstOrDefault(cliente => cliente.ID == transaccion.ClienteID);
@@ -320,7 +322,7 @@ namespace AutoCosting.Controllers.Transaccion
                     string rutaCertificado = emi.RutaArchivoCertificado;
                     //string rutaOutput = "C:\\OutputFiles\\";
                     string rutaOutput = emi.OutputFolder;
-                    Receptor receptor = new Receptor(client.NombreCompleto, "01", client.CedulaSinGuiones, "506", client.Telefono, client.Email);
+                    Receptor receptor = new Receptor(client.NombreCompleto, "01", client.CedulaSinGuiones, "506", client.Telefono.Replace("-", string.Empty), client.Email);
                     Emisor emisor = new Emisor(emi.NombreCompleto, emi.TipoIdentificacion, emi.NumeroIdentificacion, emi.Provincia, emi.Canton, emi.Distrito, emi.Barrio,
                 emi.OtrasSenas, emi.CodigoPaisTelefono, emi.NumeroTelefono, emi.CorreoElectronico, rutaCertificado, emi.PinCertificado, emi.UsuarioApi.Trim(), emi.ClaveApi.Trim(), emi.OutputFolder);
                     int numeroLinea = 0;
@@ -358,6 +360,7 @@ namespace AutoCosting.Controllers.Transaccion
                     }
                     transaccion.ClaveHacienda = clave;
                     transaccion.EnviadaHacienda = true;
+                    transaccion.ConsecutivoHacienda = consecutivo;
                     this._context.TransaccionHeaders.Update(transaccion);
                     await _context.SaveChangesAsync();
                 }
@@ -642,7 +645,8 @@ namespace AutoCosting.Controllers.Transaccion
                     Eliminada = transHeader.Eliminada,
                     AceptadaHacienda = transHeader.AceptadaHacienda,
                     ClaveHacienda = transHeader.ClaveHacienda,
-                    EnviadaHacienda = transHeader.EnviadaHacienda                    
+                    EnviadaHacienda = transHeader.EnviadaHacienda,
+                    ConsecutivoHacienda = transHeader.ConsecutivoHacienda
                 };
 
                 //Create Details

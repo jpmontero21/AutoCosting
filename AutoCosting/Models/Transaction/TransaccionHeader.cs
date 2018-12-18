@@ -97,6 +97,7 @@ namespace AutoCosting.Models.Transaction
         public bool EnviadaHacienda { get; set; }
         public string ClaveHacienda { get; set; }
         public string AceptadaHacienda { get; set; }
+        public string ConsecutivoHacienda { get; set; }
 
         public IEnumerable<TransaccionDetail> TransDetails { get; set; }
 

@@ -81,7 +81,8 @@ namespace AutoCosting.Models.Maintenance
         {
             get
             {
-                return string.Format("{0} {1} {2}", this.VIN, this.Marca, this.Modelo);
+                //return string.Format("{0} {1} {2} {4}", new object[4] { this.VIN, this.Marca, this.Modelo, this.Anno });
+                return $"{this.VIN} - {this.Marca} - {this.Modelo} - {this.Anno}";
             }
         }
 

@@ -4,14 +4,16 @@ using AutoCosting.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AutoCosting.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20181218041339_consecutivoHacienda")]
+    partial class consecutivoHacienda
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -724,8 +726,6 @@ namespace AutoCosting.Data.Migrations
                     b.Property<string>("ClaveHacienda");
 
                     b.Property<int>("ClienteID");
-
-                    b.Property<string>("ConsecutivoHacienda");
 
                     b.Property<bool>("Eliminada");
 
